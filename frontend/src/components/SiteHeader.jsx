@@ -71,7 +71,7 @@ const SiteHeader = ({ variant = "solid" }) => {
           aria-label="AXUM home"
           data-testid="logo"
         >
-          <Logo height={isTransparent ? 34 : 24} />
+          <Logo height={isTransparent ? 34 : 24} tone={isTransparent ? "overlay" : "adaptive"} />
         </a>
 
         {/* RIGHT — icons */}

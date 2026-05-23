@@ -40,6 +40,14 @@ html, body, #root {
   transition-duration: var(--axum-dur);
 }
 
+/* AXUM logo: grey → black entrance.
+   The source PNG is mid-grey; we start at brightness(1) (= grey) and finish
+   at brightness(0) (= solid black, alpha preserved). */
+@keyframes axum-logo-fade {
+  0%   { filter: brightness(1); }
+  100% { filter: brightness(0); }
+}
+
 .axum-border { border: 1px solid #000; }
 .axum-border-b { border-bottom: 1px solid #000; }
 .axum-border-t { border-top: 1px solid #000; }
