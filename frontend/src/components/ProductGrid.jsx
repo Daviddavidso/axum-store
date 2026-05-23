@@ -72,7 +72,11 @@ const ProductGrid = () => {
         {products.map((p, idx) => (
           <article
             key={p.id || idx}
-            className={`product-card axum-border-b ${idx % 4 !== 3 ? "lg:axum-border-r" : ""} ${idx % 2 === 0 ? "sm:axum-border-r lg:axum-border-r" : ""}`}
+            onClick={() => navigate(`/${lang}/product/${p.id}`)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === "Enter") navigate(`/${lang}/product/${p.id}`); }}
+            className={`product-card cursor-pointer axum-border-b ${idx % 4 !== 3 ? "lg:axum-border-r" : ""} ${idx % 2 === 0 ? "sm:axum-border-r lg:axum-border-r" : ""}`}
             style={{ aspectRatio: "3 / 4" }}
             data-testid={`product-card-${idx}`}
           >

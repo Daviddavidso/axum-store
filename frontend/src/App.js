@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate, Navigate } from
 import { Toaster } from "sonner";
 import Home from "@/pages/Home";
 import CatalogPage from "@/pages/CatalogPage";
+import ProductPage from "@/pages/ProductPage";
 import AdminPage from "@/pages/AdminPage";
 import AuthCallback from "@/components/AuthCallback";
 import { LangProvider, useLang } from "@/contexts/LanguageContext";
@@ -37,6 +38,12 @@ const LocalizedCatalog = () => (
   </LangProvider>
 );
 
+const LocalizedProduct = () => (
+  <LangProvider>
+    <ProductPage />
+  </LangProvider>
+);
+
 // Admin uses lang from URL search/hash OR defaults to en; admin UI is mostly English.
 const AdminWrapper = () => {
   // We allow admin UI to render in EN by default; we still expose t() for strings.
@@ -56,6 +63,7 @@ const AppRouter = () => {
       <Route path="/" element={<RootRedirect />} />
       <Route path="/admin" element={<AdminWrapper />} />
       <Route path="/:lang/catalog" element={<LocalizedCatalog />} />
+      <Route path="/:lang/product/:id" element={<LocalizedProduct />} />
       <Route path="/:lang" element={<LocalizedHome />} />
       <Route path="*" element={<RootRedirect />} />
     </Routes>

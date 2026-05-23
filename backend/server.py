@@ -380,6 +380,14 @@ async def get_config():
     }
 
 
+@api_router.get("/products/{product_id}")
+async def get_product(product_id: str, lang: Lang = Query("en")):
+    doc = await db.products.find_one({"id": product_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return localize_product(doc, lang)
+
+
 @api_router.get("/products")
 async def list_products(
     lang: Lang = Query("en"),
