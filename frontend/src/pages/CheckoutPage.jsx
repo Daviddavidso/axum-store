@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import SiteHeader from "@/components/SiteHeader";
 import CartDrawer from "@/components/CartDrawer";
 import MobileBagButton from "@/components/MobileBagButton";
+import PromoBar from "@/components/PromoBar";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LanguageContext";
 import { useCart, formatPrice } from "@/contexts/CartContext";
@@ -55,11 +56,12 @@ const CheckoutPage = () => {
 
   return (
     <div className="App bg-white min-h-screen" data-testid="checkout-page">
+      <PromoBar />
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
 
-      <main className="pt-[68px]">
+      <main className="pt-[102px]">
         <section className="px-5 md:px-10 py-10 md:py-14 axum-border-b">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-3">{t("checkout.eyebrow")}</div>
           <h1 className="font-display uppercase text-4xl md:text-6xl tracking-tighter leading-[0.9]">{t("checkout.title")}</h1>

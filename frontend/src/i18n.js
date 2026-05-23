@@ -73,6 +73,8 @@ export const STRINGS = {
     },
     product_card: {
       add_to_bag: "Add to bag",
+      add: "Add",
+      new: "New",
       wishlist: "Add to wishlist",
     },
     nav_overlay: {
@@ -283,6 +285,8 @@ export const STRINGS = {
     },
     product_card: {
       add_to_bag: "В корзину",
+      add: "В корзину",
+      new: "Новое",
       wishlist: "В избранное",
     },
     nav_overlay: {

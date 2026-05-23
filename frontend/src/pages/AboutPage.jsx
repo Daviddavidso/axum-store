@@ -2,6 +2,7 @@ import React from "react";
 import SiteHeader from "@/components/SiteHeader";
 import CartDrawer from "@/components/CartDrawer";
 import MobileBagButton from "@/components/MobileBagButton";
+import PromoBar from "@/components/PromoBar";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LanguageContext";
 
@@ -9,10 +10,11 @@ const AboutPage = () => {
   const { t } = useLang();
   return (
     <div className="App bg-white min-h-screen" data-testid="about-page">
+      <PromoBar />
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
-      <main className="pt-[68px]">
+      <main className="pt-[102px]">
         <section className="px-5 md:px-10 py-16 md:py-24 axum-border-b">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{t("about.eyebrow")}</div>
           <h1 className="font-display uppercase text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.88]">

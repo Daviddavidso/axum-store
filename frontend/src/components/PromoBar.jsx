@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLang } from "@/contexts/LanguageContext";
 
 const MESSAGES = {
   en: [
@@ -15,8 +16,6 @@ const MESSAGES = {
   ],
 };
 
-import { useLang } from "@/contexts/LanguageContext";
-
 const PromoBar = () => {
   const { lang } = useLang();
   const list = MESSAGES[lang] || MESSAGES.en;
@@ -27,8 +26,11 @@ const PromoBar = () => {
   }, [list.length]);
 
   return (
-    <div className="bg-black text-white text-[11px] tracking-[0.32em] uppercase text-center py-2.5 font-display select-none" data-testid="promo-bar">
-      <span key={idx} className="inline-block px-4 axum-ease" style={{ animation: "promofade 0.45s ease both" }}>
+    <div
+      className="fixed top-0 left-0 right-0 z-50 bg-black text-white text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-center py-2.5 font-display select-none h-[34px] flex items-center justify-center"
+      data-testid="promo-bar"
+    >
+      <span key={idx} className="inline-block px-4" style={{ animation: "promofade 0.45s ease both" }}>
         {list[idx]}
       </span>
       <style>{`@keyframes promofade { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }`}</style>

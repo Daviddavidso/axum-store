@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import CartDrawer from "@/components/CartDrawer";
 import MobileBagButton from "@/components/MobileBagButton";
+import PromoBar from "@/components/PromoBar";
 import HeroSlider from "@/components/HeroSlider";
 import ProductGrid from "@/components/ProductGrid";
 import Lookbook from "@/components/Lookbook";
@@ -33,11 +34,12 @@ const Home = () => {
 
   return (
     <div className="App" data-testid="axum-app">
+      <PromoBar />
       <SiteHeader variant="transparent" />
       <CartDrawer />
       <MobileBagButton />
 
-      <main id="top">
+      <main id="top" className="pt-[34px]">
         <HeroSlider />
         <Marquee />
         <section id="shop" className="axum-border-t">
