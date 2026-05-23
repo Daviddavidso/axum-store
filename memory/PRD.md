@@ -59,20 +59,26 @@ Add RU/EN with same domain, /en and /ru routing, language toggle, independently 
 - Language toggle (EN / RU) with in-place URL switch
 - Browser-language detection at root
 - Admin panel: Emergent Google OAuth, allowlist, dashboard with three tabs (Products/Hero/Lookbook), bilingual inline editing, live computed RU price preview, USD price input + price_rub_override, CRUD + delete confirmation
+- Product detail page + Cart drawer + Wishlist + Checkout (mocked payment)
+- Mobile bottom shop drawer + mobile bag button
+- Custom 10-photo product catalog (no stock photos)
+- **2026-02 — I.AM.GIA aesthetic redesign**: site-wide black rotating PromoBar (top, h-34px, fixed), new airy ProductCard component (large image on white, NEW badge top-left, heart top-right, product name + price BELOW image, quick-add button), airy underlined category tabs replacing the black/white tab boxes, increased grid breathing room. Verified in iteration_3.json — 100% pass.
 
 ## Backlog
-- P1: Product detail page + cart
 - P1: Persist user lang choice in localStorage (not just URL)
 - P1: 201 status code on create endpoints
-- P2: Bag drawer + Stripe checkout (RUB + USD)
+- P1: Refactor — extract shared `<CategoryTabs/>` component (currently duplicated between ProductGrid + CatalogPage)
+- P2: Real Stripe checkout (currently mocked Apple Pay / Google Pay / card)
 - P2: Image gallery / zoom on product page
 - P2: Add Image upload (instead of URL) for admin
 - P2: Soft-seed gating per collection
+- P2: Investigate About page 401/404 console noise (pre-existing, unrelated to redesign)
 - P3: Migrate `@app.on_event` to FastAPI lifespan
 - P3: i18n for `/admin` UI itself (currently EN-only labels)
 - P3: SEO meta tags per locale + hreflang
+- P3: Move PromoBar messages into i18n.js
 
 ## Next tasks
-1. Product detail route with localized data
-2. Cart + checkout (Stripe)
-3. Image upload component for admin
+1. Real Stripe integration (replace mocked checkout)
+2. Image upload component for admin
+3. Persist user lang choice in localStorage
