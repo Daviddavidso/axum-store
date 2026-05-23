@@ -1,16 +1,19 @@
 import React from "react";
 import { X } from "lucide-react";
-
-const links = [
-  { label: "Women", href: "#shop" },
-  { label: "Men", href: "#shop" },
-  { label: "Editorial", href: "#lookbook" },
-  { label: "Archive", href: "#lookbook" },
-  { label: "Stores", href: "#footer" },
-  { label: "Contact", href: "#manifesto" },
-];
+import { useLang } from "@/contexts/LanguageContext";
 
 const NavOverlay = ({ open, onClose }) => {
+  const { t, strings } = useLang();
+  const o = strings.nav_overlay;
+  const links = [
+    { label: o.women, href: "#shop", key: "women" },
+    { label: o.men, href: "#shop", key: "men" },
+    { label: o.editorial, href: "#lookbook", key: "editorial" },
+    { label: o.archive, href: "#lookbook", key: "archive" },
+    { label: o.stores, href: "#footer", key: "stores" },
+    { label: o.contact, href: "#manifesto", key: "contact" },
+  ];
+
   return (
     <>
       <div
@@ -39,11 +42,11 @@ const NavOverlay = ({ open, onClose }) => {
         <nav className="flex-1 flex flex-col">
           {links.map((l, i) => (
             <a
-              key={l.label}
+              key={l.key}
               href={l.href}
               onClick={onClose}
               className="group flex items-center justify-between px-8 py-5 md:py-6 axum-border-b axum-ease hover:bg-black hover:text-white"
-              data-testid={`nav-link-${l.label.toLowerCase()}`}
+              data-testid={`nav-link-${l.key}`}
             >
               <span className="font-display uppercase text-3xl md:text-4xl tracking-tighter leading-none">
                 {l.label}
@@ -56,10 +59,10 @@ const NavOverlay = ({ open, onClose }) => {
         </nav>
 
         <div className="px-8 py-8 axum-border-t flex flex-col gap-3 text-xs tracking-[0.25em] uppercase">
-          <div className="opacity-60">Atelier — Paris · Tokyo · NY</div>
+          <div className="opacity-60">{o.atelier}</div>
           <div className="flex gap-5">
-            <a href="#manifesto" className="axum-link" data-testid="nav-newsletter">Newsletter</a>
-            <a href="#footer" className="axum-link" data-testid="nav-instagram">Instagram</a>
+            <a href="#manifesto" className="axum-link" data-testid="nav-newsletter">{o.newsletter}</a>
+            <a href="#footer" className="axum-link" data-testid="nav-instagram">{o.instagram}</a>
           </div>
         </div>
       </aside>

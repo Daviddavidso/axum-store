@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useLang } from "@/contexts/LanguageContext";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const Lookbook = () => {
+  const { lang, t } = useLang();
   const [items, setItems] = useState([]);
   const [active, setActive] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -14,13 +16,12 @@ const Lookbook = () => {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${API}/lookbook`);
+        const { data } = await axios.get(`${API}/lookbook`, { params: { lang } });
         setItems(data || []);
       } catch (e) { console.error(e); }
     })();
-  }, []);
+  }, [lang]);
 
-  // Trigger fade on tab switch
   useEffect(() => {
     setVisible(false);
     const t = setTimeout(() => setVisible(true), 30);
@@ -28,7 +29,6 @@ const Lookbook = () => {
     return () => clearTimeout(t);
   }, [active]);
 
-  // Auto-cycle when in view
   useEffect(() => {
     if (!sectionRef.current || items.length < 2) return;
     let inter;
@@ -53,12 +53,11 @@ const Lookbook = () => {
   return (
     <div ref={sectionRef} className="w-full bg-white axum-border-t" data-testid="lookbook-section">
       <div className="grid grid-cols-1 lg:grid-cols-12">
-        {/* Left: tabs */}
         <div className="lg:col-span-4 axum-border-b lg:axum-border-r lg:axum-border-b-0 flex flex-col">
           <div className="p-8 md:p-10 axum-border-b">
-            <div className="text-xs tracking-[0.32em] uppercase mb-3">N°03 / Lookbook</div>
+            <div className="text-xs tracking-[0.32em] uppercase mb-3">{t("lookbook.eyebrow")}</div>
             <h2 className="font-display text-4xl md:text-5xl uppercase leading-[0.92]">
-              Volumes<br />of Discipline
+              {t("lookbook.title_a")}<br />{t("lookbook.title_b")}
             </h2>
           </div>
           <div className="flex-1 flex flex-col">
@@ -83,7 +82,7 @@ const Lookbook = () => {
               </button>
             ))}
             <div className="p-8 md:p-10 mt-auto">
-              <div className="text-[11px] tracking-[0.3em] uppercase opacity-70 mb-3">Notes</div>
+              <div className="text-[11px] tracking-[0.3em] uppercase opacity-70 mb-3">{t("lookbook.notes")}</div>
               <p className="text-sm leading-relaxed max-w-md" data-testid="lookbook-description">
                 {current.description}
               </p>
@@ -91,7 +90,6 @@ const Lookbook = () => {
           </div>
         </div>
 
-        {/* Right: dynamic image */}
         <div className="lg:col-span-8 relative overflow-hidden bg-black" style={{ minHeight: "70vh" }}>
           <img
             key={fadeKey.current}
@@ -102,7 +100,7 @@ const Lookbook = () => {
           />
           <div className="absolute bottom-5 left-5 md:bottom-8 md:left-8 text-white pointer-events-none">
             <div className="text-[10px] tracking-[0.4em] uppercase opacity-80">
-              Volume {String(active + 1).padStart(2, "0")}
+              {t("lookbook.volume")} {String(active + 1).padStart(2, "0")}
             </div>
             <div className="font-display text-2xl md:text-4xl uppercase leading-none mt-2">
               {current.tab}

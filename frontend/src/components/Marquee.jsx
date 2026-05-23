@@ -1,15 +1,9 @@
 import React from "react";
-
-const items = [
-  "AUTUMN / WINTER 25 — VOLUME 04",
-  "FREE SHIPPING ABOVE €420",
-  "MADE IN PARIS · TOKYO · NY",
-  "EDITIONS UNDER 200 PIECES",
-  "DISCIPLINE OVER DECORATION",
-];
+import { useLang } from "@/contexts/LanguageContext";
 
 const Marquee = () => {
-  const text = items.join("   ·   ");
+  const { strings } = useLang();
+  const text = strings.marquee.join("   ·   ");
   return (
     <div className="w-full bg-black text-white axum-border-b overflow-hidden" data-testid="marquee">
       <div className="marquee-track py-3 md:py-4">

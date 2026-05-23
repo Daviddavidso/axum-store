@@ -1,0 +1,25 @@
+{
+  "summary": "Full e2e regression for bilingual rewrite. Backend: 19/19 pytest passing (config, EN/RU products, RU categories, hero RU, lookbook RU, newsletter regression, admin 401 unauth, admin 403 non-admin, admin /auth/me, admin CRUD for products/hero/lookbook with bilingual shape, price_rub_override honored on public route). Frontend: / redirects to /en (Accept-Language en), /en shows English UI (SHOP/LOOKBOOK/MANIFESTO/MENU) and $USD prices, /ru shows Russian (МАГАЗИН/ЛУКБУК/МАНИФЕСТ/МЕНЮ + ₽ prices + Cyrillic hero like 'О/З 25 — БЕЗ КОМПРОМИССОВ'). lang-en/lang-ru toggle switches URL and rerenders content correctly. /admin without auth shows AXUM ADMIN + admin-google-signin button. With seeded session cookie for normuloli@gmail.com, /admin renders admin-dashboard with email banner, three tabs Products(8)/Hero(3)/Lookbook(4), bilingual ENGLISH+RUSSIAN edit fields, and the computed RU price box (data-testid computed-rub-<id>) updates live (USD 240→100 made RUB 16 416 → 6 840 = 100*72*0.95).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_axum_bilingual.py",
+    "/app/backend/tests/test_axum_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py still uses deprecated @app.on_event startup/shutdown; migrate to lifespan context manager (pre-existing).",
+    "seed_if_needed() only checks for missing 'name_en' on first product. If admin manually deletes all products this will trigger reseed of hero + lookbook too (delete_many runs on all three). Consider gating each collection independently.",
+    "POST /api/admin/products returns 200; convention is 201 Created.",
+    "compute_price_rub returns rounded value; localize_product returns price_value identical to that round, so client computed-rub UI matches backend — good. But override branch returns float(override) un-rounded while public output formats as int; harmless but inconsistent.",
+    "Root route in App.js relies on browser language; works but does not persist user choice (no localStorage). Minor UX nit."
+  ],
+  "updated_files": ["/app/backend/tests/test_axum_bilingual.py"],
+  "success_rate": {"backend": "100% (19/19)", "frontend": "100% (all critical flows verified)"},
+  "test_credentials": "Admin: normuloli@gmail.com (whitelisted). Auth flow was simulated by inserting a user + user_session document into Mongo and either passing Authorization: Bearer <token> header (pytest) or setting the session_token cookie (Playwright). Test data was cleaned up after the run.",
+  "seed_data_creation": "Inserted admin user normuloli@gmail.com + matching user_session with token test_session_<ts>; also inserted nonadmin@axumtest.com + session for 403 test. Cleaned up at end of run.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Bilingual e2e fully verified. To re-run admin tests, seed a user + user_session in MongoDB per /app/auth_testing.md, then export ADMIN_SESSION_TOKEN and NONADMIN_SESSION_TOKEN before invoking pytest /app/backend/tests/test_axum_bilingual.py. Frontend admin can be exercised by setting cookie session_token via page.context.add_cookies before navigating to /admin. Public endpoints accept ?lang=en|ru, default en."
+}

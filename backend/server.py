@@ -1,61 +1,144 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, Query
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import httpx
+import uuid
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
-from typing import List, Optional
-import uuid
-from datetime import datetime, timezone
+from typing import List, Optional, Literal
+from datetime import datetime, timezone, timedelta
 
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+ADMIN_EMAILS = {e.strip().lower() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()}
+USD_RUB_RATE = float(os.environ.get('USD_RUB_RATE', '72'))
+RU_DISCOUNT = 0.95  # RU baseline = USD * rate * 0.95
+
 app = FastAPI(title="AXUM API")
 api_router = APIRouter(prefix="/api")
 
+# ============== Models ==============
+Lang = Literal["en", "ru"]
 
-# ----------------- Models -----------------
+
 class Product(BaseModel):
     model_config = ConfigDict(extra="ignore")
-
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    name: str
-    price: str
-    category: str = "READY-TO-WEAR"
+    name_en: str
+    name_ru: str
+    description_en: str = ""
+    description_ru: str = ""
+    category_en: str
+    category_ru: str
+    price_usd: float
+    price_rub_override: Optional[float] = None  # if set, used; else computed
     image1: str
     image2: str
     sort_order: int = 0
 
 
-class LookbookItem(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    tab: str
-    title: str
-    image: str
-    description: str = ""
+class ProductCreate(BaseModel):
+    name_en: str
+    name_ru: str
+    description_en: str = ""
+    description_ru: str = ""
+    category_en: str
+    category_ru: str
+    price_usd: float
+    price_rub_override: Optional[float] = None
+    image1: str
+    image2: str
     sort_order: int = 0
+
+
+class ProductUpdate(BaseModel):
+    name_en: Optional[str] = None
+    name_ru: Optional[str] = None
+    description_en: Optional[str] = None
+    description_ru: Optional[str] = None
+    category_en: Optional[str] = None
+    category_ru: Optional[str] = None
+    price_usd: Optional[float] = None
+    price_rub_override: Optional[float] = None
+    image1: Optional[str] = None
+    image2: Optional[str] = None
+    sort_order: Optional[int] = None
 
 
 class HeroSlide(BaseModel):
     model_config = ConfigDict(extra="ignore")
-
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    headline: str
-    subline: str = ""
-    cta: str = "SHOP NOW"
+    headline_en: str
+    headline_ru: str
+    subline_en: str = ""
+    subline_ru: str = ""
+    cta_en: str = "SHOP NOW"
+    cta_ru: str = "СМОТРЕТЬ"
     image: str
     sort_order: int = 0
+
+
+class HeroSlideCreate(BaseModel):
+    headline_en: str
+    headline_ru: str
+    subline_en: str = ""
+    subline_ru: str = ""
+    cta_en: str = "SHOP NOW"
+    cta_ru: str = "СМОТРЕТЬ"
+    image: str
+    sort_order: int = 0
+
+
+class HeroSlideUpdate(BaseModel):
+    headline_en: Optional[str] = None
+    headline_ru: Optional[str] = None
+    subline_en: Optional[str] = None
+    subline_ru: Optional[str] = None
+    cta_en: Optional[str] = None
+    cta_ru: Optional[str] = None
+    image: Optional[str] = None
+    sort_order: Optional[int] = None
+
+
+class LookbookItem(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    tab: str  # locale-neutral key
+    title_en: str
+    title_ru: str
+    description_en: str = ""
+    description_ru: str = ""
+    image: str
+    sort_order: int = 0
+
+
+class LookbookCreate(BaseModel):
+    tab: str
+    title_en: str
+    title_ru: str
+    description_en: str = ""
+    description_ru: str = ""
+    image: str
+    sort_order: int = 0
+
+
+class LookbookUpdate(BaseModel):
+    tab: Optional[str] = None
+    title_en: Optional[str] = None
+    title_ru: Optional[str] = None
+    description_en: Optional[str] = None
+    description_ru: Optional[str] = None
+    image: Optional[str] = None
+    sort_order: Optional[int] = None
 
 
 class NewsletterCreate(BaseModel):
@@ -64,176 +147,351 @@ class NewsletterCreate(BaseModel):
 
 class NewsletterEntry(BaseModel):
     model_config = ConfigDict(extra="ignore")
-
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: str
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
-# ----------------- Seed data -----------------
+class User(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    user_id: str
+    email: str
+    name: str
+    picture: str = ""
+    is_admin: bool = False
+
+
+# ============== Helpers ==============
+def compute_price_rub(p: dict) -> float:
+    override = p.get('price_rub_override')
+    if override is not None:
+        return float(override)
+    return round(float(p.get('price_usd', 0)) * USD_RUB_RATE * RU_DISCOUNT)
+
+
+def format_price(amount: float, lang: str) -> str:
+    if lang == "ru":
+        # Format with thousand separator (non-breaking space)
+        return f"{int(round(amount)):,}".replace(",", "\u00A0") + " ₽"
+    # USD
+    if float(amount).is_integer():
+        return f"${int(amount)}"
+    return f"${amount:.2f}"
+
+
+def localize_product(p: dict, lang: str) -> dict:
+    rub = compute_price_rub(p)
+    if lang == "ru":
+        return {
+            "id": p["id"],
+            "name": p.get("name_ru") or p.get("name_en", ""),
+            "description": p.get("description_ru") or p.get("description_en", ""),
+            "category": p.get("category_ru") or p.get("category_en", ""),
+            "price": format_price(rub, "ru"),
+            "price_value": rub,
+            "currency": "RUB",
+            "image1": p["image1"],
+            "image2": p["image2"],
+            "sort_order": p.get("sort_order", 0),
+        }
+    return {
+        "id": p["id"],
+        "name": p.get("name_en", ""),
+        "description": p.get("description_en", ""),
+        "category": p.get("category_en", ""),
+        "price": format_price(p.get("price_usd", 0), "en"),
+        "price_value": p.get("price_usd", 0),
+        "currency": "USD",
+        "image1": p["image1"],
+        "image2": p["image2"],
+        "sort_order": p.get("sort_order", 0),
+    }
+
+
+def localize_hero(h: dict, lang: str) -> dict:
+    return {
+        "id": h["id"],
+        "headline": h.get(f"headline_{lang}") or h.get("headline_en", ""),
+        "subline": h.get(f"subline_{lang}") or h.get("subline_en", ""),
+        "cta": h.get(f"cta_{lang}") or h.get("cta_en", ""),
+        "image": h["image"],
+        "sort_order": h.get("sort_order", 0),
+    }
+
+
+def localize_lookbook(l: dict, lang: str) -> dict:
+    return {
+        "id": l["id"],
+        "tab": l["tab"],
+        "title": l.get(f"title_{lang}") or l.get("title_en", ""),
+        "description": l.get(f"description_{lang}") or l.get("description_en", ""),
+        "image": l["image"],
+        "sort_order": l.get("sort_order", 0),
+    }
+
+
+# ============== Seed ==============
 SEED_HERO = [
-    HeroSlide(
-        headline="A/W 25 — UNCOMPROMISED",
-        subline="Volume 04 / The New Silhouette",
-        cta="ENTER COLLECTION",
-        image="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
-        sort_order=0,
-    ),
-    HeroSlide(
-        headline="PINK COURT EDITORIAL",
-        subline="Sport meets couture",
-        cta="VIEW LOOKBOOK",
-        image="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
-        sort_order=1,
-    ),
-    HeroSlide(
-        headline="STUDIO N°01",
-        subline="Tailored. Disciplined. Black.",
-        cta="SHOP STUDIO",
-        image="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
-        sort_order=2,
-    ),
+    {
+        "id": str(uuid.uuid4()),
+        "headline_en": "A/W 25 — UNCOMPROMISED",
+        "headline_ru": "О/З 25 — БЕЗ КОМПРОМИССОВ",
+        "subline_en": "Volume 04 / The New Silhouette",
+        "subline_ru": "Том 04 / Новый силуэт",
+        "cta_en": "ENTER COLLECTION",
+        "cta_ru": "В КОЛЛЕКЦИЮ",
+        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
+        "sort_order": 0,
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "headline_en": "PINK COURT EDITORIAL",
+        "headline_ru": "РОЗОВЫЙ КОРТ",
+        "subline_en": "Sport meets couture",
+        "subline_ru": "Спорт встречает кутюр",
+        "cta_en": "VIEW LOOKBOOK",
+        "cta_ru": "ЛУКБУК",
+        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
+        "sort_order": 1,
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "headline_en": "STUDIO N°01",
+        "headline_ru": "СТУДИЯ №01",
+        "subline_en": "Tailored. Disciplined. Black.",
+        "subline_ru": "Точный крой. Дисциплина. Чёрный.",
+        "cta_en": "SHOP STUDIO",
+        "cta_ru": "В МАГАЗИН",
+        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
+        "sort_order": 2,
+    },
 ]
 
 SEED_PRODUCTS = [
-    Product(
-        name="STUDDED BELT CROP TOP",
-        price="$240",
-        category="READY-TO-WEAR",
-        image1="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
-        image2="https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=0,
-    ),
-    Product(
-        name="METALLIC EVENING DRESS",
-        price="$520",
-        category="EVENING",
-        image1="https://images.pexels.com/photos/16791449/pexels-photo-16791449.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
-        image2="https://images.unsplash.com/flagged/photo-1570733117311-d990c3816c47?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=1,
-    ),
-    Product(
-        name="BLACK FASHION DRESS",
-        price="$380",
-        category="EVENING",
-        image1="https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
-        image2="https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=2,
-    ),
-    Product(
-        name="WHITE BLAZER & SCARF",
-        price="$410",
-        category="TAILORING",
-        image1="https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-        image2="https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=3,
-    ),
-    Product(
-        name="PINK COURT CORSET",
-        price="$680",
-        category="ARCHIVE",
-        image1="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
-        image2="https://images.unsplash.com/photo-1674851993263-823aef958e73?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=4,
-    ),
-    Product(
-        name="CRIMSON SHEER SLIP",
-        price="$390",
-        category="EVENING",
-        image1="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
-        image2="https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=5,
-    ),
-    Product(
-        name="LEATHER HARNESS BELT",
-        price="$185",
-        category="ACCESSORIES",
-        image1="https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
-        image2="https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-        sort_order=6,
-    ),
-    Product(
-        name="ASYMMETRIC TROUSER",
-        price="$295",
-        category="TAILORING",
-        image1="https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&q=85",
-        image2="https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
-        sort_order=7,
-    ),
+    {
+        "name_en": "STUDDED BELT CROP TOP", "name_ru": "ТОП С КЛЁПАНЫМ РЕМНЁМ",
+        "description_en": "Stretch cotton crop top, finished with our signature double-row studded belt.",
+        "description_ru": "Укороченный топ из эластичного хлопка с фирменным двойным клёпаным ремнём.",
+        "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+        "price_usd": 240,
+        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
+        "image2": "https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 0,
+    },
+    {
+        "name_en": "METALLIC EVENING DRESS", "name_ru": "МЕТАЛЛИЧЕСКОЕ ВЕЧЕРНЕЕ ПЛАТЬЕ",
+        "description_en": "Hand-finished metallic jersey with floor-grazing hem.",
+        "description_ru": "Металлизированный трикотаж ручной обработки в пол.",
+        "category_en": "EVENING", "category_ru": "ВЕЧЕРНЕЕ",
+        "price_usd": 520,
+        "image1": "https://images.pexels.com/photos/16791449/pexels-photo-16791449.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
+        "image2": "https://images.unsplash.com/flagged/photo-1570733117311-d990c3816c47?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 1,
+    },
+    {
+        "name_en": "BLACK FASHION DRESS", "name_ru": "ЧЁРНОЕ ПЛАТЬЕ",
+        "description_en": "Architectural black mini dress with sculpted shoulders.",
+        "description_ru": "Архитектурное чёрное мини-платье со скульптурными плечами.",
+        "category_en": "EVENING", "category_ru": "ВЕЧЕРНЕЕ",
+        "price_usd": 380,
+        "image1": "https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
+        "image2": "https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 2,
+    },
+    {
+        "name_en": "WHITE BLAZER & SCARF", "name_ru": "БЕЛЫЙ ЖАКЕТ И ШАРФ",
+        "description_en": "Off-white wool blazer with detachable silk scarf.",
+        "description_ru": "Жакет из шерсти молочного оттенка со съёмным шёлковым шарфом.",
+        "category_en": "TAILORING", "category_ru": "КОСТЮМЫ",
+        "price_usd": 410,
+        "image1": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image2": "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 3,
+    },
+    {
+        "name_en": "PINK COURT CORSET", "name_ru": "РОЗОВЫЙ КОРСЕТ",
+        "description_en": "Lace-up cotton-twill corset from the Pink Court editorial.",
+        "description_ru": "Хлопковый корсет на шнуровке из редакционной серии «Розовый корт».",
+        "category_en": "ARCHIVE", "category_ru": "АРХИВ",
+        "price_usd": 680,
+        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
+        "image2": "https://images.unsplash.com/photo-1674851993263-823aef958e73?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 4,
+    },
+    {
+        "name_en": "CRIMSON SHEER SLIP", "name_ru": "АЛАЯ ПРОЗРАЧНАЯ КОМБИНАЦИЯ",
+        "description_en": "Bias-cut crimson silk slip dress.",
+        "description_ru": "Алое шёлковое платье-комбинация косого кроя.",
+        "category_en": "EVENING", "category_ru": "ВЕЧЕРНЕЕ",
+        "price_usd": 390,
+        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
+        "image2": "https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 5,
+    },
+    {
+        "name_en": "LEATHER HARNESS BELT", "name_ru": "КОЖАНЫЙ РЕМЕНЬ-СБРУЯ",
+        "description_en": "Italian leather harness belt with brushed steel rings.",
+        "description_ru": "Итальянский кожаный ремень-сбруя со стальными кольцами.",
+        "category_en": "ACCESSORIES", "category_ru": "АКСЕССУАРЫ",
+        "price_usd": 185,
+        "image1": "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image2": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 6,
+    },
+    {
+        "name_en": "ASYMMETRIC TROUSER", "name_ru": "АСИММЕТРИЧНЫЕ БРЮКИ",
+        "description_en": "Wool-blend trouser with asymmetric waistband.",
+        "description_ru": "Брюки из смесовой шерсти с асимметричным поясом.",
+        "category_en": "TAILORING", "category_ru": "КОСТЮМЫ",
+        "price_usd": 295,
+        "image1": "https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "image2": "https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
+        "sort_order": 7,
+    },
 ]
+for p in SEED_PRODUCTS:
+    p["id"] = str(uuid.uuid4())
+    p["price_rub_override"] = None
 
 SEED_LOOKBOOK = [
-    LookbookItem(
-        tab="EDITORIAL_01",
-        title="Volume 01 — Silhouettes in Black",
-        image="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
-        description="The fundamental shape, stripped of ornament. Studio N°01.",
-        sort_order=0,
-    ),
-    LookbookItem(
-        tab="STREETWEAR_02",
-        title="Volume 02 — Pink Court",
-        image="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
-        description="Sport rituals, distorted and recomposed.",
-        sort_order=1,
-    ),
-    LookbookItem(
-        tab="AVANT_GARDE_03",
-        title="Volume 03 — Crimson Room",
-        image="https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
-        description="Light is fabric. Silence is structure.",
-        sort_order=2,
-    ),
-    LookbookItem(
-        tab="ARCHIVE_04",
-        title="Volume 04 — Archive",
-        image="https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-        description="A catalogue of past disciplines.",
-        sort_order=3,
-    ),
+    {
+        "id": str(uuid.uuid4()),
+        "tab": "EDITORIAL_01",
+        "title_en": "Volume 01 — Silhouettes in Black",
+        "title_ru": "Том 01 — Силуэты в чёрном",
+        "description_en": "The fundamental shape, stripped of ornament. Studio N°01.",
+        "description_ru": "Базовая форма без украшательств. Студия №01.",
+        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
+        "sort_order": 0,
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "tab": "STREETWEAR_02",
+        "title_en": "Volume 02 — Pink Court",
+        "title_ru": "Том 02 — Розовый корт",
+        "description_en": "Sport rituals, distorted and recomposed.",
+        "description_ru": "Спортивные ритуалы, искажённые и собранные заново.",
+        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
+        "sort_order": 1,
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "tab": "AVANT_GARDE_03",
+        "title_en": "Volume 03 — Crimson Room",
+        "title_ru": "Том 03 — Алая комната",
+        "description_en": "Light is fabric. Silence is structure.",
+        "description_ru": "Свет — это ткань. Тишина — это структура.",
+        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
+        "sort_order": 2,
+    },
+    {
+        "id": str(uuid.uuid4()),
+        "tab": "ARCHIVE_04",
+        "title_en": "Volume 04 — Archive",
+        "title_ru": "Том 04 — Архив",
+        "description_en": "A catalogue of past disciplines.",
+        "description_ru": "Каталог прошлых дисциплин.",
+        "image": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "sort_order": 3,
+    },
 ]
 
 
-async def seed_if_empty():
-    if await db.products.count_documents({}) == 0:
-        await db.products.insert_many([p.model_dump() for p in SEED_PRODUCTS])
-    if await db.lookbook.count_documents({}) == 0:
-        await db.lookbook.insert_many([l.model_dump() for l in SEED_LOOKBOOK])
-    if await db.hero_slides.count_documents({}) == 0:
-        await db.hero_slides.insert_many([h.model_dump() for h in SEED_HERO])
+async def seed_if_needed():
+    # If existing products don't have bilingual fields, reset them
+    sample = await db.products.find_one({})
+    needs_reset = sample is None or "name_en" not in sample
+    if needs_reset:
+        await db.products.delete_many({})
+        await db.hero_slides.delete_many({})
+        await db.lookbook.delete_many({})
+        await db.products.insert_many([dict(p) for p in SEED_PRODUCTS])
+        await db.hero_slides.insert_many([dict(h) for h in SEED_HERO])
+        await db.lookbook.insert_many([dict(l) for l in SEED_LOOKBOOK])
+        logging.info("Reseeded bilingual content.")
 
 
-# ----------------- Routes -----------------
+# ============== Auth ==============
+async def get_current_user(request: Request) -> User:
+    # Try cookie first, then Authorization header
+    token = request.cookies.get("session_token")
+    if not token:
+        auth = request.headers.get("Authorization", "")
+        if auth.lower().startswith("bearer "):
+            token = auth.split(None, 1)[1].strip()
+    if not token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    session = await db.user_sessions.find_one({"session_token": token}, {"_id": 0})
+    if not session:
+        raise HTTPException(status_code=401, detail="Invalid session")
+    expires_at = session.get("expires_at")
+    if isinstance(expires_at, str):
+        expires_at = datetime.fromisoformat(expires_at)
+    if expires_at and expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    if expires_at and expires_at < datetime.now(timezone.utc):
+        raise HTTPException(status_code=401, detail="Session expired")
+    user_doc = await db.users.find_one({"user_id": session["user_id"]}, {"_id": 0})
+    if not user_doc:
+        raise HTTPException(status_code=401, detail="User not found")
+    user_doc["is_admin"] = (user_doc.get("email", "").lower() in ADMIN_EMAILS)
+    return User(**user_doc)
+
+
+async def require_admin(user: User = Depends(get_current_user)) -> User:
+    if not user.is_admin:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return user
+
+
+# ============== Public routes ==============
 @api_router.get("/")
 async def root():
-    return {"message": "AXUM API", "version": "1.0"}
+    return {"message": "AXUM API", "version": "2.0", "languages": ["en", "ru"]}
 
 
-@api_router.get("/products", response_model=List[Product])
-async def list_products(category: Optional[str] = None):
+@api_router.get("/config")
+async def get_config():
+    return {
+        "usd_rub_rate": USD_RUB_RATE,
+        "ru_discount": RU_DISCOUNT,
+        "supported_languages": ["en", "ru"],
+    }
+
+
+@api_router.get("/products")
+async def list_products(
+    lang: Lang = Query("en"),
+    category: Optional[str] = None,
+):
     query = {}
     if category and category.upper() != "ALL":
-        query["category"] = category.upper()
-    items = await db.products.find(query, {"_id": 0}).sort("sort_order", 1).to_list(200)
-    return items
+        # Filter by either localized category
+        query["$or"] = [
+            {"category_en": category.upper()},
+            {"category_ru": category.upper()},
+        ]
+    docs = await db.products.find(query, {"_id": 0}).sort("sort_order", 1).to_list(200)
+    return [localize_product(p, lang) for p in docs]
 
 
 @api_router.get("/products/categories")
-async def list_categories():
-    cats = await db.products.distinct("category")
-    return {"categories": ["ALL"] + sorted(cats)}
+async def list_categories(lang: Lang = Query("en")):
+    field = f"category_{lang}"
+    cats = await db.products.distinct(field)
+    return {"categories": ["ALL"] + sorted([c for c in cats if c])}
 
 
-@api_router.get("/lookbook", response_model=List[LookbookItem])
-async def list_lookbook():
-    items = await db.lookbook.find({}, {"_id": 0}).sort("sort_order", 1).to_list(50)
-    return items
+@api_router.get("/hero")
+async def list_hero(lang: Lang = Query("en")):
+    docs = await db.hero_slides.find({}, {"_id": 0}).sort("sort_order", 1).to_list(20)
+    return [localize_hero(h, lang) for h in docs]
 
 
-@api_router.get("/hero", response_model=List[HeroSlide])
-async def list_hero():
-    items = await db.hero_slides.find({}, {"_id": 0}).sort("sort_order", 1).to_list(20)
-    return items
+@api_router.get("/lookbook")
+async def list_lookbook(lang: Lang = Query("en")):
+    docs = await db.lookbook.find({}, {"_id": 0}).sort("sort_order", 1).to_list(50)
+    return [localize_lookbook(l, lang) for l in docs]
 
 
 @api_router.post("/newsletter", response_model=NewsletterEntry)
@@ -253,8 +511,191 @@ async def newsletter_count():
     return {"count": count}
 
 
-app.include_router(api_router)
+# ============== Auth routes ==============
+EMERGENT_SESSION_URL = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
 
+
+@api_router.post("/auth/session")
+async def create_session(request: Request, response: Response):
+    body = await request.json()
+    session_id = body.get("session_id")
+    if not session_id:
+        raise HTTPException(status_code=400, detail="session_id required")
+    async with httpx.AsyncClient(timeout=15) as client_http:
+        r = await client_http.get(
+            EMERGENT_SESSION_URL,
+            headers={"X-Session-ID": session_id},
+        )
+    if r.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid session_id")
+    data = r.json()
+    email = (data.get("email") or "").lower()
+    name = data.get("name") or ""
+    picture = data.get("picture") or ""
+    session_token = data.get("session_token") or ""
+    if not (email and session_token):
+        raise HTTPException(status_code=400, detail="Malformed session data")
+
+    # Upsert user
+    user_doc = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user_doc:
+        user_id = f"user_{uuid.uuid4().hex[:12]}"
+        user_doc = {
+            "user_id": user_id,
+            "email": email,
+            "name": name,
+            "picture": picture,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        }
+        await db.users.insert_one(user_doc)
+    else:
+        await db.users.update_one(
+            {"email": email},
+            {"$set": {"name": name, "picture": picture}},
+        )
+        user_id = user_doc["user_id"]
+
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    await db.user_sessions.insert_one({
+        "user_id": user_id,
+        "session_token": session_token,
+        "expires_at": expires_at.isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    })
+
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        max_age=7 * 24 * 60 * 60,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        path="/",
+    )
+    is_admin = email in ADMIN_EMAILS
+    return {
+        "user_id": user_id,
+        "email": email,
+        "name": name,
+        "picture": picture,
+        "is_admin": is_admin,
+    }
+
+
+@api_router.get("/auth/me")
+async def auth_me(user: User = Depends(get_current_user)):
+    return user.model_dump()
+
+
+@api_router.post("/auth/logout")
+async def auth_logout(request: Request, response: Response):
+    token = request.cookies.get("session_token")
+    if token:
+        await db.user_sessions.delete_one({"session_token": token})
+    response.delete_cookie("session_token", path="/", samesite="none", secure=True)
+    return {"ok": True}
+
+
+# ============== Admin routes ==============
+@api_router.get("/admin/products", response_model=List[Product])
+async def admin_list_products(_: User = Depends(require_admin)):
+    docs = await db.products.find({}, {"_id": 0}).sort("sort_order", 1).to_list(500)
+    return docs
+
+
+@api_router.post("/admin/products", response_model=Product)
+async def admin_create_product(payload: ProductCreate, _: User = Depends(require_admin)):
+    prod = Product(**payload.model_dump())
+    await db.products.insert_one(prod.model_dump())
+    return prod
+
+
+@api_router.put("/admin/products/{product_id}", response_model=Product)
+async def admin_update_product(product_id: str, payload: ProductUpdate, _: User = Depends(require_admin)):
+    updates = {k: v for k, v in payload.model_dump(exclude_none=True).items()}
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    res = await db.products.update_one({"id": product_id}, {"$set": updates})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+    doc = await db.products.find_one({"id": product_id}, {"_id": 0})
+    return doc
+
+
+@api_router.delete("/admin/products/{product_id}")
+async def admin_delete_product(product_id: str, _: User = Depends(require_admin)):
+    res = await db.products.delete_one({"id": product_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return {"ok": True}
+
+
+@api_router.get("/admin/hero", response_model=List[HeroSlide])
+async def admin_list_hero(_: User = Depends(require_admin)):
+    docs = await db.hero_slides.find({}, {"_id": 0}).sort("sort_order", 1).to_list(50)
+    return docs
+
+
+@api_router.post("/admin/hero", response_model=HeroSlide)
+async def admin_create_hero(payload: HeroSlideCreate, _: User = Depends(require_admin)):
+    h = HeroSlide(**payload.model_dump())
+    await db.hero_slides.insert_one(h.model_dump())
+    return h
+
+
+@api_router.put("/admin/hero/{slide_id}", response_model=HeroSlide)
+async def admin_update_hero(slide_id: str, payload: HeroSlideUpdate, _: User = Depends(require_admin)):
+    updates = {k: v for k, v in payload.model_dump(exclude_none=True).items()}
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    res = await db.hero_slides.update_one({"id": slide_id}, {"$set": updates})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Slide not found")
+    return await db.hero_slides.find_one({"id": slide_id}, {"_id": 0})
+
+
+@api_router.delete("/admin/hero/{slide_id}")
+async def admin_delete_hero(slide_id: str, _: User = Depends(require_admin)):
+    res = await db.hero_slides.delete_one({"id": slide_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Slide not found")
+    return {"ok": True}
+
+
+@api_router.get("/admin/lookbook", response_model=List[LookbookItem])
+async def admin_list_lookbook(_: User = Depends(require_admin)):
+    docs = await db.lookbook.find({}, {"_id": 0}).sort("sort_order", 1).to_list(100)
+    return docs
+
+
+@api_router.post("/admin/lookbook", response_model=LookbookItem)
+async def admin_create_lookbook(payload: LookbookCreate, _: User = Depends(require_admin)):
+    l = LookbookItem(**payload.model_dump())
+    await db.lookbook.insert_one(l.model_dump())
+    return l
+
+
+@api_router.put("/admin/lookbook/{item_id}", response_model=LookbookItem)
+async def admin_update_lookbook(item_id: str, payload: LookbookUpdate, _: User = Depends(require_admin)):
+    updates = {k: v for k, v in payload.model_dump(exclude_none=True).items()}
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    res = await db.lookbook.update_one({"id": item_id}, {"$set": updates})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return await db.lookbook.find_one({"id": item_id}, {"_id": 0})
+
+
+@api_router.delete("/admin/lookbook/{item_id}")
+async def admin_delete_lookbook(item_id: str, _: User = Depends(require_admin)):
+    res = await db.lookbook.delete_one({"id": item_id})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return {"ok": True}
+
+
+# ============== App ==============
+app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -272,8 +713,8 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def on_startup():
-    await seed_if_empty()
-    logger.info("AXUM API ready.")
+    await seed_if_needed()
+    logger.info("AXUM API ready. Admin allowlist=%s", ADMIN_EMAILS)
 
 
 @app.on_event("shutdown")

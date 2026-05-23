@@ -1,51 +1,50 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useLang } from "@/contexts/LanguageContext";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const ProductGrid = () => {
+  const { lang, t } = useLang();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState(["ALL"]);
   const [active, setActive] = useState("ALL");
 
+  // When language changes, reset filter to ALL and reload categories
   useEffect(() => {
+    setActive("ALL");
     (async () => {
       try {
-        const [pRes, cRes] = await Promise.all([
-          axios.get(`${API}/products`),
-          axios.get(`${API}/products/categories`),
-        ]);
-        setProducts(pRes.data || []);
+        const cRes = await axios.get(`${API}/products/categories`, { params: { lang } });
         setCategories(cRes.data?.categories || ["ALL"]);
       } catch (e) { console.error(e); }
     })();
-  }, []);
+  }, [lang]);
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`${API}/products`, {
-          params: active !== "ALL" ? { category: active } : {},
-        });
+        const params = { lang };
+        if (active !== "ALL") params.category = active;
+        const { data } = await axios.get(`${API}/products`, { params });
         setProducts(data || []);
       } catch (e) { console.error(e); }
     })();
-  }, [active]);
+  }, [active, lang]);
 
   return (
     <div className="w-full bg-white" data-testid="product-grid-section">
       <div className="flex items-end justify-between px-5 md:px-10 py-10 md:py-16 axum-border-b">
         <div className="reveal">
-          <div className="text-xs tracking-[0.32em] uppercase mb-3">N°02 / Catalogue</div>
+          <div className="text-xs tracking-[0.32em] uppercase mb-3">{t("catalog.eyebrow")}</div>
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl uppercase leading-none" data-testid="catalog-title">
-            Shop the<br />Edition
+            {t("catalog.title_a")}<br />{t("catalog.title_b")}
           </h2>
         </div>
-        <a href="#lookbook" className="hidden md:inline axum-link" data-testid="see-all-link">View All →</a>
+        <a href="#lookbook" className="hidden md:inline axum-link" data-testid="see-all-link">{t("catalog.view_all")}</a>
       </div>
 
-      {/* Category tabs */}
       <div className="flex flex-wrap items-center axum-border-b" data-testid="category-tabs">
         {categories.map((cat) => (
           <button
@@ -61,7 +60,6 @@ const ProductGrid = () => {
         ))}
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((p, idx) => (
           <article
@@ -72,12 +70,11 @@ const ProductGrid = () => {
           >
             <img className="img-front" src={p.image1} alt={p.name} loading="lazy" />
             <img className="img-back" src={p.image2} alt={`${p.name} alt`} loading="lazy" />
-            {/* footer overlay */}
             <div className="absolute left-0 right-0 bottom-0 flex items-center justify-between px-4 py-3 bg-white axum-border-t">
               <div className="font-display text-[11px] md:text-xs tracking-[0.18em] uppercase truncate pr-3">
                 {p.name}
               </div>
-              <div className="font-display text-xs md:text-sm">{p.price}</div>
+              <div className="font-display text-xs md:text-sm whitespace-nowrap" data-testid={`product-price-${idx}`}>{p.price}</div>
             </div>
             <div className="absolute top-3 left-3 text-[10px] tracking-[0.3em] uppercase bg-white/90 px-2 py-1">
               {p.category}
@@ -86,7 +83,7 @@ const ProductGrid = () => {
         ))}
         {products.length === 0 && (
           <div className="col-span-full p-16 text-center text-xs tracking-[0.3em] uppercase" data-testid="empty-products">
-            No pieces in this category.
+            {t("catalog.empty")}
           </div>
         )}
       </div>

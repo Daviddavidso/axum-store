@@ -1,23 +1,19 @@
 import React from "react";
+import { useLang } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { strings } = useLang();
+  const cols = strings.footer.cols;
   return (
     <footer id="footer" className="w-full bg-white axum-border-t" data-testid="footer">
       <div className="grid grid-cols-2 md:grid-cols-4">
-        {[
-          { title: "Shop", links: ["Women", "Men", "Accessories", "Archive"] },
-          { title: "Studio", links: ["Manifesto", "Atelier", "Press", "Careers"] },
-          { title: "Service", links: ["Shipping", "Returns", "Repairs", "Contact"] },
-          { title: "Connect", links: ["Instagram", "Substack", "X", "Pinterest"] },
-        ].map((col, i) => (
+        {cols.map((col, i) => (
           <div key={col.title} className={`p-6 md:p-10 axum-border-b ${i % 2 === 0 ? "axum-border-r" : ""} ${i < 2 ? "md:axum-border-r" : ""} ${i === 2 ? "md:axum-border-r" : ""}`}>
             <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{col.title}</div>
             <ul className="space-y-2">
               {col.links.map((l) => (
                 <li key={l}>
-                  <a href="#" className="axum-link" data-testid={`footer-${col.title.toLowerCase()}-${l.toLowerCase()}`}>
-                    {l}
-                  </a>
+                  <a href="#" className="axum-link" data-testid={`footer-link-${i}-${l}`}>{l}</a>
                 </li>
               ))}
             </ul>
@@ -30,7 +26,7 @@ const Footer = () => {
           AXUM
         </div>
         <div className="text-[11px] tracking-[0.3em] uppercase opacity-70">
-          © {new Date().getFullYear()} AXUM Studio — All rights reserved.
+          © {new Date().getFullYear()} {strings.footer.copyright}
         </div>
       </div>
     </footer>

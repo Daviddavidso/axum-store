@@ -1,23 +1,25 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const HeroSlider = () => {
+  const { lang, t } = useLang();
   const [slides, setSlides] = useState([]);
   const [active, setActive] = useState(0);
   const timerRef = useRef(null);
 
   const fetchSlides = useCallback(async () => {
     try {
-      const { data } = await axios.get(`${API}/hero`);
+      const { data } = await axios.get(`${API}/hero`, { params: { lang } });
       setSlides(data || []);
     } catch (e) {
       console.error("hero fetch failed", e);
     }
-  }, []);
+  }, [lang]);
 
   useEffect(() => { fetchSlides(); }, [fetchSlides]);
 
@@ -35,7 +37,6 @@ const HeroSlider = () => {
     setActive((i) => (i + dir + slides.length) % slides.length);
   };
 
-  // Swipe handling
   const startX = useRef(0);
   const onTouchStart = (e) => { startX.current = e.touches[0].clientX; };
   const onTouchEnd = (e) => {
@@ -54,10 +55,7 @@ const HeroSlider = () => {
       onTouchEnd={onTouchEnd}
       data-testid="hero-slider"
     >
-      <div
-        className="hero-track"
-        style={{ transform: `translateX(-${active * 100}%)` }}
-      >
+      <div className="hero-track" style={{ transform: `translateX(-${active * 100}%)` }}>
         {slides.map((s, idx) => (
           <div
             key={s.id || idx}
@@ -69,7 +67,6 @@ const HeroSlider = () => {
         ))}
       </div>
 
-      {/* Overlay text */}
       <div className="absolute inset-0 flex flex-col justify-end px-5 md:px-10 pb-16 md:pb-20 pointer-events-none">
         <div className="max-w-5xl">
           <div className="text-white/80 text-xs tracking-[0.32em] mb-4" data-testid="hero-subline">
@@ -89,7 +86,6 @@ const HeroSlider = () => {
         </div>
       </div>
 
-      {/* Counter + arrows */}
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-3 md:px-5 pointer-events-none">
         <button
           onClick={() => go(-1)}
@@ -114,7 +110,7 @@ const HeroSlider = () => {
       </div>
 
       <div className="absolute bottom-6 left-5 md:left-10 text-white text-xs tracking-[0.3em] uppercase opacity-80">
-        Scroll ↓
+        {t("hero.scroll")}
       </div>
     </section>
   );
