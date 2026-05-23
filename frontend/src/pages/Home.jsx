@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Menu } from "lucide-react";
-import NavOverlay from "@/components/NavOverlay";
+import React, { useEffect } from "react";
+import SiteHeader from "@/components/SiteHeader";
+import CartDrawer from "@/components/CartDrawer";
+import MobileBagButton from "@/components/MobileBagButton";
 import HeroSlider from "@/components/HeroSlider";
 import ProductGrid from "@/components/ProductGrid";
 import Lookbook from "@/components/Lookbook";
@@ -9,21 +9,10 @@ import EditorialStrip from "@/components/EditorialStrip";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 import Marquee from "@/components/Marquee";
-import LanguageToggle from "@/components/LanguageToggle";
-import Logo from "@/components/Logo";
 import { useLang } from "@/contexts/LanguageContext";
 
 const Home = () => {
-  const { lang, t } = useLang();
-  const navigate = useNavigate();
-  const [navOpen, setNavOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const { lang } = useLang();
 
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -42,59 +31,11 @@ const Home = () => {
     return () => io.disconnect();
   }, [lang]);
 
-  const onColor = scrolled ? "#000" : "#fff";
-
   return (
     <div className="App" data-testid="axum-app">
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 grid grid-cols-3 items-center px-5 md:px-8 py-4 axum-ease`}
-        style={{
-          background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
-          backdropFilter: scrolled ? "blur(8px)" : "none",
-          borderBottom: scrolled ? "1px solid #000" : "1px solid transparent",
-        }}
-        data-testid="top-bar"
-      >
-        {/* LEFT — nav links */}
-        <div
-          className="hidden md:flex items-center gap-8 justify-self-start"
-          style={{ color: onColor, mixBlendMode: scrolled ? "normal" : "difference" }}
-        >
-          <a href="#shop" className="axum-link" data-testid="nav-shop">{t("nav.shop")}</a>
-          <a href="#lookbook" className="axum-link" data-testid="nav-lookbook">{t("nav.lookbook")}</a>
-          <a href="#manifesto" className="axum-link" data-testid="nav-manifesto">{t("nav.manifesto")}</a>
-        </div>
-        {/* Spacer on mobile to keep grid balanced */}
-        <div className="md:hidden" />
-
-        {/* CENTER — logo */}
-        <a
-          href={`/${lang}`}
-          onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-          className="flex items-center justify-self-center"
-          aria-label="AXUM home"
-          data-testid="logo"
-        >
-          <Logo height={scrolled ? 22 : 34} />
-        </a>
-
-        {/* RIGHT — language + menu */}
-        <div className="flex items-center gap-3 md:gap-5 justify-self-end">
-          <LanguageToggle scrolled={scrolled} />
-          <button
-            onClick={() => setNavOpen(true)}
-            className="flex items-center gap-2 axum-ease"
-            style={{ color: onColor, mixBlendMode: scrolled ? "normal" : "difference" }}
-            data-testid="open-nav-button"
-            aria-label="Open menu"
-          >
-            <span className="hidden md:inline text-xs tracking-[0.18em] uppercase">{t("nav.menu")}</span>
-            <Menu size={26} strokeWidth={1.5} />
-          </button>
-        </div>
-      </header>
-
-      <NavOverlay open={navOpen} onClose={() => setNavOpen(false)} />
+      <SiteHeader variant="transparent" />
+      <CartDrawer />
+      <MobileBagButton />
 
       <main id="top">
         <HeroSlider />

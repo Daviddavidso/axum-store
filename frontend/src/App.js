@@ -5,10 +5,13 @@ import { Toaster } from "sonner";
 import Home from "@/pages/Home";
 import CatalogPage from "@/pages/CatalogPage";
 import ProductPage from "@/pages/ProductPage";
+import CheckoutPage from "@/pages/CheckoutPage";
+import AboutPage from "@/pages/AboutPage";
 import AdminPage from "@/pages/AdminPage";
 import AuthCallback from "@/components/AuthCallback";
 import { LangProvider, useLang } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 import { t as translate } from "@/i18n";
 
 const detectBrowserLang = () => {
@@ -44,6 +47,18 @@ const LocalizedProduct = () => (
   </LangProvider>
 );
 
+const LocalizedCheckout = () => (
+  <LangProvider>
+    <CheckoutPage />
+  </LangProvider>
+);
+
+const LocalizedAbout = () => (
+  <LangProvider>
+    <AboutPage />
+  </LangProvider>
+);
+
 // Admin uses lang from URL search/hash OR defaults to en; admin UI is mostly English.
 const AdminWrapper = () => {
   // We allow admin UI to render in EN by default; we still expose t() for strings.
@@ -64,6 +79,8 @@ const AppRouter = () => {
       <Route path="/admin" element={<AdminWrapper />} />
       <Route path="/:lang/catalog" element={<LocalizedCatalog />} />
       <Route path="/:lang/product/:id" element={<LocalizedProduct />} />
+      <Route path="/:lang/checkout" element={<LocalizedCheckout />} />
+      <Route path="/:lang/about" element={<LocalizedAbout />} />
       <Route path="/:lang" element={<LocalizedHome />} />
       <Route path="*" element={<RootRedirect />} />
     </Routes>
@@ -74,8 +91,10 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Toaster position="bottom-center" theme="light" />
-        <AppRouter />
+        <CartProvider>
+          <Toaster position="bottom-center" theme="light" />
+          <AppRouter />
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   );
