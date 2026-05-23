@@ -387,8 +387,8 @@ const AdminPage = ({ t }) => {
           category_en: "READY-TO-WEAR",
           category_ru: "ПРЕТ-А-ПОРТЕ",
           price_usd: 100,
-          image1: "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-          image2: "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
+          image1: "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/4tmpush2_DSC04772.jpg",
+          image2: "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/rlu4bxm8_DSC04820.jpg",
           sort_order: products.length,
         },
         { withCredentials: true }
@@ -408,7 +408,7 @@ const AdminPage = ({ t }) => {
           subline_ru: "",
           cta_en: "SHOP NOW",
           cta_ru: "СМОТРЕТЬ",
-          image: "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
+          image: "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/4tmpush2_DSC04772.jpg",
           sort_order: hero.length,
         },
         { withCredentials: true }
@@ -427,7 +427,7 @@ const AdminPage = ({ t }) => {
           title_ru: "Новый том",
           description_en: "",
           description_ru: "",
-          image: "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
+          image: "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/vzl0kizr_DSC05434.jpg",
           sort_order: lookbook.length,
         },
         { withCredentials: true }

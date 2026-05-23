@@ -230,185 +230,106 @@ def localize_lookbook(l: dict, lang: str) -> dict:
     }
 
 
-# ============== Seed ==============
+# ============== Seed (authentic catalog) ==============
+# Stable customer-assets URLs of the 10 authentic photos.
+_A = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/xraxme3l_DSC04491.jpg"
+_B = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/vzl0kizr_DSC05434.jpg"
+_C = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/ek3t4h9v_DSC05565.jpg"
+_D = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/10b21ebk_DSC05198.jpg"
+_E = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/napn995n_DSC04702.jpg"
+_F = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/g7izn8xb_IKS03092.JPG"
+_G = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/7fs0ph46_IKS03144.jpg"
+_H = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/52fhyxcn_DSC04854.jpg"
+_I = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/4tmpush2_DSC04772.jpg"
+_J = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/rlu4bxm8_DSC04820.jpg"
+
 SEED_HERO = [
-    {
-        "id": str(uuid.uuid4()),
-        "headline_en": "A/W 25 — UNCOMPROMISED",
-        "headline_ru": "О/З 25 — БЕЗ КОМПРОМИССОВ",
-        "subline_en": "Volume 04 / The New Silhouette",
-        "subline_ru": "Том 04 / Новый силуэт",
-        "cta_en": "ENTER COLLECTION",
-        "cta_ru": "В КОЛЛЕКЦИЮ",
-        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
-        "sort_order": 0,
-    },
-    {
-        "id": str(uuid.uuid4()),
-        "headline_en": "PINK COURT EDITORIAL",
-        "headline_ru": "РОЗОВЫЙ КОРТ",
-        "subline_en": "Sport meets couture",
-        "subline_ru": "Спорт встречает кутюр",
-        "cta_en": "VIEW LOOKBOOK",
-        "cta_ru": "ЛУКБУК",
-        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
-        "sort_order": 1,
-    },
-    {
-        "id": str(uuid.uuid4()),
-        "headline_en": "STUDIO N°01",
-        "headline_ru": "СТУДИЯ №01",
-        "subline_en": "Tailored. Disciplined. Black.",
-        "subline_ru": "Точный крой. Дисциплина. Чёрный.",
-        "cta_en": "SHOP STUDIO",
-        "cta_ru": "В МАГАЗИН",
-        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
-        "sort_order": 2,
-    },
+    {"id": str(uuid.uuid4()), "headline_en": "AXUM — PINK COURT", "headline_ru": "AXUM — PINK COURT",
+     "subline_en": "Volume 04 / The New Silhouette", "subline_ru": "Том 04 / Новый силуэт",
+     "cta_en": "ENTER COLLECTION", "cta_ru": "В КОЛЛЕКЦИЮ", "image": _G, "sort_order": 0},
+    {"id": str(uuid.uuid4()), "headline_en": "MAGENTA — AGAINST THE LINE", "headline_ru": "МАЛИНОВЫЙ — ПРОТИВ ЛИНИИ",
+     "subline_en": "Sport meets couture", "subline_ru": "Спорт встречает кутюр",
+     "cta_en": "SHOP THE EDITION", "cta_ru": "СМОТРЕТЬ ВЫПУСК", "image": _D, "sort_order": 1},
+    {"id": str(uuid.uuid4()), "headline_en": "OBSIDIAN — STUDIO N°02", "headline_ru": "ОБСИДИАН — СТУДИЯ №02",
+     "subline_en": "Tailored. Disciplined. Black.", "subline_ru": "Точный крой. Дисциплина. Чёрный.",
+     "cta_en": "SHOP STUDIO", "cta_ru": "В СТУДИЮ", "image": _I, "sort_order": 2},
 ]
 
 SEED_PRODUCTS = [
-    {
-        "name_en": "STUDDED BELT CROP TOP", "name_ru": "ТОП С КЛЁПАНЫМ РЕМНЁМ",
-        "description_en": "Stretch cotton crop top, finished with our signature double-row studded belt.",
-        "description_ru": "Укороченный топ из эластичного хлопка с фирменным двойным клёпаным ремнём.",
-        "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
-        "price_usd": 240,
-        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
-        "image2": "https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 0,
-    },
-    {
-        "name_en": "METALLIC EVENING DRESS", "name_ru": "МЕТАЛЛИЧЕСКОЕ ВЕЧЕРНЕЕ ПЛАТЬЕ",
-        "description_en": "Hand-finished metallic jersey with floor-grazing hem.",
-        "description_ru": "Металлизированный трикотаж ручной обработки в пол.",
-        "category_en": "EVENING", "category_ru": "ВЕЧЕРНЕЕ",
-        "price_usd": 520,
-        "image1": "https://images.pexels.com/photos/16791449/pexels-photo-16791449.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
-        "image2": "https://images.unsplash.com/flagged/photo-1570733117311-d990c3816c47?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 1,
-    },
-    {
-        "name_en": "BLACK FASHION DRESS", "name_ru": "ЧЁРНОЕ ПЛАТЬЕ",
-        "description_en": "Architectural black mini dress with sculpted shoulders.",
-        "description_ru": "Архитектурное чёрное мини-платье со скульптурными плечами.",
-        "category_en": "EVENING", "category_ru": "ВЕЧЕРНЕЕ",
-        "price_usd": 380,
-        "image1": "https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
-        "image2": "https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 2,
-    },
-    {
-        "name_en": "WHITE BLAZER & SCARF", "name_ru": "БЕЛЫЙ ЖАКЕТ И ШАРФ",
-        "description_en": "Off-white wool blazer with detachable silk scarf.",
-        "description_ru": "Жакет из шерсти молочного оттенка со съёмным шёлковым шарфом.",
-        "category_en": "TAILORING", "category_ru": "КОСТЮМЫ",
-        "price_usd": 410,
-        "image1": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "image2": "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 3,
-    },
-    {
-        "name_en": "PINK COURT CORSET", "name_ru": "РОЗОВЫЙ КОРСЕТ",
-        "description_en": "Lace-up cotton-twill corset from the Pink Court editorial.",
-        "description_ru": "Хлопковый корсет на шнуровке из редакционной серии «Розовый корт».",
-        "category_en": "ARCHIVE", "category_ru": "АРХИВ",
-        "price_usd": 680,
-        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
-        "image2": "https://images.unsplash.com/photo-1674851993263-823aef958e73?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 4,
-    },
-    {
-        "name_en": "CRIMSON SHEER SLIP", "name_ru": "АЛАЯ ПРОЗРАЧНАЯ КОМБИНАЦИЯ",
-        "description_en": "Bias-cut crimson silk slip dress.",
-        "description_ru": "Алое шёлковое платье-комбинация косого кроя.",
-        "category_en": "EVENING", "category_ru": "ВЕЧЕРНЕЕ",
-        "price_usd": 390,
-        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
-        "image2": "https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 5,
-    },
-    {
-        "name_en": "LEATHER HARNESS BELT", "name_ru": "КОЖАНЫЙ РЕМЕНЬ-СБРУЯ",
-        "description_en": "Italian leather harness belt with brushed steel rings.",
-        "description_ru": "Итальянский кожаный ремень-сбруя со стальными кольцами.",
-        "category_en": "ACCESSORIES", "category_ru": "АКСЕССУАРЫ",
-        "price_usd": 185,
-        "image1": "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "image2": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 6,
-    },
-    {
-        "name_en": "ASYMMETRIC TROUSER", "name_ru": "АСИММЕТРИЧНЫЕ БРЮКИ",
-        "description_en": "Wool-blend trouser with asymmetric waistband.",
-        "description_ru": "Брюки из смесовой шерсти с асимметричным поясом.",
-        "category_en": "TAILORING", "category_ru": "КОСТЮМЫ",
-        "price_usd": 295,
-        "image1": "https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "image2": "https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=720",
-        "sort_order": 7,
-    },
+    {"name_en": "PINK ZIP DENIM CORSET", "name_ru": "РОЗОВЫЙ ДЖИНСОВЫЙ КОРСЕТ НА МОЛНИИ",
+     "description_en": "Hand-dyed fuchsia cotton-denim corset with frayed hem and exposed central zip. Cut close to the body, finished by hand.",
+     "description_ru": "Корсет из хлопкового денима ручного окрашивания цвета фуксии с необработанным краем и открытой молнией спереди. Выкроен по фигуре, отделан вручную.",
+     "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+     "price_usd": 295, "price_rub_override": None, "image1": _F, "image2": _G, "sort_order": 0},
+    {"name_en": "MAGENTA CARGO TWO-PIECE", "name_ru": "МАЛИНОВЫЙ КАРГО-КОМПЛЕКТ",
+     "description_en": "Acid-washed magenta cotton-twill set: strapless bustier with exposed zip and matching low-rise cargo trouser with detachable chain.",
+     "description_ru": "Комплект из малинового хлопкового твила с эффектом «варёнка»: бюстье на молнии и широкие карго-брюки с заниженной талией и съёмной цепочкой.",
+     "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+     "price_usd": 580, "price_rub_override": None, "image1": _D, "image2": _F, "sort_order": 1},
+    {"name_en": "GREY WASH DENIM ZIP BUSTIER", "name_ru": "СЕРЫЙ ДЖИНСОВЫЙ КОРСЕТ НА МОЛНИИ",
+     "description_en": "Washed-grey denim bustier with raw-cut hems and centre-front exposed zip. Styled here over a ruched black jersey mini.",
+     "description_ru": "Бюстье из стираного серого денима с необработанными краями и открытой молнией спереди. На образе — поверх драпированной чёрной мини-юбки.",
+     "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+     "price_usd": 360, "price_rub_override": None, "image1": _A, "image2": _E, "sort_order": 2},
+    {"name_en": "IVORY CANVAS BUSTIER", "name_ru": "БЕЛЫЙ ХОЛЩОВЫЙ КОРСЕТ",
+     "description_en": "Sculpted ivory canvas bustier with frayed hem and exposed central zip. Worn here with black wide-leg trouser; back view shown with our pleated mini and waist chain.",
+     "description_ru": "Скульптурное бюстье из небелёного холста с необработанным краем и открытой молнией спереди. На образе — с чёрными широкими брюками; вид сзади — с плиссированной мини-юбкой и цепочкой.",
+     "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+     "price_usd": 420, "price_rub_override": None, "image1": _C, "image2": _B, "sort_order": 3},
+    {"name_en": "LILAC LACE-UP CORSET", "name_ru": "ЛИЛОВЫЙ КОРСЕТ НА ШНУРОВКЕ",
+     "description_en": "Lilac washed-denim corset with brass eyelets and contrast lace-up panel. Designed to wear with our black ruched mini.",
+     "description_ru": "Корсет из лилового стираного денима с латунными люверсами и контрастной шнуровкой. Создан для пары с нашей чёрной драпированной мини-юбкой.",
+     "category_en": "ARCHIVE", "category_ru": "АРХИВ",
+     "price_usd": 390, "price_rub_override": None, "image1": _E, "image2": _A, "sort_order": 4},
+    {"name_en": "OBSIDIAN HOODED ROMPER", "name_ru": "ОБСИДИАН — КОМБИНЕЗОН С КАПЮШОНОМ",
+     "description_en": "Stretch-jersey hooded zip top with attached low-rise short. Body-skimming cut, finger-loop sleeves. Knee-high lace-up leather boots sold separately.",
+     "description_ru": "Зип-топ из эластичного трикотажа с капюшоном и низко-посаженным шортиком. Облегающий крой, прорези для пальцев на рукавах. Ботфорты-шнуровка продаются отдельно.",
+     "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+     "price_usd": 260, "price_rub_override": None, "image1": _I, "image2": _J, "sort_order": 5},
+    {"name_en": "OBSIDIAN ZIP HOOD & WIDE-LEG SET", "name_ru": "ОБСИДИАН — ХУДИ НА МОЛНИИ И ШИРОКИЕ БРЮКИ",
+     "description_en": "Two-piece: a fitted stretch-jersey hooded zip top and low-rise wide-leg jersey trouser. Worn together as a column of pure black.",
+     "description_ru": "Комплект: облегающий зип-топ из трикотажа с капюшоном и широкие трикотажные брюки с заниженной талией. Носится как единая чёрная колонна.",
+     "category_en": "READY-TO-WEAR", "category_ru": "ПРЕТ-А-ПОРТЕ",
+     "price_usd": 480, "price_rub_override": None, "image1": _H, "image2": _I, "sort_order": 6},
 ]
-for p in SEED_PRODUCTS:
-    p["id"] = str(uuid.uuid4())
-    p["price_rub_override"] = None
+for _p in SEED_PRODUCTS:
+    _p["id"] = str(uuid.uuid4())
 
 SEED_LOOKBOOK = [
-    {
-        "id": str(uuid.uuid4()),
-        "tab": "EDITORIAL_01",
-        "title_en": "Volume 01 — Silhouettes in Black",
-        "title_ru": "Том 01 — Силуэты в чёрном",
-        "description_en": "The fundamental shape, stripped of ornament. Studio N°01.",
-        "description_ru": "Базовая форма без украшательств. Студия №01.",
-        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
-        "sort_order": 0,
-    },
-    {
-        "id": str(uuid.uuid4()),
-        "tab": "STREETWEAR_02",
-        "title_en": "Volume 02 — Pink Court",
-        "title_ru": "Том 02 — Розовый корт",
-        "description_en": "Sport rituals, distorted and recomposed.",
-        "description_ru": "Спортивные ритуалы, искажённые и собранные заново.",
-        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg",
-        "sort_order": 1,
-    },
-    {
-        "id": str(uuid.uuid4()),
-        "tab": "AVANT_GARDE_03",
-        "title_en": "Volume 03 — Crimson Room",
-        "title_ru": "Том 03 — Алая комната",
-        "description_en": "Light is fabric. Silence is structure.",
-        "description_ru": "Свет — это ткань. Тишина — это структура.",
-        "image": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
-        "sort_order": 2,
-    },
-    {
-        "id": str(uuid.uuid4()),
-        "tab": "ARCHIVE_04",
-        "title_en": "Volume 04 — Archive",
-        "title_ru": "Том 04 — Архив",
-        "description_en": "A catalogue of past disciplines.",
-        "description_ru": "Каталог прошлых дисциплин.",
-        "image": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&q=85",
-        "sort_order": 3,
-    },
+    {"id": str(uuid.uuid4()), "tab": "EDITORIAL_01",
+     "title_en": "Volume 01 — Reverse Anatomy", "title_ru": "Том 01 — Обратная анатомия",
+     "description_en": "Architecture seen from behind. Lacing, chain, and pleat as a single line.",
+     "description_ru": "Архитектура со спины. Шнуровка, цепь и плиссе как одна линия.",
+     "image": _B, "sort_order": 0},
+    {"id": str(uuid.uuid4()), "tab": "PINK_COURT_02",
+     "title_en": "Volume 02 — Pink Court", "title_ru": "Том 02 — Розовый корт",
+     "description_en": "Hand-dyed denim corsetry. A sport ritual, distorted.",
+     "description_ru": "Деним ручного окрашивания. Спортивный ритуал, искажённый.",
+     "image": _F, "sort_order": 1},
+    {"id": str(uuid.uuid4()), "tab": "OBSIDIAN_03",
+     "title_en": "Volume 03 — Obsidian", "title_ru": "Том 03 — Обсидиан",
+     "description_en": "Hooded jersey, leather lacing, planet-sole boot.",
+     "description_ru": "Трикотаж с капюшоном, кожаная шнуровка, ботинок-планета.",
+     "image": _J, "sort_order": 2},
+    {"id": str(uuid.uuid4()), "tab": "ARCHIVE_04",
+     "title_en": "Volume 04 — Lilac Archive", "title_ru": "Том 04 — Лиловый архив",
+     "description_en": "Washed lavender denim returns from the 2023 lookbook.",
+     "description_ru": "Стираный лавандовый деним возвращается из лукбука 2023.",
+     "image": _E, "sort_order": 3},
 ]
 
 
 async def seed_if_needed():
-    # If existing products don't have bilingual fields, reset them
-    sample = await db.products.find_one({})
-    needs_reset = sample is None or "name_en" not in sample
-    if needs_reset:
-        await db.products.delete_many({})
-        await db.hero_slides.delete_many({})
-        await db.lookbook.delete_many({})
+    # Only reseed when all three collections are empty (fresh DB).
+    # Existing admin-edited data is preserved.
+    p_empty = await db.products.count_documents({}) == 0
+    h_empty = await db.hero_slides.count_documents({}) == 0
+    l_empty = await db.lookbook.count_documents({}) == 0
+    if p_empty and h_empty and l_empty:
         await db.products.insert_many([dict(p) for p in SEED_PRODUCTS])
         await db.hero_slides.insert_many([dict(h) for h in SEED_HERO])
         await db.lookbook.insert_many([dict(l) for l in SEED_LOOKBOOK])
-        logging.info("Reseeded bilingual content.")
+        logging.info("Seeded authentic AXUM catalog (10 photos / 7 products / 3 hero / 4 lookbook).")
 
 
 # ============== Auth ==============
