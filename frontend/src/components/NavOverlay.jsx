@@ -8,7 +8,6 @@ const NavOverlay = ({ open, onClose }) => {
   const o = strings.nav_overlay;
   const links = [
     { label: o.women, href: "#shop", key: "women" },
-    { label: o.men, href: "#shop", key: "men" },
     { label: o.editorial, href: "#lookbook", key: "editorial" },
     { label: o.archive, href: "#lookbook", key: "archive" },
     { label: o.stores, href: "#footer", key: "stores" },

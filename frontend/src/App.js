@@ -80,7 +80,6 @@ const AppRouter = () => {
       <Route path="/:lang/catalog" element={<LocalizedCatalog />} />
       <Route path="/:lang/product/:id" element={<LocalizedProduct />} />
       <Route path="/:lang/checkout" element={<LocalizedCheckout />} />
-      <Route path="/:lang/about" element={<LocalizedAbout />} />
       <Route path="/:lang" element={<LocalizedHome />} />
       <Route path="*" element={<RootRedirect />} />
     </Routes>

@@ -56,7 +56,6 @@ const SiteHeader = ({ variant = "solid" }) => {
           <button onClick={() => navigate(`/${lang}/catalog`)} className={navItem} data-testid="nav-shop">{t("nav.shop")}</button>
           <button onClick={() => navigate(`/${lang}/catalog?new=1`)} className={navItem} data-testid="nav-new">{t("nav.new")}</button>
           <button onClick={() => { navigate(`/${lang}`); setTimeout(() => { const el = document.getElementById("lookbook"); el && el.scrollIntoView({ behavior: "smooth" }); }, 100); }} className={navItem} data-testid="nav-collections">{t("nav.collections")}</button>
-          <button onClick={() => navigate(`/${lang}/about`)} className={navItem} data-testid="nav-about">{t("nav.about")}</button>
         </div>
         <div className="md:hidden flex items-center" style={iconStyle}>
           <button onClick={() => setNavOpen(true)} className="axum-ease p-1.5" aria-label="Open menu" data-testid="mobile-menu-btn">
@@ -79,9 +78,6 @@ const SiteHeader = ({ variant = "solid" }) => {
         <div className="flex items-center gap-2 md:gap-4 justify-self-end" style={iconStyle}>
           <button className={iconBtnCls} aria-label="Search" data-testid="header-search" onClick={() => alert(t("header.search_soon"))}>
             <Search size={20} strokeWidth={1.5} />
-          </button>
-          <button className={`${iconBtnCls} hidden sm:inline-flex`} aria-label="Account" data-testid="header-account" onClick={() => alert(t("header.account_soon"))}>
-            <User size={20} strokeWidth={1.5} />
           </button>
           <button
             onClick={() => setDrawerOpen(true)}

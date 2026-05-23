@@ -168,7 +168,7 @@ export const STRINGS = {
     ],
     footer: {
       cols: [
-        { title: "Shop", links: ["Women", "Men", "Accessories", "Archive"] },
+        { title: "Shop", links: ["Women", "Accessories", "Archive"] },
         { title: "Studio", links: ["Manifesto", "Atelier", "Press", "Careers"] },
         { title: "Service", links: ["Shipping", "Returns", "Repairs", "Contact"] },
         { title: "Connect", links: ["Instagram", "Substack", "X", "Pinterest"] },
@@ -378,7 +378,7 @@ export const STRINGS = {
     ],
     footer: {
       cols: [
-        { title: "Магазин", links: ["Женское", "Мужское", "Аксессуары", "Архив"] },
+        { title: "Магазин", links: ["Женское", "Аксессуары", "Архив"] },
         { title: "Студия", links: ["Манифест", "Ателье", "Пресса", "Вакансии"] },
         { title: "Сервис", links: ["Доставка", "Возврат", "Ремонт", "Контакты"] },
         { title: "Соцсети", links: ["Instagram", "Telegram", "VK", "Pinterest"] },
