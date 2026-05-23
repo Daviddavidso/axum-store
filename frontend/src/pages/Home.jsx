@@ -75,7 +75,7 @@ const Home = () => {
           aria-label="AXUM home"
           data-testid="logo"
         >
-          <Logo height={scrolled ? 24 : 38} />
+          <Logo height={scrolled ? 22 : 34} />
         </a>
 
         {/* RIGHT — language + menu */}

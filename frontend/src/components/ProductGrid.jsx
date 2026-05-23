@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useLang } from "@/contexts/LanguageContext";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -7,6 +8,7 @@ const API = `${BACKEND_URL}/api`;
 
 const ProductGrid = () => {
   const { lang, t } = useLang();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState(["ALL"]);
   const [active, setActive] = useState("ALL");
@@ -42,7 +44,13 @@ const ProductGrid = () => {
             {t("catalog.title_a")}<br />{t("catalog.title_b")}
           </h2>
         </div>
-        <a href="#lookbook" className="hidden md:inline axum-link" data-testid="see-all-link">{t("catalog.view_all")}</a>
+        <button
+          onClick={() => navigate(`/${lang}/catalog`)}
+          className="hidden md:inline axum-link"
+          data-testid="see-all-link"
+        >
+          {t("catalog.view_all")}
+        </button>
       </div>
 
       <div className="flex flex-wrap items-center axum-border-b" data-testid="category-tabs">
@@ -86,6 +94,17 @@ const ProductGrid = () => {
             {t("catalog.empty")}
           </div>
         )}
+      </div>
+
+      {/* Open Full Catalog button */}
+      <div className="flex justify-center py-12 md:py-16 axum-border-t" data-testid="open-catalog-cta-wrap">
+        <button
+          onClick={() => navigate(`/${lang}/catalog`)}
+          className="axum-btn"
+          data-testid="open-catalog-cta"
+        >
+          {t("catalog.open_full")} →
+        </button>
       </div>
     </div>
   );
