@@ -10,6 +10,7 @@ import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 import Marquee from "@/components/Marquee";
 import LanguageToggle from "@/components/LanguageToggle";
+import Logo from "@/components/Logo";
 import { useLang } from "@/contexts/LanguageContext";
 
 const Home = () => {
@@ -57,11 +58,11 @@ const Home = () => {
         <a
           href={`/${lang}`}
           onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-          className="font-display text-2xl md:text-3xl tracking-tighter"
-          style={{ color: onColor, mixBlendMode: scrolled ? "normal" : "difference" }}
+          className="flex items-center"
+          aria-label="AXUM home"
           data-testid="logo"
         >
-          AXUM
+          <Logo height={scrolled ? 24 : 38} />
         </a>
 
         <div

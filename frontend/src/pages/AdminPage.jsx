@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
+import Logo from "@/components/Logo";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -327,7 +328,8 @@ const AdminPage = ({ t }) => {
   if (!user) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6">
-        <div className="font-display text-4xl md:text-6xl uppercase mb-8">{t("admin.title")}</div>
+        <Logo tone="black" height={56} className="mb-8" />
+        <div className="font-display text-xl md:text-2xl uppercase mb-8 tracking-[0.3em] opacity-70">{t("admin.title")}</div>
         <button onClick={startGoogleLogin} className="axum-btn" data-testid="admin-google-signin">
           {t("admin.sign_in")}
         </button>
@@ -438,7 +440,8 @@ const AdminPage = ({ t }) => {
     <div className="min-h-screen bg-white" data-testid="admin-dashboard">
       <header className="flex items-center justify-between px-5 md:px-8 py-4 axum-border-b">
         <div className="flex items-center gap-4">
-          <span className="font-display text-2xl tracking-tighter">{t("admin.title")}</span>
+          <Logo tone="black" height={26} />
+          <span className="hidden md:inline text-xs tracking-[0.3em] uppercase opacity-50">{t("admin.title")}</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[11px] tracking-[0.25em] uppercase opacity-70 hidden md:inline" data-testid="admin-user-email">

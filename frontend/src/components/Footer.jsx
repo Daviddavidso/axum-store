@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from "@/components/Logo";
 import { useLang } from "@/contexts/LanguageContext";
 
 const Footer = () => {
@@ -21,10 +22,8 @@ const Footer = () => {
         ))}
       </div>
 
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 px-6 md:px-10 py-6">
-        <div className="font-display text-5xl md:text-7xl lg:text-[10rem] leading-none uppercase tracking-tighter">
-          AXUM
-        </div>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-6 md:px-10 py-10">
+        <Logo tone="black" height={140} alt="AXUM" />
         <div className="text-[11px] tracking-[0.3em] uppercase opacity-70">
           © {new Date().getFullYear()} {strings.footer.copyright}
         </div>

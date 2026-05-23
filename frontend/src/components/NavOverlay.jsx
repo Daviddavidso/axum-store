@@ -1,5 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
+import Logo from "@/components/Logo";
 import { useLang } from "@/contexts/LanguageContext";
 
 const NavOverlay = ({ open, onClose }) => {
@@ -28,7 +29,7 @@ const NavOverlay = ({ open, onClose }) => {
         data-testid="nav-overlay"
       >
         <div className="flex items-center justify-between px-8 py-6 axum-border-b">
-          <span className="font-display text-2xl tracking-tighter">AXUM</span>
+          <Logo tone="black" height={26} />
           <button
             onClick={onClose}
             className="w-10 h-10 flex items-center justify-center axum-ease hover:bg-black hover:text-white"
