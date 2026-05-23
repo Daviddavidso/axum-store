@@ -5,7 +5,6 @@ import { ArrowRight, Heart } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import CartDrawer from "@/components/CartDrawer";
 import MobileBagButton from "@/components/MobileBagButton";
-import PromoBar from "@/components/PromoBar";
 import Footer from "@/components/Footer";
 import { useLang } from "@/contexts/LanguageContext";
 import { useCart } from "@/contexts/CartContext";
@@ -81,12 +80,11 @@ const ProductPage = () => {
 
   return (
     <div className="App bg-white min-h-screen" data-testid="product-page">
-      <PromoBar />
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
 
-      <main className="pt-[102px]">
+      <main className="pt-[68px]">
         <section className="grid grid-cols-1 lg:grid-cols-2 axum-border-b" data-testid="product-gallery">
           {gallery.map((src, idx) => (
             <button

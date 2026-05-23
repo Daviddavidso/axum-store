@@ -4,7 +4,6 @@ import axios from "axios";
 import SiteHeader from "@/components/SiteHeader";
 import CartDrawer from "@/components/CartDrawer";
 import MobileBagButton from "@/components/MobileBagButton";
-import PromoBar from "@/components/PromoBar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { useLang } from "@/contexts/LanguageContext";
@@ -47,12 +46,11 @@ const CatalogPage = () => {
 
   return (
     <div className="App bg-white min-h-screen" data-testid="catalog-page">
-      <PromoBar />
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
 
-      <main className="pt-[102px]">
+      <main className="pt-[68px]">
         <section className="px-5 md:px-10 py-14 md:py-20" data-testid="catalog-title-block">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">
             {isNew ? t("nav.new") : t("catalog.full_eyebrow")}

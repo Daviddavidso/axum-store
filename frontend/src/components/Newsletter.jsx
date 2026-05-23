@@ -56,7 +56,7 @@ const Newsletter = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="axum-btn mt-8 w-full md:w-auto"
+                className="axum-btn axum-btn-solid mt-8 w-full md:w-auto"
                 data-testid="newsletter-submit"
               >
                 {loading ? t("newsletter.sending") : t("newsletter.submit")} <ArrowRight size={16} strokeWidth={2} />

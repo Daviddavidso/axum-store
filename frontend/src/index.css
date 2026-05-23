@@ -83,6 +83,15 @@ html, body, #root {
 }
 .axum-btn-ghost:hover { background: #000; color: #fff; }
 
+/* Stays solid black regardless of hover — used on footer / newsletter buttons. */
+.axum-btn-solid,
+.axum-btn-solid:hover,
+.axum-btn-solid:focus {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #000 !important;
+}
+
 /* Hero slider */
 .hero-track {
   display: flex;
