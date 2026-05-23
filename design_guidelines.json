@@ -1,0 +1,108 @@
+{
+  "theme": "light",
+  "archetype": "4 (Swiss & High-Contrast / Brutalism)",
+  "design_philosophy": "Modern brutalist and minimalist aesthetics. Full-width grid layout with bold, thin black borders between sections. Clean white background. Typography uses bold, futuristic sans-serif for headings (Helvetica Neue, Arial Black) and a clean monotone color scheme. No unnecessary elements—just massive images and sharp lines. Site name: AXUM.",
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "text": "#000000",
+    "border": "#000000",
+    "brand": "#000000",
+    "inverted_bg": "#000000",
+    "inverted_text": "#FFFFFF"
+  },
+  "typography": {
+    "headings": "Helvetica Neue, Arial Black, system-ui, sans-serif",
+    "body": "Helvetica Neue, Arial, system-ui, sans-serif",
+    "scale": {
+      "h1": "text-6xl md:text-8xl lg:text-[10vw] font-black uppercase tracking-tighter leading-none",
+      "h2": "text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight",
+      "h3": "text-2xl md:text-3xl font-bold uppercase",
+      "body": "text-base font-normal",
+      "nav": "text-3xl md:text-5xl font-black uppercase"
+    }
+  },
+  "layout_and_spacing": {
+    "grid": "Strict full-width modular grid. Use grid-cols-1 md:grid-cols-2 lg:grid-cols-4 layout logic. Every section and item must be divided by a 1px solid black border (e.g. border-b border-black).",
+    "spacing": "Generous padding inside bordered containers (p-6 to p-12).",
+    "borders": "1px solid #000000 everywhere. border-collapse-like structure. No rounded corners (`rounded-none`)."
+  },
+  "motion_and_interactions": {
+    "timing": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "duration": "0.4s",
+    "product_hover": "Smooth opacity cross-fade. Dual-image hover effect: top image fades out (opacity-0) to reveal bottom image.",
+    "hero_slider": "Horizontal slide transition (current pushes previous out instantly but smoothly), with subtle zoom-in (Ken Burns effect) on the active image. Page transitions and swiping must feel liquid and seamless.",
+    "lookbook_fade": "Fade-in-out effect when page scrolls or category tabs are switched.",
+    "button_hover": "Instant inverted color animation (black bg -> white bg, text-white -> text-black, border-black).",
+    "nav_overlay": "Smoothly slides in from the right side of the screen when clicked."
+  },
+  "components": {
+    "buttons": "Sharp rectangular boxes, bold text, solid black default, white text. Hover state must invert instantly.",
+    "product_card": "Large image cards spanning grid cells. Image area aspect-[3/4]. Minimal text footer with Name and Price, separated by borders.",
+    "hero_slider": "Full screen (h-screen). Absolute positioning for text and controls. Smooth horizontal slide tracking.",
+    "lookbook": "Category tabs as border-separated links. Dynamic image display.",
+    "newsletter": "Brutalist input form: full-width input, huge text, simple submit arrow/button, thick black borders.",
+    "editorial_strip": "Horizontal strip section for about info with stark brutalist layout."
+  },
+  "media": {
+    "hero_slider_images": [
+      "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/0jm50sy9_photo_5226647467917515077_y.jpg",
+      "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/dpmife4r_photo_5226647467917515076_y.jpg"
+    ],
+    "products": [
+      {
+        "id": "prod_1",
+        "name": "STUDDED BELT CROP TOP",
+        "price": "$240",
+        "image1": "https://customer-assets.emergentagent.com/job_643263bd-c784-4e06-87fb-b91e7fc9b022/artifacts/y6wn81kb_photo_5226647467917515075_y.jpg",
+        "image2": "https://images.unsplash.com/photo-1776273920158-510b171e936f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwbW9kZWwlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBmdWxsJTIwYm9keXxlbnwwfHx8fDE3Nzk1Mzg5OTd8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_2",
+        "name": "METALLIC EVENING DRESS",
+        "price": "$520",
+        "image1": "https://images.pexels.com/photos/16791449/pexels-photo-16791449.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "image2": "https://images.unsplash.com/flagged/photo-1570733117311-d990c3816c47?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwyfHxmYXNoaW9uJTIwbW9kZWwlMjBlZGl0b3JpYWwlMjBoaWdoJTIwZW5kfGVufDB8fHx8MTc3OTUzODk5N3ww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_3",
+        "name": "BLACK FASHION DRESS",
+        "price": "$380",
+        "image1": "https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "image2": "https://images.unsplash.com/photo-1662532577856-e8ee8b138a8b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHw0fHxmYXNoaW9uJTIwbW9kZWwlMjBlZGl0b3JpYWwlMjBoaWdoJTIwZW5kfGVufDB8fHx8MTc3OTUzODk5N3ww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "prod_4",
+        "name": "WHITE BLAZER SCARF",
+        "price": "$410",
+        "image1": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwbW9kZWwlMjBlZGl0b3JpYWwlMjBoaWdoJTIwZW5kfGVufDB8fHx8MTc3OTUzODk5N3ww&ixlib=rb-4.1.0&q=85",
+        "image2": "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwbW9kZWwlMjBlZGl0b3JpYWwlMjBoaWdoJTIwZW5kfGVufDB8fHx8MTc3OTUzODk5N3ww&ixlib=rb-4.1.0&q=85"
+      }
+    ],
+    "lookbook": [
+      {
+        "tab": "EDITORIAL_01",
+        "image": "https://images.unsplash.com/photo-1601597565151-70c4020dc0e1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzl8MHwxfHNlYXJjaHwzfHxmYXNoaW9uJTIwbW9kZWwlMjBlZGl0b3JpYWwlMjBoaWdoJTIwZW5kfGVufDB8fHx8MTc3OTUzODk5N3ww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "tab": "STREETWEAR_02",
+        "image": "https://images.unsplash.com/photo-1674851993263-823aef958e73?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwyfHxmYXNoaW9uJTIwbW9kZWwlMjB3aGl0ZSUyMGJhY2tncm91bmQlMjBmdWxsJTIwYm9keXxlbnwwfHx8fDE3Nzk1Mzg5OTd8MA&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "tab": "AVANT_GARDE_03",
+        "image": "https://images.pexels.com/photos/15432338/pexels-photo-15432338.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Use framer-motion or Swiper.js to handle the hero slider with exact bezier transitions (`cubic-bezier(0.25, 0.46, 0.45, 0.94)`) and sliding horizontal effect.",
+    "Implement the ken burns zoom via CSS transform/scale on the active slide.",
+    "The product grid hover effect MUST be built with two images positioned absolutely. The top image fades out on hover with the specified timing function and duration (0.4s).",
+    "Borders are essential for the brutalist style. Use tailwind `border-black` and `border` or specific side borders (`border-r`, `border-b`) on grid items.",
+    "All text inputs and forms should have heavy 1px black borders and zero border radius.",
+    "Ensure the `data-testid` attribute is on all interactive elements as requested."
+  ],
+  "accessibility_and_testing": {
+    "testing_attributes": "All interactive and key informational elements MUST include a `data-testid` attribute."
+  }
+}
