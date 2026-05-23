@@ -47,7 +47,7 @@ const Home = () => {
   return (
     <div className="App" data-testid="axum-app">
       <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-8 py-4 axum-ease`}
+        className={`fixed top-0 left-0 right-0 z-50 grid grid-cols-3 items-center px-5 md:px-8 py-4 axum-ease`}
         style={{
           background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
           backdropFilter: scrolled ? "blur(8px)" : "none",
@@ -55,26 +55,31 @@ const Home = () => {
         }}
         data-testid="top-bar"
       >
-        <a
-          href={`/${lang}`}
-          onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-          className="flex items-center"
-          aria-label="AXUM home"
-          data-testid="logo"
-        >
-          <Logo height={scrolled ? 24 : 38} />
-        </a>
-
+        {/* LEFT — nav links */}
         <div
-          className="hidden md:flex items-center gap-8"
+          className="hidden md:flex items-center gap-8 justify-self-start"
           style={{ color: onColor, mixBlendMode: scrolled ? "normal" : "difference" }}
         >
           <a href="#shop" className="axum-link" data-testid="nav-shop">{t("nav.shop")}</a>
           <a href="#lookbook" className="axum-link" data-testid="nav-lookbook">{t("nav.lookbook")}</a>
           <a href="#manifesto" className="axum-link" data-testid="nav-manifesto">{t("nav.manifesto")}</a>
         </div>
+        {/* Spacer on mobile to keep grid balanced */}
+        <div className="md:hidden" />
 
-        <div className="flex items-center gap-3 md:gap-5">
+        {/* CENTER — logo */}
+        <a
+          href={`/${lang}`}
+          onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          className="flex items-center justify-self-center"
+          aria-label="AXUM home"
+          data-testid="logo"
+        >
+          <Logo height={scrolled ? 24 : 38} />
+        </a>
+
+        {/* RIGHT — language + menu */}
+        <div className="flex items-center gap-3 md:gap-5 justify-self-end">
           <LanguageToggle scrolled={scrolled} />
           <button
             onClick={() => setNavOpen(true)}
