@@ -243,16 +243,17 @@ _H = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/52fhyxc
 _I = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/4tmpush2_DSC04772.jpg"
 _J = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/rlu4bxm8_DSC04820.jpg"
 
+# Hero campaign imagery (uploaded by client)
+_HERO_1 = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/95nmxgyn_David_Son_combine_them__do_not_add_any_your_texts_or_logos_just_use_logos_726a2ee3-9ce4-42d4-9002-f8a2be449805%20%281%29.png"
+_HERO_2 = "https://customer-assets.emergentagent.com/job_axum-stark/artifacts/9hwnqte3_David_Son_combined_them__do_not_add_any_your_texts__or_logos_just_use_log_5a8ac7c0-0b59-4d6d-9813-1bf86220d0e7%20%281%29.png"
+
 SEED_HERO = [
-    {"id": str(uuid.uuid4()), "headline_en": "AXUM — PINK COURT", "headline_ru": "AXUM — PINK COURT",
+    {"id": str(uuid.uuid4()), "headline_en": "AXUM — STUDIO N°02", "headline_ru": "AXUM — СТУДИЯ №02",
      "subline_en": "Volume 04 / The New Silhouette", "subline_ru": "Том 04 / Новый силуэт",
-     "cta_en": "ENTER COLLECTION", "cta_ru": "В КОЛЛЕКЦИЮ", "image": _G, "sort_order": 0},
-    {"id": str(uuid.uuid4()), "headline_en": "MAGENTA — AGAINST THE LINE", "headline_ru": "МАЛИНОВЫЙ — ПРОТИВ ЛИНИИ",
+     "cta_en": "ENTER COLLECTION", "cta_ru": "В КОЛЛЕКЦИЮ", "image": _HERO_1, "sort_order": 0},
+    {"id": str(uuid.uuid4()), "headline_en": "AXUM — PINK COURT", "headline_ru": "AXUM — РОЗОВЫЙ КОРТ",
      "subline_en": "Sport meets couture", "subline_ru": "Спорт встречает кутюр",
-     "cta_en": "SHOP THE EDITION", "cta_ru": "СМОТРЕТЬ ВЫПУСК", "image": _D, "sort_order": 1},
-    {"id": str(uuid.uuid4()), "headline_en": "OBSIDIAN — STUDIO N°02", "headline_ru": "ОБСИДИАН — СТУДИЯ №02",
-     "subline_en": "Tailored. Disciplined. Black.", "subline_ru": "Точный крой. Дисциплина. Чёрный.",
-     "cta_en": "SHOP STUDIO", "cta_ru": "В СТУДИЮ", "image": _I, "sort_order": 2},
+     "cta_en": "SHOP THE EDITION", "cta_ru": "СМОТРЕТЬ ВЫПУСК", "image": _HERO_2, "sort_order": 1},
 ]
 
 SEED_PRODUCTS = [
