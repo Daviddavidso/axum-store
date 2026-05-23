@@ -1,53 +1,118 @@
-import { useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import axios from "axios";
 import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { Toaster, toast } from "sonner";
+import NavOverlay from "@/components/NavOverlay";
+import HeroSlider from "@/components/HeroSlider";
+import ProductGrid from "@/components/ProductGrid";
+import Lookbook from "@/components/Lookbook";
+import EditorialStrip from "@/components/EditorialStrip";
+import Newsletter from "@/components/Newsletter";
+import Footer from "@/components/Footer";
+import Marquee from "@/components/Marquee";
+import { Menu } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+export const API = `${BACKEND_URL}/api`;
 
 const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+  const [navOpen, setNavOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    helloWorldApi();
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Reveal on scroll
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   return (
-    <div>
-      <header className="App-header">
+    <div className="App" data-testid="axum-app">
+      <Toaster position="bottom-center" theme="light" />
+      {/* Top bar */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-8 py-4 axum-ease`}
+        style={{
+          background: scrolled ? "rgba(255,255,255,0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(8px)" : "none",
+          borderBottom: scrolled ? "1px solid #000" : "1px solid transparent",
+        }}
+        data-testid="top-bar"
+      >
         <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#top"
+          className="font-display text-2xl md:text-3xl tracking-tighter"
+          style={{ color: scrolled ? "#000" : "#fff", mixBlendMode: scrolled ? "normal" : "difference" }}
+          data-testid="logo"
         >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
+          AXUM
         </a>
-        <p className="mt-5">Building something incredible ~!</p>
+        <div
+          className="hidden md:flex items-center gap-8"
+          style={{ color: scrolled ? "#000" : "#fff", mixBlendMode: scrolled ? "normal" : "difference" }}
+        >
+          <a href="#shop" className="axum-link" data-testid="nav-shop">Shop</a>
+          <a href="#lookbook" className="axum-link" data-testid="nav-lookbook">Lookbook</a>
+          <a href="#manifesto" className="axum-link" data-testid="nav-manifesto">Manifesto</a>
+        </div>
+        <button
+          onClick={() => setNavOpen(true)}
+          className="flex items-center gap-2 axum-ease"
+          style={{ color: scrolled ? "#000" : "#fff", mixBlendMode: scrolled ? "normal" : "difference" }}
+          data-testid="open-nav-button"
+          aria-label="Open menu"
+        >
+          <span className="hidden md:inline text-xs tracking-[0.18em] uppercase">Menu</span>
+          <Menu size={26} strokeWidth={1.5} />
+        </button>
       </header>
+
+      <NavOverlay open={navOpen} onClose={() => setNavOpen(false)} />
+
+      <main id="top">
+        <HeroSlider />
+        <Marquee />
+        <section id="shop" className="axum-border-t">
+          <ProductGrid />
+        </section>
+        <EditorialStrip />
+        <section id="lookbook">
+          <Lookbook />
+        </section>
+        <section id="manifesto">
+          <Newsletter />
+        </section>
+        <Footer />
+      </main>
     </div>
   );
 };
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
