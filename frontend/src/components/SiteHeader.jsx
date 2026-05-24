@@ -28,7 +28,7 @@ const SiteHeader = ({ variant = "solid" }) => {
   }, [variant]);
 
   const isTransparent = variant === "transparent" && !scrolled;
-  const onColor = isTransparent ? "#fff" : "#000";
+  const onColor = "#000";
 
   const headerStyle = {
     background: isTransparent ? "transparent" : "rgba(255,255,255,0.94)",
@@ -37,7 +37,7 @@ const SiteHeader = ({ variant = "solid" }) => {
   };
 
   const iconBtnCls = "axum-ease p-1.5 hover:opacity-70 relative";
-  const iconStyle = { color: onColor, mixBlendMode: isTransparent ? "difference" : "normal" };
+  const iconStyle = { color: onColor };
 
   const navItem = "axum-link";
 
@@ -51,7 +51,7 @@ const SiteHeader = ({ variant = "solid" }) => {
         {/* LEFT — center nav */}
         <div
           className="hidden md:flex items-center gap-6 lg:gap-8 justify-self-start"
-          style={{ color: onColor, mixBlendMode: isTransparent ? "difference" : "normal" }}
+          style={{ color: onColor }}
         >
           <button onClick={() => navigate(`/${lang}/catalog`)} className={navItem} data-testid="nav-shop">{t("nav.shop")}</button>
           <button onClick={() => navigate(`/${lang}/catalog?new=1`)} className={navItem} data-testid="nav-new">{t("nav.new")}</button>
@@ -71,7 +71,7 @@ const SiteHeader = ({ variant = "solid" }) => {
           aria-label="AXUM home"
           data-testid="logo"
         >
-          <Logo height={isTransparent ? 34 : 24} tone={isTransparent ? "overlay" : "adaptive"} />
+          <Logo height={isTransparent ? 34 : 24} tone="adaptive" />
         </a>
 
         {/* RIGHT — icons */}

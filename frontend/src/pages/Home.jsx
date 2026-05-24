@@ -33,11 +33,11 @@ const Home = () => {
 
   return (
     <div className="App" data-testid="axum-app">
-      <SiteHeader variant="transparent" />
+      <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
 
-      <main id="top">
+      <main id="top" className="pt-[68px]">
         <HeroSlider />
         <Marquee />
         <section id="shop" className="axum-border-t">

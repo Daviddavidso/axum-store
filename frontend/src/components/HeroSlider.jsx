@@ -69,17 +69,17 @@ const HeroSlider = () => {
 
       <div className="absolute inset-0 flex flex-col justify-end px-5 md:px-10 pb-16 md:pb-20 pointer-events-none">
         <div className="max-w-5xl">
-          <div className="text-white/80 text-xs tracking-[0.32em] mb-4" data-testid="hero-subline">
+          <div className="text-black/70 text-xs tracking-[0.32em] mb-4" data-testid="hero-subline">
             {slides[active]?.subline}
           </div>
           <h1
-            className="font-display text-white text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] leading-[0.88] uppercase"
+            className="font-display text-black text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] leading-[0.88] uppercase"
             data-testid="hero-headline"
           >
             {slides[active]?.headline}
           </h1>
           <div className="mt-8 pointer-events-auto">
-            <a href="#shop" className="axum-btn axum-btn-ghost" data-testid="hero-cta">
+            <a href="#shop" className="axum-btn" data-testid="hero-cta">
               {slides[active]?.cta} →
             </a>
           </div>
@@ -89,7 +89,7 @@ const HeroSlider = () => {
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-3 md:px-5 pointer-events-none">
         <button
           onClick={() => go(-1)}
-          className="pointer-events-auto w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white axum-ease hover:bg-white hover:text-black border border-white/0 hover:border-white"
+          className="pointer-events-auto w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-black axum-ease hover:bg-black hover:text-white border border-black/0 hover:border-black"
           data-testid="hero-prev"
           aria-label="Previous slide"
         >
@@ -97,7 +97,7 @@ const HeroSlider = () => {
         </button>
         <button
           onClick={() => go(1)}
-          className="pointer-events-auto w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-white axum-ease hover:bg-white hover:text-black border border-white/0 hover:border-white"
+          className="pointer-events-auto w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-black axum-ease hover:bg-black hover:text-white border border-black/0 hover:border-black"
           data-testid="hero-next"
           aria-label="Next slide"
         >
@@ -105,11 +105,11 @@ const HeroSlider = () => {
         </button>
       </div>
 
-      <div className="absolute bottom-6 right-5 md:right-10 text-white font-display text-sm tracking-widest" data-testid="hero-counter">
+      <div className="absolute bottom-6 right-5 md:right-10 text-black font-display text-sm tracking-widest" data-testid="hero-counter">
         {String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
       </div>
 
-      <div className="absolute bottom-6 left-5 md:left-10 text-white text-xs tracking-[0.3em] uppercase opacity-80">
+      <div className="absolute bottom-6 left-5 md:left-10 text-black text-xs tracking-[0.3em] uppercase opacity-70">
         {t("hero.scroll")}
       </div>
     </section>
