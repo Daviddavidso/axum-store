@@ -67,25 +67,6 @@ const HeroSlider = () => {
         ))}
       </div>
 
-      <div className="absolute inset-0 flex flex-col justify-end px-5 md:px-10 pb-16 md:pb-20 pointer-events-none">
-        <div className="max-w-5xl">
-          <div className="text-black/70 text-xs tracking-[0.32em] mb-4" data-testid="hero-subline">
-            {slides[active]?.subline}
-          </div>
-          <h1
-            className="font-display text-black text-5xl sm:text-6xl md:text-8xl lg:text-[8.5rem] leading-[0.88] uppercase"
-            data-testid="hero-headline"
-          >
-            {slides[active]?.headline}
-          </h1>
-          <div className="mt-8 pointer-events-auto">
-            <a href="#shop" className="axum-btn" data-testid="hero-cta">
-              {slides[active]?.cta} →
-            </a>
-          </div>
-        </div>
-      </div>
-
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-3 md:px-5 pointer-events-none">
         <button
           onClick={() => go(-1)}
@@ -107,10 +88,6 @@ const HeroSlider = () => {
 
       <div className="absolute bottom-6 right-5 md:right-10 text-black font-display text-sm tracking-widest" data-testid="hero-counter">
         {String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-      </div>
-
-      <div className="absolute bottom-6 left-5 md:left-10 text-black text-xs tracking-[0.3em] uppercase opacity-70">
-        {t("hero.scroll")}
       </div>
     </section>
   );
