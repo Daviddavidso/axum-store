@@ -1,13 +1,10 @@
 import React from "react";
 import { useLang } from "@/contexts/LanguageContext";
-import { ScribbleSticker, KanjiSticker } from "@/components/GraffitiSticker";
 
 const EditorialStrip = () => {
   const { t } = useLang();
   return (
-    <section className="w-full bg-white axum-border-t axum-border-b axum-graffiti" data-testid="editorial-strip">
-      <ScribbleSticker corner="bl" />
-      <KanjiSticker glyph="黑" corner="tr" tilt={4} />
+    <section className="w-full bg-white axum-border-t axum-border-b" data-testid="editorial-strip">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <div className="p-8 md:p-12 axum-border-b md:axum-border-b-0 md:axum-border-r reveal reveal-3d">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{t("editorial.manifesto_eyebrow")}</div>

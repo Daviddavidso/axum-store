@@ -67,6 +67,19 @@ html, body, #root {
   letter-spacing: 0;
 }
 
+/* Oswald is already a CONDENSED face — the old Archivo-era `tracking-tighter`
+   (−0.05em) makes its letters collide ("СЛЕДУЮЩИЙ" ran together). Neutralise
+   negative tracking on display headings; a hair of positive spacing keeps big
+   uppercase Cyrillic/Latin from touching. Wide tracking utilities are untouched. */
+.font-display.tracking-tighter,
+.font-display.tracking-tight {
+  letter-spacing: 0.01em;
+}
+
+/* Belt-and-suspenders: all decorative "graffiti" stickers removed from the JSX;
+   this guarantees none can ever render again even if a usage is missed. */
+.graffiti-sticker { display: none !important; }
+
 .axum-ease {
   transition-timing-function: var(--axum-ease);
   transition-duration: var(--axum-dur);

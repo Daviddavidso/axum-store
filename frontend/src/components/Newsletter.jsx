@@ -4,7 +4,6 @@ import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
 import ScrollTypeWriter from "@/components/ScrollTypeWriter";
-import { ThrowieSticker } from "@/components/GraffitiSticker";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -33,8 +32,7 @@ const Newsletter = () => {
   };
 
   return (
-    <section className="w-full bg-white axum-border-t axum-graffiti" data-testid="newsletter-section">
-      <ThrowieSticker corner="br" />
+    <section className="w-full bg-white axum-border-t" data-testid="newsletter-section">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         <div className="lg:col-span-7 p-8 md:p-14 axum-border-b lg:axum-border-b-0 lg:axum-border-r">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-6">{t("newsletter.eyebrow")}</div>

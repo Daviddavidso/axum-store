@@ -7,7 +7,6 @@ import MobileBagButton from "@/components/MobileBagButton";
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
-import { CrownSticker, TagArrowSticker } from "@/components/GraffitiSticker";
 import { useLang } from "@/contexts/LanguageContext";
 
 const PAGE_SIZE = 12;
@@ -91,9 +90,7 @@ const CatalogPage = () => {
         tabIndex={-1}
         className="pt-[68px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 scroll-mt-[68px] focus:outline-none"
       >
-        <section className="px-5 md:px-10 py-14 md:py-20 axum-graffiti" data-testid="catalog-title-block">
-          <CrownSticker corner="tr" tilt={-3} />
-          <TagArrowSticker corner="br" tilt={-8} />
+        <section className="px-5 md:px-10 py-14 md:py-20" data-testid="catalog-title-block">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">
             {isNew ? t("nav.new") : t("catalog.full_eyebrow")}
           </div>

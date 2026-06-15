@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SplitText from "@/components/SplitText";
-import { SplatterSticker, KanjiSticker } from "@/components/GraffitiSticker";
 import { useLang } from "@/contexts/LanguageContext";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -38,12 +37,10 @@ const TrendingRail = () => {
 
   return (
     <section
-      className="w-full bg-white axum-border-t axum-graffiti"
+      className="w-full bg-white axum-border-t"
       aria-labelledby="trending-title"
       data-testid="trending-rail"
     >
-      <SplatterSticker corner="tr" />
-      <KanjiSticker glyph="街" corner="bl" tilt={-6} />
       <div className="px-5 md:px-10 pt-14 md:pt-20 pb-8 md:pb-10">
         <div className="reveal text-[10px] tracking-[0.32em] uppercase mb-3 opacity-60">
           {t("trending.eyebrow")}
