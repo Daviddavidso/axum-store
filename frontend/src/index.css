@@ -80,6 +80,159 @@ html, body, #root {
    this guarantees none can ever render again even if a usage is missed. */
 .graffiti-sticker { display: none !important; }
 
+/* ============================================================================
+   ProductCard v2 — minimalist, dark-theme-native.
+   ----------------------------------------------------------------------------
+   Goals (client brief: "сделай минималистично, стильно, чтобы вписывалось в
+   сайт"): no white panels, no patchwork. The image sits on a slightly raised
+   charcoal frame matching --axum-surface-2, with hairline borders. NEW = small
+   pink dot + tiny label, no jarring block. Wishlist + quick-add are flat icons
+   with focus-visible rings. No 3D tilt — the old effect cheapened the dark UI.
+   Contrast: name #cfcfcf on #242424 ≈ 9.7:1 (text 4.5:1 ✓); price kept same.
+   Touch: quick-add is hidden via the existing `@media not all and (hover…)`
+   rule keyed on data-testid^="quick-add-" further up in this file.
+   ============================================================================ */
+.product-card-v2 { position: relative; isolation: isolate; }
+
+.product-card-v2 .pc-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--axum-surface-2);
+  border: 1px solid var(--axum-line);
+  transition: border-color 0.3s var(--axum-ease);
+}
+.product-card-v2:hover .pc-media,
+.product-card-v2:focus-within .pc-media {
+  border-color: var(--axum-line-strong);
+}
+
+.product-card-v2 .pc-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.45s var(--axum-ease), transform 8s var(--axum-ease);
+}
+.product-card-v2 .pc-img--back { opacity: 0; }
+.product-card-v2:hover .pc-img--front { opacity: 0; }
+.product-card-v2:hover .pc-img--back { opacity: 1; transform: scale(1.03); }
+
+/* NEW badge: tiny pink dot + capital label, no solid block. */
+.pc-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-family: 'Oswald', 'Archivo Black', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #ededed;
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(237, 237, 237, 0.15);
+  z-index: 2;
+}
+.pc-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--axum-pink);
+  box-shadow: 0 0 0 2px rgba(255, 61, 165, 0.18);
+}
+.pc-badge--best { color: var(--axum-pink); }
+
+/* Wishlist heart: minimal icon, fades to filled on press; no bg, no chrome. */
+.pc-wish {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent;
+  color: var(--axum-ink-muted);
+  transition: color 0.2s var(--axum-ease), transform 0.2s var(--axum-ease);
+  z-index: 2;
+}
+.pc-wish:hover { color: var(--axum-pink); transform: scale(1.08); }
+.pc-wish[aria-pressed="true"] { color: var(--axum-pink); }
+.pc-wish:focus-visible {
+  outline: 2px solid var(--axum-focus);
+  outline-offset: 2px;
+}
+
+/* Quick add: thin underline CTA at the bottom; fades up on hover. */
+.pc-quickadd {
+  position: absolute;
+  left: 12px; right: 12px; bottom: 12px;
+  padding: 9px 0;
+  font-family: 'Oswald', 'Archivo Black', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #000;
+  background: var(--axum-accent);
+  border: 1px solid var(--axum-accent);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.3s var(--axum-ease), transform 0.3s var(--axum-ease),
+              background 0.2s var(--axum-ease), color 0.2s var(--axum-ease);
+  z-index: 3;
+}
+.product-card-v2:hover .pc-quickadd,
+.product-card-v2:focus-within .pc-quickadd {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
+}
+.pc-quickadd:hover { background: transparent; color: var(--axum-accent); }
+.pc-quickadd:focus-visible {
+  outline: 2px solid var(--axum-focus);
+  outline-offset: 2px;
+}
+
+/* Meta row: thin, tracked, one-line. */
+.product-card-v2 .pc-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 2px 24px;
+}
+.product-card-v2 .pc-name {
+  font-family: 'Oswald', 'Archivo Black', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--axum-ink);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  transition: color 0.2s var(--axum-ease);
+}
+.product-card-v2 .pc-name:hover { color: var(--axum-accent); text-decoration: underline; text-underline-offset: 4px; }
+.product-card-v2 .pc-name:focus-visible {
+  outline: 2px solid var(--axum-focus);
+  outline-offset: 3px;
+}
+.product-card-v2 .pc-price {
+  font-family: 'Oswald', 'Archivo Black', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--axum-ink-muted);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
 .axum-ease {
   transition-timing-function: var(--axum-ease);
   transition-duration: var(--axum-dur);

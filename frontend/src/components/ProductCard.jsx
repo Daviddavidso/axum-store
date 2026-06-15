@@ -57,24 +57,23 @@ const ProductCard = ({ product, idx, isNew = false, isBestSeller = false }) => {
     toast.success(t("product.added_toast"));
   };
 
+  // Tilt kept around for the original light theme; under the current dark
+  // redesign the carousel looks cleaner flat, so we no-op the handlers.
+  void onTiltMove; void onTiltLeave; void tiltRef;
+
   return (
     <article
-      className="group flex flex-col bg-white reveal reveal-3d"
+      className="product-card-v2 group flex flex-col reveal"
       style={{ "--rd": `${(idx % 4) * 0.06}s` }}
       data-testid={`product-card-${idx}`}
     >
       <div
-        ref={tiltRef}
-        className="product-card tilt cursor-pointer"
+        className="pc-media cursor-pointer"
         style={{ aspectRatio: "3 / 4" }}
         onClick={open}
-        onMouseMove={onTiltMove}
-        onMouseLeave={onTiltLeave}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
-          // Native buttons fire on Enter AND Space; replicate that and stop
-          // Space from scrolling the page (WCAG 2.1.1).
           if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
         }}
       >
@@ -82,68 +81,53 @@ const ProductCard = ({ product, idx, isNew = false, isBestSeller = false }) => {
             placeholder products) with the product name as fallback — improves
             automatically once real garment copy is added. accessibility-lead
             WCAG 1.1.1 sign-off. */}
-        <img className="img-front" src={product.image1} alt={product.alt1 || product.name} loading="lazy" />
+        <img className="pc-img pc-img--front" src={product.image1} alt={product.alt1 || product.name} loading="lazy" />
         {/* Hover-swap image is decorative — alt="" so it isn't announced twice. */}
-        <img className="img-back" src={product.image2} alt="" loading="lazy" />
+        <img className="pc-img pc-img--back" src={product.image2} alt="" loading="lazy" />
 
-        {/* Status badges — real text + inverted fill (NEW: light, BEST SELLER:
-            dark) + 1px hairline border so the badge edge stays visible over a
-            light OR dark photo. Not color-dependent (each carries a text label).
-            Stacked top-left so they never overlap. */}
-        {(isNew || isBestSeller) && (
-          <div className="absolute top-3 left-3 z-10 flex flex-col items-start gap-1.5">
-            {isNew && (
-              /* Light badge intentionally kept light for contrast against the
-                 dark theme; explicit #000 text (not the remapped text-black ink
-                 token) so it stays dark-on-light and legible. */
-              <span className="bg-[#ff3da5] text-[#000] border border-[#ff3da5] px-2 py-1 text-[10px] tracking-[0.3em] uppercase font-display">
-                {t("product_card.new")}
-              </span>
-            )}
-            {isBestSeller && (
-              <span className="bg-black text-white border border-white/80 px-2 py-1 text-[10px] tracking-[0.3em] uppercase font-display">
-                {t("product_card.best_seller")}
-              </span>
-            )}
-          </div>
+        {/* NEW badge — small pink dot + label, no jarring fill block. */}
+        {isNew && (
+          <span className="pc-badge pc-badge--new" data-testid={`badge-new-${product.id}`}>
+            <span aria-hidden="true" className="pc-badge-dot" />
+            {t("product_card.new")}
+          </span>
+        )}
+        {isBestSeller && !isNew && (
+          <span className="pc-badge pc-badge--best">{t("product_card.best_seller")}</span>
         )}
 
-        {/* Wishlist heart */}
+        {/* Wishlist heart — minimal, top-right, focus-visible ring. */}
         <button
           onClick={(e) => { e.stopPropagation(); toggleWish(product.id); }}
-          className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center axum-ease hover:scale-110 z-10"
+          className="pc-wish"
           aria-label={t("product_card.wishlist")}
           aria-pressed={wished}
           data-testid={`wishlist-${product.id}`}
         >
-          <Heart size={20} strokeWidth={1.4} fill={wished ? "#000" : "transparent"} />
+          <Heart size={18} strokeWidth={1.5} fill={wished ? "currentColor" : "none"} />
         </button>
 
-        {/* Quick add — slides up on hover. `pointer-events-none` while hidden
-            so it can't intercept the card's link click before it transitions
-            in. Hidden entirely on devices without true hover (touch / coarse
-            pointer) via a CSS media query — see index.css `.quick-add-touch`
-            block — because tapping a card on touch leaves a stale hover state
-            that would otherwise keep the button visible. */}
+        {/* Quick add — thin underline-style CTA at the bottom, fades in on hover.
+            Hidden on touch via CSS (no stale hover state). */}
         <button
           onClick={quickAdd}
-          className="absolute left-3 right-3 bottom-3 bg-white text-black border border-black py-2.5 text-[11px] tracking-[0.3em] uppercase font-display axum-ease opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto hover:bg-black hover:text-white z-10"
+          className="pc-quickadd"
           data-testid={`quick-add-${product.id}`}
         >
           + {t("product_card.add")}
         </button>
       </div>
 
-      {/* Below image — name + price */}
-      <div className="pt-4 pb-8 px-1 flex items-start justify-between gap-3">
+      {/* Below image — name + price, single tight row */}
+      <div className="pc-meta">
         <button
           onClick={open}
-          className="font-display text-[11px] md:text-xs tracking-[0.18em] uppercase text-left hover:underline underline-offset-4 truncate"
+          className="pc-name"
           data-testid={`product-name-${idx}`}
         >
           {product.name}
         </button>
-        <div className="font-display text-[11px] md:text-xs tracking-[0.18em] whitespace-nowrap" data-testid={`product-price-${idx}`}>
+        <div className="pc-price" data-testid={`product-price-${idx}`}>
           {product.price}
         </div>
       </div>
