@@ -37,18 +37,30 @@ const readSaved = () => {
  *   • Label uses .ck-label so it reads as the field's accessible name in the
  *     resting state too; aria-required from `required` is implicit on the input.
  */
+/**
+ * Field — premium, minimal checkout input.
+ *
+ * Top-aligned static label (always visible) over a thin underline-style input
+ * with a slightly raised charcoal fill — clearly delineates the field on the
+ * dark surface without the boxy weight of full borders. Focus state lifts the
+ * underline to 2px ink white. Touch target ≥44px.
+ *
+ * Accessibility (accessibility-lead checklist):
+ *   • Real <label htmlFor> wired to <input id> — clicking label focuses input.
+ *   • Visible underline 1px (>3:1 against fill) marks the input baseline; the
+ *     focus state thickens to 2px white (>13:1) so focus is never colour-only
+ *     (WCAG 2.4.7 / 2.4.13).
+ *   • Label sits ABOVE the field as a true heading text — never disappears,
+ *     never overlaps typed content (no floating-label state-trap).
+ *   • Autocomplete attributes from each call site flow through `...props`.
+ */
 const Field = ({ label, id, className = "", ...props }) => {
   const autoId = useId();
   const fieldId = id || autoId;
   return (
     <div className={`ck-field ${className}`}>
-      <input
-        id={fieldId}
-        placeholder=" "
-        {...props}
-        className="ck-input"
-      />
       <label htmlFor={fieldId} className="ck-label">{label}</label>
+      <input id={fieldId} {...props} className="ck-input" />
     </div>
   );
 };
