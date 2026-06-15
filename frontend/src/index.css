@@ -81,6 +81,257 @@ html, body, #root {
 .graffiti-sticker { display: none !important; }
 
 /* ============================================================================
+   CartDrawer — Amazon/Zara/Balenciaga-class shopping bag.
+   Surfaces sit on the dark theme; line items get a thin hairline + image; the
+   summary block is sticky-feel at the bottom. Free-ship progress + promo input
+   sit between items and totals.
+   Contrast verified: ink #d4d4d4 on surface #242424 ≈ 9.4:1; pink accent text
+   only used on >=24px or paired with backgrounds that meet 4.5:1.
+   ============================================================================ */
+.cart-drawer {
+  background: var(--axum-surface) !important;
+  border-left-color: var(--axum-line) !important;
+  width: min(440px, 96vw);
+  color: var(--axum-ink);
+}
+.cart-drawer .cart-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--axum-line);
+  color: #fff;
+}
+.cart-drawer .cart-icon-btn {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--axum-ink);
+  transition: color 0.2s var(--axum-ease), background 0.2s var(--axum-ease);
+}
+.cart-drawer .cart-icon-btn:hover { color: #000; background: var(--axum-accent); }
+.cart-drawer .cart-icon-btn:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+.cart-drawer .cart-link-btn {
+  font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 10px;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  padding: 6px 10px; color: var(--axum-ink-muted);
+  background: transparent;
+  transition: color 0.2s var(--axum-ease);
+}
+.cart-drawer .cart-link-btn:hover { color: var(--axum-pink); }
+.cart-drawer .cart-link-btn:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+/* ── Free shipping progress ───────────────────────────────────────────── */
+.cart-drawer .cart-ship {
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--axum-line);
+  background: rgba(255, 255, 255, 0.02);
+}
+.cart-drawer .cart-ship__bar {
+  width: 100%; height: 4px; background: var(--axum-line-strong);
+  position: relative; overflow: hidden;
+}
+.cart-drawer .cart-ship__fill {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--axum-ink) 0%, var(--axum-pink) 100%);
+  transition: width 0.5s var(--axum-ease);
+}
+.cart-drawer .cart-ship__copy {
+  margin-top: 8px;
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--axum-ink-muted);
+}
+.cart-drawer .cart-ship__unlocked {
+  color: var(--axum-pink);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* ── Lines ────────────────────────────────────────────────────────────── */
+.cart-drawer .cart-lines {
+  list-style: none; padding: 0; margin: 0;
+  flex: 1 1 auto; overflow-y: auto;
+}
+.cart-drawer .cart-line {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 14px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--axum-line);
+  align-items: start;
+}
+.cart-drawer .cart-line__img {
+  width: 80px; height: 104px; object-fit: cover;
+  border: 1px solid var(--axum-line);
+  background: var(--axum-surface-2);
+}
+.cart-drawer .cart-line__body { min-width: 0; }
+.cart-drawer .cart-line__name {
+  font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 12px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: #fff;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cart-drawer .cart-line__meta {
+  margin-top: 4px;
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--axum-ink-muted);
+}
+.cart-drawer .cart-line__meta-val { color: var(--axum-ink); }
+
+.cart-drawer .cart-line__row {
+  margin-top: 12px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.cart-drawer .cart-line__price {
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 13px; letter-spacing: 0.06em;
+  color: #fff; white-space: nowrap;
+}
+
+/* Quantity stepper */
+.cart-drawer .cart-qty {
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--axum-line-strong);
+}
+.cart-drawer .cart-qty__btn {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--axum-ink);
+  transition: background 0.18s var(--axum-ease), color 0.18s var(--axum-ease);
+}
+.cart-drawer .cart-qty__btn:hover:not(:disabled) { background: var(--axum-accent); color: #000; }
+.cart-drawer .cart-qty__btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.cart-drawer .cart-qty__btn:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: -2px; }
+.cart-drawer .cart-qty__val {
+  min-width: 26px; text-align: center;
+  font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 12px;
+  color: #fff;
+}
+
+/* Line actions (save-for-later, remove) */
+.cart-drawer .cart-line__actions { display: inline-flex; gap: 4px; margin-left: auto; }
+.cart-drawer .cart-line__action {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--axum-ink-muted);
+  transition: color 0.18s var(--axum-ease);
+}
+.cart-drawer .cart-line__action:hover { color: var(--axum-pink); }
+.cart-drawer .cart-line__action:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+/* ── Promo code ───────────────────────────────────────────────────────── */
+.cart-drawer .cart-promo {
+  padding: 14px 22px;
+  border-top: 1px solid var(--axum-line);
+}
+.cart-drawer .cart-promo__label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--axum-ink-muted);
+  margin-bottom: 8px;
+}
+.cart-drawer .cart-promo__row { display: flex; gap: 8px; }
+.cart-drawer .cart-promo__input {
+  flex: 1 1 auto; min-width: 0;
+  background: transparent;
+  border: 1px solid var(--axum-line-strong);
+  color: var(--axum-ink);
+  padding: 10px 12px;
+  font-family: 'Inter', sans-serif; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.cart-drawer .cart-promo__input::placeholder { color: var(--axum-ink-faint); text-transform: none; letter-spacing: normal; }
+.cart-drawer .cart-promo__input:focus-visible {
+  outline: none; border-color: var(--axum-ink);
+  box-shadow: 0 0 0 2px var(--axum-focus);
+}
+.cart-drawer .cart-promo__apply {
+  background: var(--axum-accent); color: #000;
+  border: 1px solid var(--axum-accent);
+  padding: 0 16px;
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  transition: background 0.2s var(--axum-ease), color 0.2s var(--axum-ease);
+}
+.cart-drawer .cart-promo__apply:hover:not(:disabled) { background: transparent; color: var(--axum-accent); }
+.cart-drawer .cart-promo__apply:disabled { opacity: 0.4; cursor: not-allowed; }
+.cart-drawer .cart-promo__apply:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+.cart-drawer .cart-promo__err {
+  margin-top: 8px;
+  color: var(--axum-pink);
+  font-size: 11px; letter-spacing: 0.05em;
+}
+
+.cart-drawer .cart-promo__applied {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255, 61, 165, 0.12);
+  border: 1px solid rgba(255, 61, 165, 0.35);
+  padding: 8px 12px;
+  color: #fff;
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+}
+.cart-drawer .cart-promo__pct { color: var(--axum-pink); }
+.cart-drawer .cart-promo__remove {
+  margin-left: 4px;
+  font-size: 9px; letter-spacing: 0.32em;
+  color: var(--axum-ink-muted);
+  background: transparent;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.cart-drawer .cart-promo__remove:hover { color: var(--axum-pink); }
+.cart-drawer .cart-promo__remove:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+/* ── Summary + checkout ───────────────────────────────────────────────── */
+.cart-drawer .cart-foot {
+  padding: 16px 22px 22px;
+  border-top: 1px solid var(--axum-line);
+  background: var(--axum-surface-2);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.cart-drawer .cart-total-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--axum-ink-muted);
+}
+.cart-drawer .cart-total-row__val { font-family: 'Oswald', sans-serif; font-weight: 700; color: var(--axum-ink); }
+.cart-drawer .cart-total-row--positive .cart-total-row__val { color: var(--axum-pink); }
+.cart-drawer .cart-total-row--total {
+  padding-top: 10px;
+  border-top: 1px solid var(--axum-line);
+  margin-top: 2px;
+  color: #fff;
+}
+.cart-drawer .cart-total-row--total .cart-total-row__lbl { color: #fff; }
+.cart-drawer .cart-total-row--total .cart-total-row__val { color: #fff; font-size: 22px; letter-spacing: 0.04em; }
+.cart-drawer .cart-foot__note { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--axum-ink-faint); margin-top: 2px; }
+
+.cart-drawer .cart-checkout-btn {
+  margin-top: 8px;
+  width: 100%; padding: 14px 18px;
+  background: var(--axum-accent); color: #000;
+  border: 1px solid var(--axum-accent);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+  transition: background 0.2s var(--axum-ease), color 0.2s var(--axum-ease);
+}
+.cart-drawer .cart-checkout-btn:hover { background: transparent; color: var(--axum-accent); }
+.cart-drawer .cart-checkout-btn:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+.cart-drawer .cart-continue-link {
+  margin-top: 4px;
+  background: transparent; color: var(--axum-ink-muted);
+  font-family: 'Oswald', sans-serif; font-weight: 700;
+  font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+  padding: 6px 0;
+  text-decoration: underline; text-underline-offset: 4px;
+}
+.cart-drawer .cart-continue-link:hover { color: var(--axum-pink); }
+.cart-drawer .cart-continue-link:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 2px; }
+
+/* ============================================================================
    CollectionTiles — kinetic editorial grid (Bottega / Acne / Balenciaga vibe)
    ----------------------------------------------------------------------------
    Layout: photo on top in its own clip-mask, text in its own surface row below.
