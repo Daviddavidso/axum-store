@@ -53,8 +53,8 @@ const HeroSlider = () => {
         <img
           src={asset("/campaign/hero-axum-2.jpg")}
           alt={t("hero.alt")}
-          width="1280"
-          height="960"
+          width="2560"
+          height="1082"
           loading="eager"
           fetchPriority="high"
           decoding="async"
