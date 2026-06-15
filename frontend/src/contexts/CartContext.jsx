@@ -13,6 +13,19 @@ const load = (k, fallback) => {
   } catch { return fallback; }
 };
 
+// Migrate any cart line whose `image` was persisted with a doubled deploy base
+// (e.g. "/axum-store/axum-store/products/…", caused by an earlier non-idempotent
+// asset() wrapper before this fix shipped). Strip the redundant prefix so the
+// stored value matches the single-prefix convention again.
+const BASE = process.env.PUBLIC_URL || "";
+const dedupeImagePath = (p) => {
+  if (typeof p !== "string" || !BASE) return p;
+  const doubled = BASE + BASE + "/";
+  return p.startsWith(doubled) ? p.slice(BASE.length) : p;
+};
+const migrateItems = (arr) =>
+  Array.isArray(arr) ? arr.map((it) => it && it.image ? { ...it, image: dedupeImagePath(it.image) } : it) : arr;
+
 // Demo promo codes — production wires this to the backend. Codes are
 // case-insensitive (we uppercase before lookup) and the discount is a flat
 // percent off the subtotal. Easy to extend or move server-side later.
@@ -30,7 +43,7 @@ const FREE_SHIP_THRESHOLD = { RUB: 15000, USD: 150, IDR: 2400000 };
 const FLAT_SHIPPING = { RUB: 590, USD: 8, IDR: 95000 };
 
 export const CartProvider = ({ children }) => {
-  const [items, setItems] = useState(() => load(KEY, []));
+  const [items, setItems] = useState(() => migrateItems(load(KEY, [])));
   const [wishlist, setWishlist] = useState(() => load(WISH_KEY, []));
   const [promo, setPromo] = useState(() => load(PROMO_KEY, null));
   const [drawerOpen, setDrawerOpen] = useState(false);
