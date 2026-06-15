@@ -7,6 +7,7 @@ export const STRINGS = {
     a11y: {
       opens_new_tab: "(opens in new tab)",
       back_to_top: "Back to top",
+      bottom_nav: "Quick navigation",
     },
     nav: {
       shop: "Shop",
@@ -329,6 +330,7 @@ export const STRINGS = {
     a11y: {
       opens_new_tab: "(открывается в новой вкладке)",
       back_to_top: "Наверх",
+      bottom_nav: "Быстрая навигация",
     },
     nav: {
       shop: "Магазин",

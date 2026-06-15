@@ -141,6 +141,116 @@ html, body, #root {
 .ck-field textarea.ck-input { padding-top: 6px; padding-bottom: 6px; }
 
 /* ============================================================================
+   Mobile bottom tab bar (MobileBagButton) — premium glass-bar.
+   Glassy charcoal surface + thin hairline + vertical icon-over-label cells +
+   pink active indicator + pink bag count badge. Safe-area aware for iOS.
+   Contrast: ink #d4d4d4 on glass ≈ 8.4:1 (text 4.5:1 ✓); icon 1.6 stroke at
+   18px keeps shape visible at the same ratio. Focus ring 2px white.
+   ============================================================================ */
+.mnav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  display: flex; align-items: stretch;
+  height: calc(60px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgba(20, 20, 20, 0.78);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  /* subtle inner top highlight reads like a thin lifted glass edge */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.mnav-cell {
+  position: relative;
+  flex: 1 1 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  background: transparent;
+  color: var(--axum-ink-muted);
+  padding: 8px 6px 10px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: color 0.2s var(--axum-ease), transform 0.12s var(--axum-ease);
+  min-height: 48px;
+}
+.mnav-cell:hover { color: #fff; }
+.mnav-cell:active { transform: scale(0.96); }
+.mnav-cell:focus-visible {
+  outline: 2px solid var(--axum-focus);
+  outline-offset: -3px;
+}
+.mnav-cell.is-active { color: #fff; }
+
+/* Active indicator — thin pink bar at the top of the active cell. */
+.mnav-cell__indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--axum-pink);
+  transform: translateX(-50%);
+  transition: width 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.mnav-cell.is-active .mnav-cell__indicator { width: 22px; }
+
+.mnav-cell__icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; height: 24px;
+}
+.mnav-cell__label { line-height: 1; }
+
+/* Pink count badge over the bag icon (Amazon / Zara vocabulary). */
+.mnav-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--axum-pink);
+  color: #000;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* tiny halo so the badge separates over busy backgrounds */
+  box-shadow: 0 0 0 2px rgba(20, 20, 20, 0.9);
+}
+
+/* Hairline divider between cells — barely visible, just enough to split. */
+.mnav-divider {
+  width: 1px;
+  align-self: stretch;
+  margin: 12px 0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Push page content above the bar — clears safe-area on iOS. */
+@media (max-width: 767px) {
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mnav-cell,
+  .mnav-cell__indicator { transition: none !important; }
+  .mnav-cell:active { transform: none !important; }
+}
+
+/* ============================================================================
    CartDrawer — Amazon/Zara/Balenciaga-class shopping bag.
    Surfaces sit on the dark theme; line items get a thin hairline + image; the
    summary block is sticky-feel at the bottom. Free-ship progress + promo input
