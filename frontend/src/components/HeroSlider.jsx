@@ -1,5 +1,6 @@
 import React from "react";
 import { ChevronDown } from "lucide-react";
+import { asset } from "@/lib/asset";
 import { useLang } from "@/contexts/LanguageContext";
 import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
 
@@ -45,12 +46,12 @@ const HeroSlider = () => {
       <picture>
         <source
           media="(max-width: 640px)"
-          srcSet="/campaign/hero-axum-mobile.jpg"
+          srcSet={asset("/campaign/hero-axum-mobile.jpg")}
           width="1152"
           height="1728"
         />
         <img
-          src="/campaign/hero-axum-2.jpg"
+          src={asset("/campaign/hero-axum-2.jpg")}
           alt={t("hero.alt")}
           width="1280"
           height="960"

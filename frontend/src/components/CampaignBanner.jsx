@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "@/contexts/LanguageContext";
+import { asset, assetSrcSet } from "@/lib/asset";
 
 /**
  * CampaignBanner — a single FULL-BLEED studio band on the home page.
@@ -40,8 +41,8 @@ const CampaignBanner = () => {
           {t("campaign.studio_section_name")}
         </h2>
         <img
-          src="/campaign/hero-dsc04992-1920w.jpg"
-          srcSet="/campaign/hero-dsc04992-1280w.jpg 1280w, /campaign/hero-dsc04992-1920w.jpg 1920w, /campaign/hero-dsc04992-2560w.jpg 2560w"
+          src={asset("/campaign/hero-dsc04992-1920w.jpg")}
+          srcSet={assetSrcSet("/campaign/hero-dsc04992-1280w.jpg 1280w, /campaign/hero-dsc04992-1920w.jpg 1920w, /campaign/hero-dsc04992-2560w.jpg 2560w")}
           sizes="100vw"
           alt={t("campaign.studio_alt")}
           width="2560"

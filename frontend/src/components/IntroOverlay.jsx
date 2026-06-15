@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { asset } from "@/lib/asset";
 
 // Module-level flag: the intro plays once per page-load session. It persists
 // across react-router v7 client navigations (the module stays loaded), so the
@@ -55,7 +56,7 @@ const IntroOverlay = () => {
       {/* Decorative: the real header logo + sr-only <h1> already name the
           brand/page, and the whole overlay is aria-hidden → alt="". */}
       <img
-        src="/brand/axum-logo-black.png"
+        src={asset("/brand/axum-logo-black.png")}
         alt=""
         aria-hidden="true"
         className="axum-intro__logo"

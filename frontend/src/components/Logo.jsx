@@ -1,4 +1,5 @@
 import React from "react";
+import { asset } from "@/lib/asset";
 
 /**
  * AXUM Logo component.
@@ -25,10 +26,11 @@ const Logo = ({
 }) => {
   // Logogram still uses the legacy assets.
   if (variant === "logogram") {
-    const file =
+    const file = asset(
       tone === "white"
         ? "/brand/axum-logogram-white.png"
-        : "/brand/axum-logogram-black.png";
+        : "/brand/axum-logogram-black.png"
+    );
     const style = {
       height: `${height}px`,
       width: "auto",
@@ -53,7 +55,7 @@ const Logo = ({
   if (tone === "overlay") {
     return (
       <img
-        src="/brand/axum-logo-white.png"
+        src={asset("/brand/axum-logo-white.png")}
         alt={alt}
         draggable={false}
         style={{
@@ -73,7 +75,7 @@ const Logo = ({
   if (tone === "white") {
     return (
       <img
-        src="/brand/axum-logo-white.png"
+        src={asset("/brand/axum-logo-white.png")}
         alt={alt}
         draggable={false}
         style={{ height: `${height}px`, width: "auto", display: "block" }}
@@ -98,7 +100,7 @@ const Logo = ({
 
   return (
     <img
-      src="/brand/axum-logo-grey.png"
+      src={asset("/brand/axum-logo-grey.png")}
       alt={alt}
       draggable={false}
       style={style}

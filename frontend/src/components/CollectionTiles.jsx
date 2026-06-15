@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "@/contexts/LanguageContext";
 import { COLLECTIONS, collectionHref } from "@/lib/collections";
+import { asset } from "@/lib/asset";
 
 /**
  * CollectionTiles — "Explore the collections" grid (reference: Balenciaga's
@@ -53,7 +54,7 @@ const CollectionTiles = () => {
           >
             {/* Decorative — the <h3> names the collection. */}
             <img
-              src={c.img}
+              src={asset(c.img)}
               alt=""
               loading="lazy"
               className="wipe absolute inset-0 w-full h-full object-cover object-center axum-ease group-hover:scale-[1.05]"

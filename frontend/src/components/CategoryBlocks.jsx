@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SplitText from "@/components/SplitText";
 import { useLang } from "@/contexts/LanguageContext";
+import { asset } from "@/lib/asset";
 
 /**
  * CategoryBlocks — two full-width editorial "shop by category" tiles
@@ -62,7 +63,7 @@ const CategoryBlocks = () => {
           >
             {/* Decorative — the heading names the category. */}
             <img
-              src={tile.img}
+              src={asset(tile.img)}
               alt=""
               loading="lazy"
               className="wipe absolute inset-0 w-full h-full object-cover object-center axum-ease group-hover:scale-[1.04]"

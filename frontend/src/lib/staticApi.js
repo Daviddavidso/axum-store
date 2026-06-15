@@ -12,6 +12,21 @@ const ENABLED = process.env.REACT_APP_STATIC_DEMO === "1";
 // build also works under a sub-path.
 const BASE = process.env.PUBLIC_URL || "";
 
+// Asset paths inside the harvested JSON (image1, image, srcset entries, …) are
+// root-absolute (/products/…). Under a sub-path deploy they must carry BASE too,
+// or every photo 404s. Recursively prefix any string that points at an asset root.
+const ASSET_RE = /^\/(products|campaign|brand|assets)\//;
+function withBase(v) {
+  if (typeof v === "string") return ASSET_RE.test(v) ? BASE + v : v;
+  if (Array.isArray(v)) return v.map(withBase);
+  if (v && typeof v === "object") {
+    const o = {};
+    for (const k in v) o[k] = withBase(v[k]);
+    return o;
+  }
+  return v;
+}
+
 const _cache = new Map();
 async function loadJson(file) {
   if (_cache.has(file)) return _cache.get(file);
@@ -53,21 +68,21 @@ async function handleGet(path, config) {
   if (path === "/api/config") return ok(await loadJson("config.json"), config);
   if (path === "/api/payments/config") return ok(await loadJson("payments-config.json"), config);
   if (path === "/api/products/categories") return ok(await loadJson(`categories.${lang}.json`), config);
-  if (path === "/api/hero") return ok(await loadJson(`hero.${lang}.json`), config);
-  if (path === "/api/lookbook") return ok(await loadJson(`lookbook.${lang}.json`), config);
+  if (path === "/api/hero") return ok(withBase(await loadJson(`hero.${lang}.json`)), config);
+  if (path === "/api/lookbook") return ok(withBase(await loadJson(`lookbook.${lang}.json`)), config);
 
   if (path === "/api/products") {
     const list = await loadJson(`products.${lang}.json`);
     const cat = config.params && config.params.category;
     const filtered = cat && cat !== "ALL" ? list.filter((p) => p.category === cat) : list;
-    return ok(filtered, config);
+    return ok(withBase(filtered), config);
   }
 
   if (path.startsWith("/api/products/")) {
     const id = path.split("/").pop();
     const list = await loadJson(`products.${lang}.json`);
     const found = list.find((p) => p.id === id);
-    return found ? ok(found, config) : err(404, config);
+    return found ? ok(withBase(found), config) : err(404, config);
   }
 
   // Logged-out demo: no session.
