@@ -109,9 +109,19 @@ const ProductPage = () => {
               alt={images[safeActive].alt}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            {/* Solid white plate (not /90) so the 10px counter keeps 4.5:1 over
-                any photo (WCAG 1.4.3). */}
-            <div className="absolute top-3 left-3 text-[10px] tracking-[0.3em] uppercase bg-white px-2 py-1">
+            {/* Dark plate + true #fff text — guarantees the counter holds
+                ≥7:1 over ANY photo (busy/light/skin tones included), and
+                bypasses the dark-theme global text-white→ink remap which would
+                otherwise turn this counter mid-grey on the dark plate. */}
+            <div
+              className="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 text-[10px] tracking-[0.32em] uppercase font-display"
+              style={{
+                color: "#fff",
+                background: "rgba(10, 10, 10, 0.78)",
+                backdropFilter: "blur(6px)",
+                border: "1px solid rgba(255, 255, 255, 0.14)",
+              }}
+            >
               {safeActive + 1} / {images.length}
             </div>
           </div>
