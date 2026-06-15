@@ -22,18 +22,34 @@ const readSaved = () => {
   }
 };
 
-const Field = ({ label, id, ...props }) => {
+/**
+ * Field — checkout input with a floating-label "box" pattern.
+ *
+ * Accessibility (accessibility-lead checklist):
+ *   • Real <label htmlFor> wired to the <input id> — clickable + announced.
+ *   • Visible 1px border around every field on dark surfaces (the old underline-
+ *     only style was invisible against #242424). Border darkens to ink on hover
+ *     and switches to a 2px focus ring on focus-visible — focus is never
+ *     conveyed by colour alone (WCAG 2.4.7 / 2.4.13).
+ *   • Placeholder is left empty so the label can pivot above the field on focus
+ *     OR when the field has content — the floating label is the visible name,
+ *     never duplicated by a placeholder ghost.
+ *   • Label uses .ck-label so it reads as the field's accessible name in the
+ *     resting state too; aria-required from `required` is implicit on the input.
+ */
+const Field = ({ label, id, className = "", ...props }) => {
   const autoId = useId();
   const fieldId = id || autoId;
   return (
-    <label htmlFor={fieldId} className="block">
-      <span className="block text-[10px] tracking-[0.3em] uppercase opacity-60 mb-1">{label}</span>
+    <div className={`ck-field ${className}`}>
       <input
         id={fieldId}
+        placeholder=" "
         {...props}
-        className="w-full border-b border-black px-1 py-2 text-sm bg-transparent outline-none focus:border-black axum-ease"
+        className="ck-input"
       />
-    </label>
+      <label htmlFor={fieldId} className="ck-label">{label}</label>
+    </div>
   );
 };
 
@@ -140,7 +156,7 @@ const CheckoutPage = () => {
   const orderDisabled = submitting || items.length === 0;
 
   return (
-    <div className="App bg-white min-h-screen" data-testid="checkout-page">
+    <div className="App min-h-screen" data-testid="checkout-page" style={{ background: "var(--axum-surface)" }}>
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
@@ -245,7 +261,8 @@ const CheckoutPage = () => {
                     onChange={(e) => setPromo(e.target.value)}
                     placeholder={t("checkout.promo")}
                     aria-label={t("checkout.promo")}
-                    className="flex-1 border border-black px-3 py-2 text-sm bg-white outline-none uppercase tracking-widest"
+                    className="flex-1 ck-input"
+                    style={{ height: 44, padding: "10px 12px", textTransform: "uppercase", letterSpacing: "0.15em" }}
                     data-testid="promo-input"
                   />
                   <button type="button" onClick={applyPromo} className="axum-btn" data-testid="promo-apply">{t("checkout.apply")}</button>

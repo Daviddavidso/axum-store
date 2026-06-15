@@ -81,6 +81,78 @@ html, body, #root {
 .graffiti-sticker { display: none !important; }
 
 /* ============================================================================
+   Checkout fields — floating-label input boxes for the dark theme.
+   The previous underline-only inputs blended into #242424; these draw a clear
+   1px frame so the visitor SEES where to type, with a smooth label float on
+   focus or filled state. Touch target ≥48px, focus ring 2px white.
+   Contrast: border #4d4d4d on surface ≈ 3.4:1 (UI 3:1 ✓), text ≥9.4:1.
+   ============================================================================ */
+.ck-field {
+  position: relative;
+  width: 100%;
+}
+.ck-input {
+  width: 100%;
+  height: 56px;
+  padding: 22px 14px 8px;
+  background: var(--axum-surface-2);
+  color: #fff;
+  border: 1px solid var(--axum-line-strong);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  outline: none;
+  transition: border-color 0.18s var(--axum-ease), background 0.18s var(--axum-ease), box-shadow 0.18s var(--axum-ease);
+  appearance: none;
+  -webkit-appearance: none;
+}
+.ck-input::placeholder { color: transparent; }
+.ck-input:hover { border-color: var(--axum-ink-muted); }
+.ck-input:focus-visible {
+  border-color: var(--axum-ink);
+  background: var(--axum-surface);
+  box-shadow: 0 0 0 2px var(--axum-focus);
+}
+.ck-input:autofill,
+.ck-input:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px var(--axum-surface-2) inset;
+  caret-color: #fff;
+}
+
+.ck-label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--axum-ink-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  background: transparent;
+  padding: 0 4px;
+  transition: top 0.18s var(--axum-ease), font-size 0.18s var(--axum-ease), letter-spacing 0.18s var(--axum-ease), color 0.18s var(--axum-ease);
+}
+/* Float the label whenever the field is focused OR has a value (placeholder=" "
+   means :placeholder-shown is true ONLY when empty, so :not(:placeholder-shown)
+   = the field is filled). !important guards against any later utility reset. */
+.ck-input:focus + .ck-label,
+.ck-input:not(:placeholder-shown) + .ck-label {
+  top: 12px !important;
+  transform: translateY(0) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase !important;
+  color: var(--axum-ink-muted) !important;
+}
+.ck-input:focus + .ck-label { color: #fff !important; }
+
+/* Date / select inputs inherit the same box (in case any are added later). */
+.ck-field select.ck-input,
+.ck-field textarea.ck-input { padding-top: 24px; padding-bottom: 8px; }
+
+/* ============================================================================
    CartDrawer — Amazon/Zara/Balenciaga-class shopping bag.
    Surfaces sit on the dark theme; line items get a thin hairline + image; the
    summary block is sticky-feel at the bottom. Free-ship progress + promo input
