@@ -81,6 +81,245 @@ html, body, #root {
 .graffiti-sticker { display: none !important; }
 
 /* ============================================================================
+   CollectionTiles — kinetic editorial grid (Bottega / Acne / Balenciaga vibe)
+   ----------------------------------------------------------------------------
+   Layout: photo on top in its own clip-mask, text in its own surface row below.
+   On viewport-enter the heading rises from behind a clip-path mask, the eyebrow
+   and CTA stagger in, and the photo subtly scales out from a vertical clip.
+   On hover the front photo cross-fades to a second look, the index chip swaps
+   to a piece-count chip, a hairline draws under the CTA, and the arrow shifts.
+   Tactile press on :active. Every transform is transform/opacity/clip-path only
+   (no layout) and gated by prefers-reduced-motion.
+   ============================================================================ */
+.ctiles { background: var(--axum-surface); }
+
+.ctiles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 0 14px 14px;
+}
+@media (min-width: 1024px) {
+  .ctiles-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 0 18px 24px;
+  }
+}
+
+.ctile {
+  position: relative;
+  display: block;
+  background: var(--axum-surface);
+  border: 1px solid var(--axum-line);
+  transition: border-color 0.45s var(--axum-ease), transform 0.18s var(--axum-ease);
+  text-decoration: none;
+  color: inherit;
+}
+.ctile:hover { border-color: var(--axum-line-strong); }
+.ctile:active { transform: scale(0.992); transition-duration: 0.12s; }
+.ctile:focus-visible { outline: 2px solid var(--axum-focus); outline-offset: 3px; }
+
+/* ── Media ─────────────────────────────────────────────────────────────── */
+.ctile-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--axum-surface-2);
+}
+.ctile-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* Vertical clip-reveal on enter: image is masked from the bottom and rises
+     into view as the tile is revealed. Settled state is set under .in below. */
+  clip-path: inset(0 0 100% 0);
+  transform: scale(1.06);
+  transition:
+    clip-path 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--rd, 0s) + 0.05s),
+    transform 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--rd, 0s) + 0.05s),
+    opacity 0.55s var(--axum-ease);
+  will-change: transform, clip-path;
+}
+.ctile-img--back { opacity: 0; }
+.js-ready .ctile.reveal.in .ctile-img--front,
+.js-ready .ctile.reveal.in .ctile-img--back {
+  clip-path: inset(0 0 0% 0);
+  transform: scale(1);
+}
+.ctile:hover .ctile-img--front { opacity: 0; transform: scale(1.04); transition-duration: 0.7s, 1.2s, 0.45s; transition-delay: 0s; }
+.ctile:hover .ctile-img--back  { opacity: 1; transform: scale(1.02); transition-duration: 0.7s, 1.2s, 0.45s; transition-delay: 0s; }
+
+/* Chip in the top-right of the media — index → piece-count swap on hover. */
+.ctile-chip {
+  position: absolute;
+  top: 10px; right: 10px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #fff;
+  z-index: 2;
+  overflow: hidden;
+  min-width: 64px;
+  height: 26px;
+}
+.ctile-chip__idx,
+.ctile-chip__pieces {
+  white-space: nowrap;
+  transition: transform 0.45s var(--axum-ease), opacity 0.35s var(--axum-ease);
+  will-change: transform, opacity;
+}
+.ctile-chip__pieces {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(110%);
+  opacity: 0;
+}
+.ctile:hover .ctile-chip__idx { transform: translateY(-110%); opacity: 0; }
+.ctile:hover .ctile-chip__pieces { transform: translateY(0); opacity: 1; }
+
+/* ── Body (text row beneath photo) ─────────────────────────────────────── */
+.ctile-body {
+  padding: 14px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+@media (min-width: 1024px) {
+  .ctile-body { padding: 16px 18px 22px; gap: 10px; }
+}
+
+.ctile-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--axum-ink-muted);
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.55s var(--axum-ease) calc(var(--rd, 0s) + 0.45s),
+    transform 0.55s var(--axum-ease) calc(var(--rd, 0s) + 0.45s);
+}
+.ctile-eyebrow-dot { color: var(--axum-pink); }
+.js-ready .ctile.reveal.in .ctile-eyebrow { opacity: 1; transform: translateY(0); }
+
+/* Heading: clip-path mask reveal — slides up from below a hard edge. */
+.ctile-title {
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+  color: #fff;
+}
+.ctile-title__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 2px;
+}
+.ctile-title__inner {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) calc(var(--rd, 0s) + 0.2s);
+  will-change: transform;
+}
+.js-ready .ctile.reveal.in .ctile-title__inner { transform: translateY(0); }
+
+/* CTA row: small label + animated underline + arrow. */
+.ctile-cta {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--axum-ink);
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.6s var(--axum-ease) calc(var(--rd, 0s) + 0.6s),
+    transform 0.6s var(--axum-ease) calc(var(--rd, 0s) + 0.6s);
+}
+.js-ready .ctile.reveal.in .ctile-cta { opacity: 1; transform: translateY(0); }
+
+.ctile-cta__label { position: relative; padding-bottom: 3px; }
+.ctile-cta__label::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.ctile:hover .ctile-cta__label::after,
+.ctile:focus-visible .ctile-cta__label::after { transform: scaleX(1); }
+
+/* The thin connecting line between label and arrow extends on hover. */
+.ctile-cta__line {
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left center;
+  transition: width 0.5s var(--axum-ease);
+}
+.ctile:hover .ctile-cta__line { width: 28px; }
+
+.ctile-cta__arrow {
+  display: inline-block;
+  transition: transform 0.5s var(--axum-ease), color 0.3s var(--axum-ease);
+}
+.ctile:hover .ctile-cta__arrow { transform: translateX(4px); color: var(--axum-pink); }
+
+/* Reduced motion: kill every transition + keep everything visible & settled. */
+@media (prefers-reduced-motion: reduce) {
+  .ctile,
+  .ctile-img,
+  .ctile-chip__idx,
+  .ctile-chip__pieces,
+  .ctile-eyebrow,
+  .ctile-title__inner,
+  .ctile-cta,
+  .ctile-cta__label::after,
+  .ctile-cta__line,
+  .ctile-cta__arrow {
+    transition: none !important;
+    animation: none !important;
+  }
+  .ctile-img { clip-path: none !important; transform: none !important; opacity: 1 !important; }
+  .ctile-img--back { opacity: 0 !important; }
+  .ctile-title__inner { transform: none !important; }
+  .ctile-eyebrow, .ctile-cta { opacity: 1 !important; transform: none !important; }
+  .ctile-chip__pieces { opacity: 0 !important; }
+}
+
+/* ============================================================================
    ProductCard v2 — minimalist, dark-theme-native.
    ----------------------------------------------------------------------------
    Goals (client brief: "сделай минималистично, стильно, чтобы вписывалось в

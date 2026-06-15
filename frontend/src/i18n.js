@@ -129,6 +129,8 @@ export const STRINGS = {
       title: "Explore the collections",
       cta: "Explore",
       cta_aria: "Explore the {name} collection",
+      pieces: "Pieces",
+      view: "View",
     },
     hero: {
       scroll: "Scroll ↓",
@@ -428,6 +430,8 @@ export const STRINGS = {
       title: "Смотреть коллекции",
       cta: "Смотреть",
       cta_aria: "Открыть коллекцию «{name}»",
+      pieces: "Вещей",
+      view: "Открыть",
     },
     hero: {
       scroll: "Скролл ↓",

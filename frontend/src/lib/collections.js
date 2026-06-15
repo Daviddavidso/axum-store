@@ -11,26 +11,38 @@ export const COLLECTIONS = [
   {
     slug: "new",
     img: "/products/col-new-violet-corset.jpg",
+    imgAlt: "/products/col-onyx-hood-set.jpg",
+    pieces: 12,
     cat: { en: "NEW COLLECTION", ru: "НОВАЯ КОЛЛЕКЦИЯ" },
     label: { en: "New Collection", ru: "Новая коллекция" },
+    eyebrow: { en: "Drop 04", ru: "Дроп 04" },
   },
   {
     slug: "dresses",
     img: "/products/axum-red-sheer-slip-dress.jpg",
+    imgAlt: "/products/col-new-violet-corset.jpg",
+    pieces: 8,
     cat: { en: "DRESSES", ru: "ПЛАТЬЯ" },
     label: { en: "Dresses", ru: "Платья" },
+    eyebrow: { en: "Evening", ru: "Вечер" },
   },
   {
     slug: "sets",
     img: "/products/col-sets-ivory-bustier.jpg",
+    imgAlt: "/products/col-streetwear-onyx-wideleg.jpg",
+    pieces: 10,
     cat: { en: "SETS", ru: "КОМПЛЕКТЫ" },
     label: { en: "Sets", ru: "Комплекты" },
+    eyebrow: { en: "Two-piece", ru: "Две вещи" },
   },
   {
     slug: "streetwear",
     img: "/products/col-streetwear-onyx-wideleg.jpg",
+    imgAlt: "/products/col-onyx-hood-set.jpg",
+    pieces: 14,
     cat: { en: "STREETWEAR", ru: "СТРИТВИР" },
     label: { en: "Streetwear", ru: "Стритвир" },
+    eyebrow: { en: "Everyday", ru: "Каждый день" },
   },
 ];
 

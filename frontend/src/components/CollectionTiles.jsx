@@ -5,32 +5,37 @@ import { COLLECTIONS, collectionHref } from "@/lib/collections";
 import { asset } from "@/lib/asset";
 
 /**
- * CollectionTiles — "Explore the collections" grid (reference: Balenciaga's
- * EXPLORE OUR SERVICES). Large image tiles that deep-link into the catalog
- * pre-filtered to that collection.
+ * CollectionTiles — kinetic, editorial "Explore the collections" grid.
  *
- * Accessibility (accessibility-lead checklist applied):
+ * Reference vocabulary: Balenciaga / Bottega Veneta / Acne Studios. Photo and
+ * type live in SEPARATE rows so the image breathes; type sits on the site
+ * surface (no chunky black caption band). Hover triggers a cross-fade to a
+ * second photo, an animated underline draw under the CTA, and the eyebrow
+ * cycles to a piece-count chip — quiet movement, never wobbly.
+ *
+ * Accessibility (accessibility-lead checklist + house patterns):
  *   • Each tile is ONE <Link> wrapping the whole card — no nested interactives.
- *   • The collection photo is decorative (alt="") because the visible <h3>
- *     names the collection; the link's accessible name comes from that text +
- *     the aria-label, which is unique per tile (WCAG 1.1.1 / 2.4.4).
- *   • Whole-tile focus uses the two-tone .tile-link ring (white halo + dark)
- *     so it stays visible over any photo on the dark theme (2.4.7 / 2.4.13).
- *   • Section is a labelled region with a real <h2>; tiles are <h3> siblings —
- *     no skipped heading levels under the page's single <h1>.
- *   • Bottom scrim reaches ~92% black behind the label so white text holds
- *     ≥4.5:1 regardless of the photo pixels (WCAG 1.4.3).
+ *     Both photos carry alt="" because the visible <h3> already names the
+ *     collection (WCAG 1.1.1). Accessible name comes from the link aria-label.
+ *   • The eyebrow swap and piece-count chip are aria-hidden purely decorative
+ *     overlays — they never change the link's accessible name.
+ *   • Whole-tile focus uses .tile-link's two-tone ring (white halo + dark),
+ *     stays visible over any photo on the dark theme (WCAG 2.4.7 / 2.4.13).
+ *   • All motion (image scale, mask reveals, underline draw, cross-fade) is
+ *     gated by prefers-reduced-motion in CSS — content stays fully visible
+ *     and static when reduced (WCAG 2.3.3).
+ *   • Tile is a labelled landmark group; <h3> siblings under the page <h1>.
  */
 const CollectionTiles = () => {
   const { lang, t } = useLang();
 
   return (
     <section
-      className="w-full bg-white axum-border-t"
+      className="w-full axum-border-t ctiles"
       aria-labelledby="collections-title"
       data-testid="collection-tiles"
     >
-      <div className="px-5 md:px-10 pt-8 md:pt-12 pb-5 md:pb-6">
+      <div className="px-5 md:px-10 pt-8 md:pt-12 pb-5 md:pb-7">
         <div className="text-[10px] tracking-[0.4em] uppercase text-[var(--axum-ink-muted)] mb-3">
           {t("collections.eyebrow")}
         </div>
@@ -42,49 +47,74 @@ const CollectionTiles = () => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4">
-        {COLLECTIONS.map((c, i) => (
-          <Link
-            key={c.slug}
-            to={collectionHref(lang, c)}
-            className="tile-link reveal group relative block overflow-hidden bg-black border-t border-l border-[var(--axum-line)]"
-            style={{ minHeight: "min(64vh, 560px)", "--rd": `${i * 0.06}s` }}
-            aria-label={t("collections.cta_aria").replace("{name}", c.label[lang] || c.label.en)}
-            data-testid={`collection-tile-${c.slug}`}
-          >
-            {/* Decorative — the <h3> names the collection. */}
-            <img
-              src={asset(c.img)}
-              alt=""
-              loading="lazy"
-              className="wipe absolute inset-0 w-full h-full object-cover object-center axum-ease group-hover:scale-[1.05]"
-            />
-            {/* Gradient adds atmospheric darkening higher up; the solid label
-                band below carries the actual contrast guarantee for the text. */}
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
+      <div className="ctiles-grid">
+        {COLLECTIONS.map((c, i) => {
+          const name = c.label[lang] || c.label.en;
+          const eye = c.eyebrow ? (c.eyebrow[lang] || c.eyebrow.en) : null;
+          const indexStr = String(i + 1).padStart(2, "0");
+          return (
+            <Link
+              key={c.slug}
+              to={collectionHref(lang, c)}
+              className="tile-link ctile reveal group"
+              style={{ "--rd": `${i * 0.07}s` }}
+              aria-label={t("collections.cta_aria").replace("{name}", name)}
+              data-testid={`collection-tile-${c.slug}`}
+            >
+              {/* PHOTO ─ two stacked images, cross-fade on hover. */}
+              <div className="ctile-media" aria-hidden="true">
+                <img
+                  src={asset(c.img)}
+                  alt=""
+                  loading="lazy"
+                  className="ctile-img ctile-img--front"
+                />
+                {c.imgAlt ? (
+                  <img
+                    src={asset(c.imgAlt)}
+                    alt=""
+                    loading="lazy"
+                    className="ctile-img ctile-img--back"
+                  />
+                ) : null}
 
-            {/* Solid dark caption band — gives white text a guaranteed ≥7:1
-                substrate regardless of how light the photo is. */}
-            <div className="absolute inset-x-0 bottom-0 z-10 px-4 md:px-6 py-4 md:py-5 bg-[rgba(10,10,10,0.78)] backdrop-blur-sm border-t border-white/10">
-              {/* Inline #fff — the global dark-theme override remaps .text-white
-                  to the muted grey ink token, which on a dark plate reads as
-                  invisible. Forcing #fff guarantees ≥7:1 against the band. */}
-              <h3
-                className="font-display text-2xl md:text-3xl uppercase leading-none"
-                style={{ color: "#fff" }}
-              >
-                {c.label[lang] || c.label.en}
-              </h3>
-              <span
-                aria-hidden="true"
-                className="mt-2 inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase"
-                style={{ color: "rgba(255,255,255,0.9)" }}
-              >
-                {t("collections.cta")} <span className="axum-ease group-hover:translate-x-1">→</span>
-              </span>
-            </div>
-          </Link>
-        ))}
+                {/* Decorative top-right meta chip — index of the tile in the
+                    grid. Replaced by a piece-count chip on hover (CSS swap). */}
+                <div className="ctile-chip" aria-hidden="true">
+                  <span className="ctile-chip__idx">N°{indexStr}</span>
+                  <span className="ctile-chip__pieces">
+                    {c.pieces} {t("collections.pieces")}
+                  </span>
+                </div>
+              </div>
+
+              {/* TEXT ─ on its own surface row beneath the photo. */}
+              <div className="ctile-body">
+                {eye ? (
+                  <div className="ctile-eyebrow" aria-hidden="true">
+                    <span>{eye}</span>
+                    <span className="ctile-eyebrow-dot">·</span>
+                    <span>N°{indexStr}</span>
+                  </div>
+                ) : null}
+
+                <h3 className="ctile-title">
+                  {/* Mask-reveal wrapper — heading slides up from below a clip
+                      on .in (set by useScrollFX). Reduced-motion safe (CSS). */}
+                  <span className="ctile-title__mask">
+                    <span className="ctile-title__inner">{name}</span>
+                  </span>
+                </h3>
+
+                <span className="ctile-cta" aria-hidden="true">
+                  <span className="ctile-cta__label">{t("collections.cta")}</span>
+                  <span className="ctile-cta__line" />
+                  <span className="ctile-cta__arrow">→</span>
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
