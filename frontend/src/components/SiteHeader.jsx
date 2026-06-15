@@ -191,7 +191,7 @@ const SiteHeader = ({ variant = "solid" }) => {
       <header
         ref={headerRef}
         onFocus={revealForFocus}
-        className={`fixed top-0 left-0 right-0 z-50 grid grid-cols-3 items-center px-5 md:px-8 py-3.5 axum-ease ${hidden ? "is-hidden" : ""}`}
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-between md:grid md:grid-cols-3 items-center gap-3 px-5 md:px-8 py-3.5 axum-ease ${hidden ? "is-hidden" : ""}`}
         style={headerStyle}
         data-testid="site-header"
       >
@@ -229,7 +229,7 @@ const SiteHeader = ({ variant = "solid" }) => {
 
         {/* RIGHT — icons */}
         <div className="flex items-center gap-2 md:gap-4 justify-self-end" style={iconStyle}>
-          <button className={iconBtnCls} aria-label="Search" data-testid="header-search" onClick={() => alert(t("header.search_soon"))}>
+          <button className={`${iconBtnCls} hidden sm:inline-flex`} aria-label="Search" data-testid="header-search" onClick={() => alert(t("header.search_soon"))}>
             <Search size={20} strokeWidth={1.5} />
           </button>
           <button
