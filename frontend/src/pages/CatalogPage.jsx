@@ -90,7 +90,7 @@ const CatalogPage = () => {
         tabIndex={-1}
         className="pt-[68px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 scroll-mt-[68px] focus:outline-none"
       >
-        <section className="px-5 md:px-10 py-14 md:py-20" data-testid="catalog-title-block">
+        <section className="px-5 md:px-10 py-9 md:py-12" data-testid="catalog-title-block">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">
             {isNew ? t("nav.new") : t("catalog.full_eyebrow")}
           </div>
@@ -150,7 +150,7 @@ const CatalogPage = () => {
         </div>
 
         {!allShown && (
-          <div className="flex justify-center pb-20" data-testid="catalog-load-more-wrap">
+          <div className="flex justify-center pb-12" data-testid="catalog-load-more-wrap">
             <button
               type="button"
               onClick={handleLoadMore}

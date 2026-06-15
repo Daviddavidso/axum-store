@@ -41,7 +41,7 @@ const TrendingRail = () => {
       aria-labelledby="trending-title"
       data-testid="trending-rail"
     >
-      <div className="px-5 md:px-10 pt-14 md:pt-20 pb-8 md:pb-10">
+      <div className="px-5 md:px-10 pt-8 md:pt-12 pb-5 md:pb-6">
         <div className="reveal text-[10px] tracking-[0.32em] uppercase mb-3 opacity-60">
           {t("trending.eyebrow")}
         </div>

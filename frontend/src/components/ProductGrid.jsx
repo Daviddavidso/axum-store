@@ -39,7 +39,7 @@ const ProductGrid = () => {
   return (
     <div className="w-full bg-white" data-testid="product-grid-section">
       {/* Title block */}
-      <div className="flex items-end justify-between px-5 md:px-10 py-14 md:py-20">
+      <div className="flex items-end justify-between px-5 md:px-10 py-8 md:py-12">
         {/* Parallax (decorative drift) wraps the reveal so the two transforms
             never collide. Both are disabled under prefers-reduced-motion. */}
         <div className="parallax" data-parallax="0.12">
@@ -95,7 +95,7 @@ const ProductGrid = () => {
         )}
       </div>
 
-      <div className="flex justify-center py-12 md:py-16 axum-border-t" data-testid="open-catalog-cta-wrap">
+      <div className="flex justify-center py-8 md:py-10 axum-border-t" data-testid="open-catalog-cta-wrap">
         <button onClick={() => navigate(`/${lang}/catalog`)} data-magnetic className="axum-btn" data-testid="open-catalog-cta">
           {t("catalog.open_full")} →
         </button>
