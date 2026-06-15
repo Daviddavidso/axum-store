@@ -68,16 +68,22 @@ const CategoryBlocks = () => {
               loading="lazy"
               className="wipe absolute inset-0 w-full h-full object-cover object-center axum-ease group-hover:scale-[1.04]"
             />
-            {/* B1 scrim — reaches 90% black behind the text at the bottom. */}
+            {/* Scrim — reaches 90% black behind the text at the bottom. */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
             <div className="absolute left-6 bottom-6 md:left-10 md:bottom-10 right-6 z-10">
+              {/* Inline #fff — see CollectionTiles note: the dark-theme override
+                  collapses .text-white to muted grey, which disappears here. */}
               <SplitText
                 as="h3"
-                className="font-display text-3xl md:text-5xl uppercase leading-none tracking-tighter text-white"
+                className="font-display text-3xl md:text-5xl uppercase leading-none tracking-tighter"
+                style={{ color: "#fff" }}
                 text={t(tile.nameKey)}
               />
-              <span className="campaign-cta mt-5 inline-block bg-white text-black border border-black px-7 py-3 text-[11px] tracking-[0.3em] uppercase font-display">
+              <span
+                className="mt-5 inline-block px-7 py-3 text-[11px] tracking-[0.3em] uppercase font-display"
+                style={{ color: "#000", background: "#fff", border: "1px solid #fff" }}
+              >
                 {t(tile.ctaKey)}
               </span>
             </div>

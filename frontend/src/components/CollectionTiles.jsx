@@ -59,15 +59,26 @@ const CollectionTiles = () => {
               loading="lazy"
               className="wipe absolute inset-0 w-full h-full object-cover object-center axum-ease group-hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/25 to-transparent" />
+            {/* Gradient adds atmospheric darkening higher up; the solid label
+                band below carries the actual contrast guarantee for the text. */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
 
-            <div className="absolute left-4 bottom-4 md:left-6 md:bottom-6 right-4 z-10">
-              <h3 className="font-display text-2xl md:text-3xl uppercase leading-none tracking-tighter text-white">
+            {/* Solid dark caption band — gives white text a guaranteed ≥7:1
+                substrate regardless of how light the photo is. */}
+            <div className="absolute inset-x-0 bottom-0 z-10 px-4 md:px-6 py-4 md:py-5 bg-[rgba(10,10,10,0.78)] backdrop-blur-sm border-t border-white/10">
+              {/* Inline #fff — the global dark-theme override remaps .text-white
+                  to the muted grey ink token, which on a dark plate reads as
+                  invisible. Forcing #fff guarantees ≥7:1 against the band. */}
+              <h3
+                className="font-display text-2xl md:text-3xl uppercase leading-none"
+                style={{ color: "#fff" }}
+              >
                 {c.label[lang] || c.label.en}
               </h3>
               <span
                 aria-hidden="true"
-                className="mt-3 inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-white/85 group-hover:text-white"
+                className="mt-2 inline-flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase"
+                style={{ color: "rgba(255,255,255,0.9)" }}
               >
                 {t("collections.cta")} <span className="axum-ease group-hover:translate-x-1">→</span>
               </span>
