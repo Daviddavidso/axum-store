@@ -1,0 +1,65 @@
+[
+  {
+    "id": "l1",
+    "tab": "NOIR_01",
+    "title": "Volume 01 — Hooded Garter Dress",
+    "description": "Ruched hooded mini, detachable sleeves, over-knee socks.",
+    "alt": "Model in a black hooded ruched mini dress with detachable long sleeves and over-the-knee socks, shown from front, side and back.",
+    "image": "/products/lookbook/look-noir-01.jpg",
+    "sort_order": 0
+  },
+  {
+    "id": "l2",
+    "tab": "NOIR_02",
+    "title": "Volume 02 — Bell-Sleeve Flare",
+    "description": "Lace-up bell-sleeve crop over lace-up flared trousers.",
+    "alt": "Model in a black lace-up bell-sleeve crop top with matching lace-up flared trousers, shown in two poses.",
+    "image": "/products/lookbook/look-noir-02.jpg",
+    "sort_order": 1
+  },
+  {
+    "id": "l3",
+    "tab": "NOIR_03",
+    "title": "Volume 03 — Hooded Zip",
+    "description": "Thumbhole hooded zip and micro short.",
+    "alt": "Model in a black hooded zip top with thumbhole sleeves, black micro shorts and lace-up tall boots, shown from front, side and back.",
+    "image": "/products/lookbook/look-noir-03.jpg",
+    "sort_order": 2
+  },
+  {
+    "id": "l4",
+    "tab": "NOIR_04",
+    "title": "Volume 04 — Lace-Up Court",
+    "description": "Lace-up tank crop and ruched mini, knee boots.",
+    "alt": "Model in a black lace-up crop tank and ruched lace-up mini skirt with a lace-up choker and knee-high boots, shown from front, side and back.",
+    "image": "/products/lookbook/look-noir-04.jpg",
+    "sort_order": 3
+  },
+  {
+    "id": "l5",
+    "tab": "BLOOM",
+    "title": "Volume 05 — Blush Pleat",
+    "description": "Washed-pink corset top and pleated mini — editorial.",
+    "alt": "Model with long pink hair and pink fairy wings in a pink corset top and pleated mini skirt, side profile against a pale mint backdrop.",
+    "image": "/products/lookbook/IMG_7290.jpg",
+    "sort_order": 4
+  },
+  {
+    "id": "l6",
+    "tab": "CHROME",
+    "title": "Volume 06 — Star Corset",
+    "description": "Star-print corset, buckled mini and jacket — shot on blue leather.",
+    "alt": "Overhead shot of a model reclining on a blue leather sofa in a black star-print corset, buckled black mini skirt, open black jacket, sunglasses and chunky black sneakers.",
+    "image": "/products/lookbook/IMG_5906.jpg",
+    "sort_order": 5
+  },
+  {
+    "id": "l7",
+    "tab": "HEDONIST",
+    "title": "Volume 07 — Hedonist",
+    "description": "Tie-dye shorts and hooded jacket — motion, streetwear.",
+    "alt": "Person in motion in an open black hooded jacket, red-and-black tie-dye knee shorts with a silver chain and chunky pink high-top sneakers, in front of a white studio wall stencilled \"HEDONIST\".",
+    "image": "/products/lookbook/IMG_5350.jpg",
+    "sort_order": 6
+  }
+]

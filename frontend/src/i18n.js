@@ -1,6 +1,13 @@
 // AXUM UI strings dictionary
 export const STRINGS = {
   en: {
+    home: {
+      page_h1: "AXUM — Shop the Collection",
+    },
+    a11y: {
+      opens_new_tab: "(opens in new tab)",
+      back_to_top: "Back to top",
+    },
     nav: {
       shop: "Shop",
       new: "New Arrivals",
@@ -31,7 +38,7 @@ export const STRINGS = {
       express: "Express checkout",
       applepay_mock: "Apple Pay flow is a preview — real wallet integration is the next step.",
       googlepay_mock: "Google Pay flow is a preview — real wallet integration is the next step.",
-      or_card: "— or pay with card —",
+      or_card: "— or enter your details —",
       contact: "Contact",
       email: "Email",
       shipping_address: "Shipping address",
@@ -42,11 +49,9 @@ export const STRINGS = {
       zip: "Postal code",
       country: "Country",
       phone: "Phone",
+      optional: "optional",
       payment: "Payment",
-      card_number: "Card number",
-      expiry: "Expiry",
-      cvc: "CVC",
-      payment_mock_note: "Payment processing is a preview. No card will be charged.",
+      redirect_note: "You'll be taken to our secure payment partner to complete your purchase, then returned here.",
       summary: "Order",
       empty: "Your bag is empty. Add a piece to continue.",
       promo: "Promo code",
@@ -58,8 +63,27 @@ export const STRINGS = {
       shipping: "Shipping",
       total: "Total",
       place_order: "Place order",
-      placing: "Placing order…",
-      order_placed: "Order received. (Preview mode.)",
+      placing: "Redirecting…",
+      redirecting: "Redirecting you to our secure payment page…",
+      create_error: "We couldn't start the payment. Please try again.",
+      order_placed: "Order received.",
+    },
+    confirmation: {
+      eyebrow: "Order status",
+      title_paid: "Payment received",
+      title_processing: "Confirming your payment",
+      title_failed: "Payment not completed",
+      body_paid: "Thank you. Your payment has been received and your order is confirmed.",
+      body_processing: "Your payment is being confirmed. We'll email you as soon as your order is finalized.",
+      body_failed: "No charge was made and your order has not been placed. You can try the payment again.",
+      announce_paid: "Payment successful. Your order is confirmed.",
+      announce_processing: "Payment received. We are confirming your order.",
+      announce_failed: "Payment was not completed. Your order has not been placed.",
+      order_label: "Order number",
+      loading: "Loading your order…",
+      not_found: "We couldn't find this order.",
+      try_again: "Try payment again",
+      back_home: "Back to home",
     },
     about: {
       eyebrow: "About",
@@ -75,6 +99,7 @@ export const STRINGS = {
       add_to_bag: "Add to bag",
       add: "Add",
       new: "New",
+      best_seller: "Best Seller",
       wishlist: "Add to wishlist",
     },
     nav_overlay: {
@@ -87,9 +112,27 @@ export const STRINGS = {
       atelier: "Atelier — Paris · Tokyo · NY",
       newsletter: "Newsletter",
       instagram: "Instagram",
+      menu_title: "Menu",
+      language: "Language",
+      shop_all: "Shop all",
+      customization: "Customization",
+      delivery: "Delivery & Stores",
+      group_collections: "Collections",
+      group_service: "Service",
+    },
+    scroll_band: {
+      line1: "BEAUTY IS A WEAPON",
+      line2: "WORN BY THE FEARLESS",
+    },
+    collections: {
+      eyebrow: "Collections",
+      title: "Explore the collections",
+      cta: "Explore",
+      cta_aria: "Explore the {name} collection",
     },
     hero: {
       scroll: "Scroll ↓",
+      alt: "AXUM campaign hero.",
     },
     catalog: {
       eyebrow: "N°02 / Catalogue",
@@ -105,10 +148,16 @@ export const STRINGS = {
       pieces: "pieces in this catalogue",
       back_home: "Back",
       open_full: "Open full catalog",
+      load_more: "Show more",
+      showing_count: "Showing {shown} of {total}",
+      all_shown: "All {total} shown",
     },
     product: {
       view_front: "FRONT",
       view_alt: "ALT VIEW",
+      gallery_label: "Product images",
+      view_word: "View",
+      of_word: "of",
       details: "Details",
       edition: "Edition",
       made_in: "Made in",
@@ -137,12 +186,45 @@ export const STRINGS = {
       stockists: "Stockists",
       read_manifesto: "Read the manifesto →",
     },
+    campaign: {
+      studio_section_name: "AXUM ruched studio look",
+      cta: "Shop the edition",
+      studio_alt:
+        "AXUM campaign — model on a pale studio backdrop in a black ruched mini dress with cold-shoulder cut-outs and a draped hood, long black ruched gloves, and black over-the-knee socks with trailing ties.",
+    },
+    trending: {
+      eyebrow: "Right now",
+      title: "Trending now",
+      region_label: "Trending products, scrollable",
+      prev: "Scroll to previous products",
+      next: "Scroll to next products",
+      shop_looks: "Shop the looks",
+    },
+    categories: {
+      eyebrow: "Shop by category",
+      tops_name: "Tops & corsetry",
+      tops_cta: "Shop tops",
+      sets_name: "Two-piece sets",
+      sets_cta: "Shop sets",
+    },
     lookbook: {
       eyebrow: "N°03 / Lookbook",
       title_a: "Volumes",
       title_b: "of Discipline",
       notes: "Notes",
       volume: "Volume",
+      pause: "Pause lookbook auto-rotation",
+      play: "Play lookbook auto-rotation",
+      paused_status: "Auto-rotation paused",
+      playing_status: "Auto-rotation playing",
+    },
+    gallery: {
+      eyebrow: "Editorial — In Motion",
+      title: "Looks in Motion",
+      intro:
+        "A scrollable gallery of the season's looks. Every piece is listed below with its name and price — open the full collection any time.",
+      scroll_hint: "Scroll to explore",
+      cta: "Open the collection",
     },
     newsletter: {
       eyebrow: "N°04 / Dispatch",
@@ -168,12 +250,17 @@ export const STRINGS = {
       "EDITIONS UNDER 200 PIECES",
       "DISCIPLINE OVER DECORATION",
     ],
+    motion: {
+      marquee_pause: "Pause scrolling text",
+      marquee_play: "Resume scrolling text",
+      scroll_cue: "Scroll",
+    },
     footer: {
       cols: [
         { title: "Shop", links: ["Women", "Accessories", "Archive"] },
         { title: "Studio", links: ["Manifesto", "Atelier", "Press", "Careers"] },
         { title: "Service", links: ["Shipping", "Returns", "Repairs", "Contact"] },
-        { title: "Connect", links: ["Instagram", "Substack", "X", "Pinterest"] },
+        { title: "Connect", links: ["Instagram", "Telegram", "Pinterest"] },
       ],
       copyright: "AXUM Studio — All rights reserved.",
     },
@@ -213,6 +300,13 @@ export const STRINGS = {
     },
   },
   ru: {
+    home: {
+      page_h1: "AXUM — магазин коллекции",
+    },
+    a11y: {
+      opens_new_tab: "(открывается в новой вкладке)",
+      back_to_top: "Наверх",
+    },
     nav: {
       shop: "Магазин",
       new: "Новинки",
@@ -243,7 +337,7 @@ export const STRINGS = {
       express: "Быстрая оплата",
       applepay_mock: "Apple Pay — предпросмотр; интеграция кошельков на следующем шаге.",
       googlepay_mock: "Google Pay — предпросмотр; интеграция кошельков на следующем шаге.",
-      or_card: "— или картой —",
+      or_card: "— или введите данные —",
       contact: "Контакты",
       email: "Email",
       shipping_address: "Адрес доставки",
@@ -254,11 +348,9 @@ export const STRINGS = {
       zip: "Индекс",
       country: "Страна",
       phone: "Телефон",
+      optional: "необязательно",
       payment: "Оплата",
-      card_number: "Номер карты",
-      expiry: "Срок",
-      cvc: "CVC",
-      payment_mock_note: "Платёж — предпросмотр. С карты ничего не спишется.",
+      redirect_note: "Вы перейдёте на защищённую страницу нашего платёжного партнёра, чтобы завершить покупку, и вернётесь сюда.",
       summary: "Заказ",
       empty: "Корзина пуста. Добавьте вещь, чтобы продолжить.",
       promo: "Промокод",
@@ -270,8 +362,27 @@ export const STRINGS = {
       shipping: "Доставка",
       total: "Итого",
       place_order: "Оформить заказ",
-      placing: "Оформление…",
-      order_placed: "Заказ получен. (Предпросмотр.)",
+      placing: "Перенаправление…",
+      redirecting: "Перенаправляем вас на защищённую страницу оплаты…",
+      create_error: "Не удалось начать оплату. Попробуйте ещё раз.",
+      order_placed: "Заказ получен.",
+    },
+    confirmation: {
+      eyebrow: "Статус заказа",
+      title_paid: "Платёж получен",
+      title_processing: "Подтверждаем платёж",
+      title_failed: "Платёж не завершён",
+      body_paid: "Спасибо. Платёж получен, ваш заказ подтверждён.",
+      body_processing: "Ваш платёж подтверждается. Мы пришлём письмо, как только заказ будет оформлен.",
+      body_failed: "Списание не произошло, заказ не оформлен. Вы можете повторить оплату.",
+      announce_paid: "Оплата прошла успешно. Ваш заказ подтверждён.",
+      announce_processing: "Платёж получен. Подтверждаем ваш заказ.",
+      announce_failed: "Оплата не завершена. Заказ не оформлен.",
+      order_label: "Номер заказа",
+      loading: "Загрузка заказа…",
+      not_found: "Не удалось найти этот заказ.",
+      try_again: "Повторить оплату",
+      back_home: "На главную",
     },
     about: {
       eyebrow: "О бренде",
@@ -287,6 +398,7 @@ export const STRINGS = {
       add_to_bag: "В корзину",
       add: "В корзину",
       new: "Новое",
+      best_seller: "Хит продаж",
       wishlist: "В избранное",
     },
     nav_overlay: {
@@ -299,9 +411,27 @@ export const STRINGS = {
       atelier: "Ателье — Париж · Токио · Нью-Йорк",
       newsletter: "Рассылка",
       instagram: "Instagram",
+      menu_title: "Меню",
+      language: "Язык",
+      shop_all: "Весь магазин",
+      customization: "Кастомизация",
+      delivery: "Доставка и магазины",
+      group_collections: "Коллекции",
+      group_service: "Сервис",
+    },
+    scroll_band: {
+      line1: "КРАСОТА — ЭТО ОРУЖИЕ",
+      line2: "ДЛЯ ТЕХ, КТО НЕ БОИТСЯ",
+    },
+    collections: {
+      eyebrow: "Коллекции",
+      title: "Смотреть коллекции",
+      cta: "Смотреть",
+      cta_aria: "Открыть коллекцию «{name}»",
     },
     hero: {
       scroll: "Скролл ↓",
+      alt: "Главная фотография кампании AXUM.",
     },
     catalog: {
       eyebrow: "№02 / Каталог",
@@ -317,10 +447,16 @@ export const STRINGS = {
       pieces: "вещей в каталоге",
       back_home: "Назад",
       open_full: "Открыть полный каталог",
+      load_more: "Показать ещё",
+      showing_count: "Показано {shown} из {total}",
+      all_shown: "Показаны все {total}",
     },
     product: {
       view_front: "ВИД СПЕРЕДИ",
       view_alt: "АЛЬТ. КАДР",
+      gallery_label: "Изображения товара",
+      view_word: "Ракурс",
+      of_word: "из",
       details: "Детали",
       edition: "Издание",
       made_in: "Произведено в",
@@ -349,12 +485,45 @@ export const STRINGS = {
       stockists: "Точки продаж",
       read_manifesto: "Читать манифест →",
     },
+    campaign: {
+      studio_section_name: "Студийный образ AXUM со сборками",
+      cta: "Смотреть коллекцию",
+      studio_alt:
+        "Кампания AXUM — модель на светлом студийном фоне в чёрном сборчатом мини-платье с вырезами на плечах и драпированным капюшоном, длинных чёрных сборчатых перчатках и чёрных гольфах выше колена с длинными завязками.",
+    },
+    trending: {
+      eyebrow: "Прямо сейчас",
+      title: "В тренде",
+      region_label: "Популярные товары, прокручиваемый список",
+      prev: "Прокрутить к предыдущим товарам",
+      next: "Прокрутить к следующим товарам",
+      shop_looks: "Купить образы",
+    },
+    categories: {
+      eyebrow: "Покупки по категориям",
+      tops_name: "Топы и корсеты",
+      tops_cta: "Смотреть топы",
+      sets_name: "Комплекты из двух предметов",
+      sets_cta: "Смотреть комплекты",
+    },
     lookbook: {
       eyebrow: "№03 / Лукбук",
       title_a: "Тома",
       title_b: "Дисциплины",
       notes: "Заметки",
       volume: "Том",
+      pause: "Остановить автопрокрутку лукбука",
+      play: "Запустить автопрокрутку лукбука",
+      paused_status: "Автопрокрутка остановлена",
+      playing_status: "Автопрокрутка запущена",
+    },
+    gallery: {
+      eyebrow: "Эдиториал — В движении",
+      title: "Образы в движении",
+      intro:
+        "Прокручиваемая галерея образов сезона. Каждая вещь с названием и ценой перечислена ниже — полную коллекцию можно открыть в любой момент.",
+      scroll_hint: "Листайте, чтобы смотреть",
+      cta: "Открыть коллекцию",
     },
     newsletter: {
       eyebrow: "№04 / Депеша",
@@ -380,6 +549,11 @@ export const STRINGS = {
       "ТИРАЖ МЕНЕЕ 200 ВЕЩЕЙ",
       "ДИСЦИПЛИНА ВАЖНЕЕ ДЕКОРА",
     ],
+    motion: {
+      marquee_pause: "Остановить бегущую строку",
+      marquee_play: "Возобновить бегущую строку",
+      scroll_cue: "Листайте",
+    },
     footer: {
       cols: [
         { title: "Магазин", links: ["Женское", "Аксессуары", "Архив"] },
@@ -424,6 +598,16 @@ export const STRINGS = {
       back_to_site: "← Вернуться на сайт",
     },
   },
+};
+
+/**
+ * Real outbound social URLs, keyed by the literal label string used in the
+ * footer/nav link lists. Locale-neutral — "Instagram" is identical Latin text
+ * in both EN and RU. Labels not present here have no destination yet and are
+ * rendered as inert text (not links).
+ */
+export const SOCIAL_URLS = {
+  Instagram: "https://www.instagram.com/axum.tm/",
 };
 
 export const t = (lang, path) => {

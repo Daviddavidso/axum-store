@@ -1,2 +1,5 @@
 /* AXUM - styles live primarily in index.css */
-.App { min-height: 100vh; background: #fff; color: #000; }
+/* Dark theme: the page base is near-black with light-grey ink. Tokens are
+   defined in index.css (:root). Every section/text that doesn't set an explicit
+   colour inherits these, so nothing renders black-on-black. */
+.App { min-height: 100vh; background: var(--axum-surface); color: var(--axum-ink); }

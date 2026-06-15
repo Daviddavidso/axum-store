@@ -55,7 +55,17 @@ const ProductPage = () => {
     );
   }
 
-  const gallery = [product.image1, product.image2].filter(Boolean);
+  // Every studio angle of this garment, front first. The API serves
+  // `images` as [{src, alt}] (alt = name for the first, "name, view N" after).
+  // Fall back to the legacy two-photo shape for any product without an array.
+  const images =
+    product.images?.length
+      ? product.images
+      : [
+          { src: product.image1, alt: product.name },
+          { src: product.image2, alt: product.alt2 || product.name },
+        ].filter((im) => im.src);
+  const safeActive = Math.min(active, images.length - 1);
   const wished = inWishlist(product.id);
 
   const handleAdd = () => {
@@ -84,30 +94,72 @@ const ProductPage = () => {
       <CartDrawer />
       <MobileBagButton />
 
-      <main className="pt-[68px]">
-        <section className="grid grid-cols-1 lg:grid-cols-2 axum-border-b" data-testid="product-gallery">
-          {gallery.map((src, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActive(idx)}
-              className={`relative overflow-hidden bg-white axum-ease ${idx === 0 ? "lg:axum-border-r" : ""} ${idx === 0 ? "axum-border-b lg:axum-border-b-0" : ""}`}
-              style={{ aspectRatio: "3 / 4" }}
-              data-testid={`product-image-${idx}`}
+      <main className="pt-[68px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0">
+        <section className="grid grid-cols-1 lg:grid-cols-12 axum-border-b" data-testid="product-gallery">
+          {/* Main active image — presentational projection of the selected
+              thumbnail. Not focusable (no action on it); its alt updates to the
+              active angle so the reading order stays accurate. */}
+          <div
+            className="lg:col-span-9 relative overflow-hidden bg-white lg:axum-border-r"
+            style={{ aspectRatio: "3 / 4" }}
+            data-testid="product-image-main"
+          >
+            <img
+              src={images[safeActive].src}
+              alt={images[safeActive].alt}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Solid white plate (not /90) so the 10px counter keeps 4.5:1 over
+                any photo (WCAG 1.4.3). */}
+            <div className="absolute top-3 left-3 text-[10px] tracking-[0.3em] uppercase bg-white px-2 py-1">
+              {safeActive + 1} / {images.length}
+            </div>
+          </div>
+
+          {/* Thumbnail rail — toggle buttons that select which angle is shown.
+              Single image (e.g. one-photo look) hides the rail entirely. */}
+          {images.length > 1 && (
+            <ul
+              role="group"
+              aria-label={t("product.gallery_label")}
+              className="lg:col-span-3 flex lg:flex-col gap-2 p-2 overflow-x-auto lg:overflow-y-auto lg:max-h-[75vh]"
+              data-testid="product-thumbs"
             >
-              <img
-                src={src}
-                alt={`${product.name} ${idx === 0 ? "front" : "alt"}`}
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{
-                  transition: "transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                  transform: active === idx ? "scale(1.04)" : "scale(1)",
-                }}
-              />
-              <div className="absolute top-3 left-3 text-[10px] tracking-[0.3em] uppercase bg-white/90 px-2 py-1">
-                {idx === 0 ? t("product.view_front") : t("product.view_alt")}
-              </div>
-            </button>
-          ))}
+              {images.map((im, idx) => (
+                <li key={idx} className="shrink-0 lg:shrink">
+                  <button
+                    type="button"
+                    onClick={() => setActive(idx)}
+                    aria-pressed={safeActive === idx}
+                    aria-label={im.alt}
+                    className={`relative block w-20 lg:w-full bg-white axum-ease focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${
+                      safeActive === idx
+                        ? "ring-2 ring-black ring-offset-2 ring-offset-white"
+                        : "opacity-70 hover:opacity-100"
+                    }`}
+                    style={{ aspectRatio: "3 / 4" }}
+                    data-testid={`product-thumb-${idx}`}
+                  >
+                    {/* alt="" — the button's aria-label already names it; an alt
+                        here would double-announce. */}
+                    <img
+                      src={im.src}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {/* Polite, terse status so SR users hear the new angle after a
+              thumbnail activates (focus stays on the button, so the swapped
+              main image isn't otherwise announced). */}
+          <div aria-live="polite" className="sr-only" data-testid="gallery-status">
+            {`${t("product.view_word")} ${safeActive + 1} ${t("product.of_word")} ${images.length}`}
+          </div>
         </section>
 
         <section className="grid grid-cols-1 lg:grid-cols-12 axum-border-b" data-testid="product-info">
@@ -146,7 +198,7 @@ const ProductPage = () => {
                     key={sz}
                     onClick={() => setSize(sz)}
                     className={`py-3 border border-black text-xs tracking-[0.18em] uppercase font-display axum-ease ${
-                      size === sz ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white"
+                      size === sz ? "bg-[var(--axum-accent)] text-[#000] border-[var(--axum-accent)]" : "bg-white text-black hover:bg-black hover:text-white"
                     }`}
                     data-testid={`size-${sz}`}
                   >
@@ -206,7 +258,7 @@ const ProductPage = () => {
                   data-testid={`more-card-${idx}`}
                 >
                   <img className="img-front" src={p.image1} alt={p.name} loading="lazy" />
-                  <img className="img-back" src={p.image2} alt={`${p.name} alt`} loading="lazy" />
+                  <img className="img-back" src={p.image2} alt={p.alt2 || p.name} loading="lazy" />
                   <div className="absolute left-0 right-0 bottom-0 flex items-center justify-between px-4 py-3 bg-white axum-border-t">
                     <div className="font-display text-[11px] md:text-xs tracking-[0.18em] uppercase truncate pr-3">{p.name}</div>
                     <div className="font-display text-xs md:text-sm whitespace-nowrap">{p.price}</div>

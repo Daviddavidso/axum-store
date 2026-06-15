@@ -1,22 +1,25 @@
 import React from "react";
 import { useLang } from "@/contexts/LanguageContext";
+import { ScribbleSticker, KanjiSticker } from "@/components/GraffitiSticker";
 
 const EditorialStrip = () => {
   const { t } = useLang();
   return (
-    <section className="w-full bg-white axum-border-t axum-border-b" data-testid="editorial-strip">
+    <section className="w-full bg-white axum-border-t axum-border-b axum-graffiti" data-testid="editorial-strip">
+      <ScribbleSticker corner="bl" />
+      <KanjiSticker glyph="黑" corner="tr" tilt={4} />
       <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className="p-8 md:p-12 axum-border-b md:axum-border-b-0 md:axum-border-r reveal">
+        <div className="p-8 md:p-12 axum-border-b md:axum-border-b-0 md:axum-border-r reveal reveal-3d">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{t("editorial.manifesto_eyebrow")}</div>
           <p className="font-display text-2xl md:text-3xl uppercase leading-tight">
             {t("editorial.manifesto_text")}
           </p>
         </div>
-        <div className="p-8 md:p-12 axum-border-b md:axum-border-b-0 md:axum-border-r reveal">
+        <div className="p-8 md:p-12 axum-border-b md:axum-border-b-0 md:axum-border-r reveal reveal-3d" style={{ "--rd": "0.1s" }}>
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{t("editorial.studio_eyebrow")}</div>
           <p className="text-sm leading-relaxed">{t("editorial.studio_text")}</p>
         </div>
-        <div className="p-8 md:p-12 reveal flex flex-col justify-between">
+        <div className="p-8 md:p-12 reveal reveal-3d flex flex-col justify-between" style={{ "--rd": "0.2s" }}>
           <div>
             <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{t("editorial.index_eyebrow")}</div>
             <ul className="space-y-2 text-sm">

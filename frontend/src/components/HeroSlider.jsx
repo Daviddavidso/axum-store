@@ -1,94 +1,78 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import axios from "axios";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import React from "react";
+import { ChevronDown } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
+import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
+/**
+ * HeroSlider — the full-screen homepage hero. A single portrait studio photo
+ * (hero-dsc04992, 2560×3200 / 4:5) of a model on a pale off-white backdrop.
+ * Because the source is a tall portrait shown in a landscape full-screen box,
+ * it is cropped with object-cover object-top so the model's face stays in frame
+ * rather than being letterboxed. (accessibility-lead sign-off.)
+ *
+ *   • Responsive <img> with srcset across the 1280/1920/2560w renders + sizes
+ *     ="100vw"; intrinsic 2560×3200 width/height reserves the box → no CLS.
+ *     LCP: eager + fetchPriority high.
+ *   • The alt describes the full look (garment, gloves, socks) so nothing
+ *     meaningful is lost to the object-cover crop (WCAG 1.1.1).
+ *   • Scroll cue sits on its own near-black plate so its white text and its
+ *     focus ring both clear 3:1 over the pale artwork at any viewport.
+ *   • No entrance animation; the scroll-cue bob is already gated behind
+ *     prefers-reduced-motion in CSS (.scroll-cue).
+ */
 const HeroSlider = () => {
-  const { lang, t } = useLang();
-  const [slides, setSlides] = useState([]);
-  const [active, setActive] = useState(0);
-  const timerRef = useRef(null);
+  const { t } = useLang();
+  const { scrollTo } = useSmoothScroll();
 
-  const fetchSlides = useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${API}/hero`, { params: { lang } });
-      setSlides(data || []);
-    } catch (e) {
-      console.error("hero fetch failed", e);
-    }
-  }, [lang]);
-
-  useEffect(() => { fetchSlides(); }, [fetchSlides]);
-
-  useEffect(() => {
-    if (slides.length < 2) return;
-    timerRef.current && clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setActive((i) => (i + 1) % slides.length);
-    }, 6500);
-    return () => clearTimeout(timerRef.current);
-  }, [active, slides.length]);
-
-  const go = (dir) => {
-    if (slides.length === 0) return;
-    setActive((i) => (i + dir + slides.length) % slides.length);
+  // Keep href="#shop" as the no-JS fallback; when JS is on, route through the
+  // global Lenis controller so the scroll honours the sticky-header offset and
+  // moves keyboard focus to <section id="shop"> in sync (WCAG 2.4.3 / 2.4.11).
+  const onShopCue = (e) => {
+    e.preventDefault();
+    scrollTo("#shop", { focusId: "shop" });
   };
-
-  const startX = useRef(0);
-  const onTouchStart = (e) => { startX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e) => {
-    const dx = e.changedTouches[0].clientX - startX.current;
-    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-  };
-
-  if (!slides.length) {
-    return <div className="h-screen w-full bg-black" data-testid="hero-loading" />;
-  }
 
   return (
     <section
-      className="relative w-full h-screen overflow-hidden axum-border-b"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
+      className="relative w-full h-screen overflow-hidden axum-border-b bg-[#efefed]"
       data-testid="hero-slider"
     >
-      <div className="hero-track" style={{ transform: `translateX(-${active * 100}%)` }}>
-        {slides.map((s, idx) => (
-          <div
-            key={s.id || idx}
-            className={`hero-slide ${idx === active ? "active" : ""}`}
-            data-testid={`hero-slide-${idx}`}
-          >
-            <img src={s.image} alt={s.headline} draggable={false} />
-          </div>
-        ))}
-      </div>
+      {/* Art-directed responsive hero: desktop gets the landscape wave-frame
+          campaign photo; mobile (≤640px) gets the portrait magenta zine-poster.
+          Single concise alt — WCAG 1.1.1 expects the alternative to convey the
+          same PURPOSE across breakpoints (here: the AXUM campaign hero). We
+          don't describe specific garments/poses because they differ per source. */}
+      <picture>
+        <source
+          media="(max-width: 640px)"
+          srcSet="/campaign/hero-axum-mobile.jpg"
+          width="1152"
+          height="1728"
+        />
+        <img
+          src="/campaign/hero-axum-2.jpg"
+          alt={t("hero.alt")}
+          width="1280"
+          height="960"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          draggable={false}
+          className="w-full h-full object-cover object-center"
+          data-testid="hero-image"
+        />
+      </picture>
 
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-3 md:px-5 pointer-events-none">
-        <button
-          onClick={() => go(-1)}
-          className="pointer-events-auto w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-black axum-ease hover:bg-black hover:text-white border border-black/0 hover:border-black"
-          data-testid="hero-prev"
-          aria-label="Previous slide"
-        >
-          <ArrowLeft size={22} strokeWidth={1.5} />
-        </button>
-        <button
-          onClick={() => go(1)}
-          className="pointer-events-auto w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-black axum-ease hover:bg-black hover:text-white border border-black/0 hover:border-black"
-          data-testid="hero-next"
-          aria-label="Next slide"
-        >
-          <ArrowRight size={22} strokeWidth={1.5} />
-        </button>
-      </div>
-
-      <div className="absolute bottom-6 right-5 md:right-10 text-black font-display text-sm tracking-widest" data-testid="hero-counter">
-        {String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
-      </div>
+      {/* Scroll cue — own near-black plate backs both the text and the focus ring */}
+      <a
+        href="#shop"
+        onClick={onShopCue}
+        className="absolute bottom-6 left-5 md:left-10 inline-flex items-center gap-2 bg-black/85 text-white font-display text-[10px] tracking-[0.4em] uppercase px-3 py-2 axum-ease focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+        data-testid="hero-scroll-cue"
+      >
+        {t("motion.scroll_cue")}
+        <ChevronDown size={16} strokeWidth={1.6} className="scroll-cue" aria-hidden="true" />
+      </a>
     </section>
   );
 };

@@ -6,12 +6,14 @@ import Home from "@/pages/Home";
 import CatalogPage from "@/pages/CatalogPage";
 import ProductPage from "@/pages/ProductPage";
 import CheckoutPage from "@/pages/CheckoutPage";
+import OrderConfirmationPage from "@/pages/OrderConfirmationPage";
 import AboutPage from "@/pages/AboutPage";
 import AdminPage from "@/pages/AdminPage";
 import AuthCallback from "@/components/AuthCallback";
 import { LangProvider, useLang } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { SmoothScrollProvider } from "@/contexts/SmoothScrollContext";
 import { t as translate } from "@/i18n";
 
 const detectBrowserLang = () => {
@@ -53,6 +55,12 @@ const LocalizedCheckout = () => (
   </LangProvider>
 );
 
+const LocalizedConfirmation = () => (
+  <LangProvider>
+    <OrderConfirmationPage />
+  </LangProvider>
+);
+
 const LocalizedAbout = () => (
   <LangProvider>
     <AboutPage />
@@ -80,6 +88,7 @@ const AppRouter = () => {
       <Route path="/:lang/catalog" element={<LocalizedCatalog />} />
       <Route path="/:lang/product/:id" element={<LocalizedProduct />} />
       <Route path="/:lang/checkout" element={<LocalizedCheckout />} />
+      <Route path="/:lang/order/confirmation" element={<LocalizedConfirmation />} />
       <Route path="/:lang" element={<LocalizedHome />} />
       <Route path="*" element={<RootRedirect />} />
     </Routes>
@@ -91,8 +100,10 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <Toaster position="bottom-center" theme="light" />
-          <AppRouter />
+          <SmoothScrollProvider>
+            <Toaster position="bottom-center" theme="light" />
+            <AppRouter />
+          </SmoothScrollProvider>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

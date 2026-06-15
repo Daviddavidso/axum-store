@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Sparkles, Layers, ShoppingBag } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useLang } from "@/contexts/LanguageContext";
+import { useSmoothScroll } from "@/contexts/SmoothScrollContext";
 
 /**
  * Mobile-only bottom shop drawer (sticky bar) with three quick shortcuts:
@@ -13,6 +14,14 @@ const MobileBagButton = () => {
   const { count, setDrawerOpen } = useCart();
   const { lang, t } = useLang();
   const navigate = useNavigate();
+  const { scrollTo } = useSmoothScroll();
+
+  // Navigate home then smooth-scroll to #lookbook via the global Lenis controller
+  // (sticky-header offset + reduced-motion native fallback).
+  const goToLookbook = () => {
+    navigate(`/${lang}`);
+    setTimeout(() => scrollTo("#lookbook"), 100);
+  };
 
   const Cell = ({ icon: Icon, label, onClick, testid, right }) => (
     <button
@@ -39,7 +48,7 @@ const MobileBagButton = () => {
       <Cell
         icon={Layers}
         label={t("nav.collections")}
-        onClick={() => { navigate(`/${lang}`); setTimeout(() => { const el = document.getElementById("lookbook"); el && el.scrollIntoView({ behavior: "smooth" }); }, 100); }}
+        onClick={goToLookbook}
         testid="mobile-drawer-collections"
       />
       <Cell

@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,6 +10,30 @@
   --axum-white: #ffffff;
   --axum-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --axum-dur: 0.4s;
+
+  /* ============================================================
+     DARK THEME TOKENS (accessibility-lead sign-off).
+     Base surface is near-black; ink is light grey. All pairings
+     verified ≥ WCAG AA against the surface they sit on:
+       --ink       #cfcfcf on #0a0a0a ≈ 9.7:1  (body text 4.5:1 ✓)
+       --ink-muted #9b9b9b on #0a0a0a ≈ 5.1:1  (secondary 4.5:1 ✓)
+       --ink-faint #7c7c7c on #0a0a0a ≈ 3.2:1  (large/UI 3:1 ✓ — never body)
+       --line      #2c2c2c (decorative hairlines)
+       --line-strong #3d3d3d (≥3:1 UI borders where they carry meaning)
+     Focus rings switch to pure white (#fff ≈ 19:1 on #0a0a0a).
+     ============================================================ */
+  --axum-surface: #242424;     /* page + section base — charcoal grey, not pure black */
+  --axum-surface-2: #2e2e2e;   /* elevated cards / drawers */
+  --axum-ink: #d4d4d4;         /* primary text — #d4d4d4 on #242424 ≈ 9.4:1 (4.5:1 ✓) */
+  --axum-ink-muted: #a6a6a6;   /* secondary text ≈ 6:1 (4.5:1 ✓) */
+  --axum-ink-faint: #808080;   /* tertiary / large only ≈ 3.7:1 (3:1 ✓) */
+  --axum-line: #3a3a3a;        /* hairline borders */
+  --axum-line-strong: #4d4d4d; /* meaningful UI borders */
+  --axum-accent: #ededed;      /* light fill for primary buttons/chips */
+  --axum-focus: #ffffff;       /* focus ring on grey ≈ 13:1 */
+  --axum-pink: #ff3da5;        /* brand pink accent (client's pink prints). Used
+                                  sparingly; with #000 text ≈ 6.8:1, as text on
+                                  grey ≈ 4.8:1 — both pass AA. Never the only cue. */
 }
 
 * {
@@ -17,22 +42,29 @@
 }
 
 html, body, #root {
-  background: var(--axum-white);
-  color: var(--axum-black);
+  background: var(--axum-surface);
+  color: var(--axum-ink);
   margin: 0;
   padding: 0;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 
 ::selection {
-  background: #000;
-  color: #fff;
+  background: #fff;
+  color: #000;
 }
 
 /* AXUM design tokens */
+/* Display face: switched to OSWALD 700 — a bold, condensed grotesque (client
+   ref: Balenciaga + the heavy "STOP HATIN'" graphic). Crucially Oswald ships
+   full CYRILLIC, so RU and EN headings render in the SAME face (Anton/Bebas are
+   Latin-only and would silently fall back on Russian text). Condensed glyphs
+   carry their own spacing, so we drop the Archivo-era −0.02em tightening; per-
+   heading tracking classes still apply on top. */
 .font-display {
-  font-family: 'Archivo Black', 'Helvetica Neue', 'Arial Black', sans-serif;
-  letter-spacing: -0.02em;
+  font-family: 'Oswald', 'Archivo Black', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .axum-ease {
@@ -56,6 +88,7 @@ html, body, #root {
 
 /* Buttons - inverted hover */
 .axum-btn {
+  position: relative; /* anchors the decorative ::before sheen */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -76,6 +109,52 @@ html, body, #root {
   user-select: none;
 }
 .axum-btn:hover { background: #fff; color: #000; }
+
+/* Decorative sheen sweep (accessibility-lead sign-off A1-A7).
+   A translucent white band sweeps ACROSS the button once on hover AND
+   keyboard focus-visible (parity, A2). Implemented as an animated gradient
+   background-position on an inset:0 pseudo — backgrounds auto-clip to the
+   box, so NO overflow:hidden is needed and the focus ring is never clipped
+   (condition A4). Parked off-screen + opacity:0 at rest, so the band never
+   sits over the text (A3). Purely decorative: pointer-events:none, no
+   content string, not in the a11y tree (A7). The color-invert hover state
+   above remains the primary affordance — the sheen is never the only signal
+   (A1). Single non-looping pass, no flashing (A5). */
+.axum-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 58%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  background-position: 120% 0; /* bright band parked off to the right */
+  background-repeat: no-repeat;
+  transition: opacity 0.1s linear;
+}
+.axum-btn:hover::before,
+.axum-btn:focus-visible::before {
+  opacity: 1;
+  background-position: -40% 0; /* sweeps across, exits left */
+  transition: background-position 0.6s var(--axum-ease), opacity 0.1s linear;
+}
+
+/* Tactile press feedback (B1-B3) — tiny, non-vestibular, :active only. */
+.axum-btn:active { transform: translateY(1px) scale(0.985); }
+
+/* Keyboard focus parity for buttons (matches the .axum-link convention,
+   condition A1/A2). Not clipped: the button uses no overflow:hidden. */
+.axum-btn:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+}
 
 .axum-btn-ghost {
   background: #fff;
@@ -185,6 +264,13 @@ html, body, #root {
   white-space: nowrap;
   animation: marquee 38s linear infinite;
 }
+/* WCAG 2.2.2 Pause, Stop, Hide: the marquee stops on hover, on keyboard
+   focus, and via an explicit pause button (toggles .is-paused). */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track,
+.marquee.is-paused .marquee-track {
+  animation-play-state: paused;
+}
 
 /* Form input */
 .axum-input {
@@ -221,16 +307,269 @@ html, body, #root {
 }
 .axum-link:hover::after { right: 0; }
 
-/* Reveal on scroll */
-.reveal {
+/* ============================================================
+   Scroll-driven motion (IAMGIA-style) — progressive enhancement.
+   Content is visible by DEFAULT. The hidden/animated states only
+   apply once JS confirms support and motion is allowed, by adding
+   `.js-ready` to <html>. No-JS, no-IntersectionObserver, and
+   reduced-motion users always see the final, static layout.
+   ============================================================ */
+
+/* Reveal on scroll — visible by default (no-JS / no-IO safe) */
+.reveal { opacity: 1; transform: none; }
+.js-ready .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(26px);
   transition: opacity 0.7s var(--axum-ease), transform 0.7s var(--axum-ease);
+  transition-delay: var(--rd, 0s);
+  will-change: opacity, transform;
 }
-.reveal.in { opacity: 1; transform: translateY(0); }
+.js-ready .reveal.reveal-scale { transform: scale(0.965); }
+.js-ready .reveal.in { opacity: 1; transform: none; }
+
+/* 3D entrance modifier — element rotates up into place on a perspective plane,
+   then settles to a flat, static end state. ALWAYS used together with `.reveal`
+   (e.g. class="reveal reveal-3d") so it inherits the JS engine, the focusin
+   keyboard-safety reveal, and the 2600ms safety net. The 8deg tilt + 28px lift
+   is one-shot, non-looping, settles to transform:none, and is fully neutralised
+   under prefers-reduced-motion (see override block below). Vestibular-safe per
+   accessibility-lead sign-off. */
+.js-ready .reveal-3d {
+  transform: perspective(1000px) rotateX(8deg) translateY(28px);
+  transform-origin: center bottom;
+}
+.js-ready .reveal-3d.in { transform: none; }
+
+/* Parallax — JS sets --py (capped translate) on scroll */
+.js-ready .parallax {
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: transform;
+}
+
+/* Campaign CTA over a photo — solid white chip (contrast self-contained).
+   Focus ring is two-tone (white halo + black) so it stays visible over BOTH the
+   magenta poster and the dark studio shot, independent of the pixels behind it
+   (WCAG 2.4.7 / 2.4.13). :focus-visible = keyboard only. */
+.campaign-cta {
+  transition: background-color var(--axum-dur) var(--axum-ease),
+              color var(--axum-dur) var(--axum-ease);
+}
+.campaign-cta:hover { background: #000; color: #fff; }
+.campaign-cta:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 5px #000;
+}
+
+/* Full-bleed category tile link — same two-tone focus ring as .campaign-cta so
+   the keyboard focus indicator stays visible over ANY photo behind it
+   (WCAG 2.4.7 / 2.4.13). :focus-visible = keyboard only. */
+.tile-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 5px #000;
+}
+
+/* 3D tilt — pointer-driven, rests flat, small magnitude (<=5deg).
+   JS writes an inline transform; this only supplies the easing. */
+.tilt { transition: transform 0.35s var(--axum-ease); transform-style: preserve-3d; }
+
+/* Slow "Ken Burns" zoom on the active hero slide — adds life, scroll-independent */
+@keyframes axum-kenburns {
+  0%   { transform: scale(1.005); }
+  100% { transform: scale(1.09); }
+}
+.hero-slide.active img { animation: axum-kenburns 9s var(--axum-ease) forwards; }
+
+/* Hero scroll cue — gentle bob */
+@keyframes axum-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(7px); }
+}
+.scroll-cue { animation: axum-bob 1.9s var(--axum-ease) infinite; }
+
+/* ============================================================
+   Premium motion pass (accessibility-lead sign-off, conditions
+   1.1–5.4 + X1–X6). Line-mask headings, image wipes, magnetic
+   CTAs, intro overlay, refined link easing. ALL effects are
+   armed only under `html.js-ready` (progressive enhancement) and
+   fully neutralised by the reduced-motion master switch below.
+   ============================================================ */
+
+/* (1) Word/line mask reveal — real heading text rises out of an
+   overflow clip. The clip is PURELY VISUAL (translate only); the
+   text is never display:none / visibility:hidden / aria-hidden, so
+   it stays in the accessible name at all times (cond 1.2/1.3). The
+   heading remains ONE element; spans carry class only, no roles. */
+.mask-line-block { display: block; }
+.mask-word { display: inline-block; overflow: hidden; vertical-align: top; }
+.mask-word-inner { display: inline-block; will-change: transform; }
+/* A masked heading does not also fade/translate as a block — only its
+   words move (we neutralise the inherited .reveal block transform). */
+.js-ready .reveal.mask-lines { opacity: 1; transform: none; }
+.js-ready .mask-lines .mask-word-inner {
+  transform: translateY(112%);
+  transition: transform 0.85s var(--axum-ease);
+  transition-delay: var(--wd, 0s);
+}
+.js-ready .mask-lines.in .mask-word-inner { transform: none; }
+
+/* (3) Image clip-path wipe — unmasks bottom→top on scroll-in.
+   Decorative; the <img> is fully present + named regardless of clip
+   state. Visible by default (no-JS) and under reduced motion. */
+.wipe { clip-path: inset(0 0 0 0); }
+.js-ready .wipe {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.05s var(--axum-ease);
+  will-change: clip-path;
+}
+.js-ready .wipe.in { clip-path: inset(0 0 0 0); }
+
+/* (2) Magnetic CTA — JS writes a small (<=8px) pointer-following
+   transform; this only supplies the spring-back easing. Pointer-only
+   + fine-pointer gated in JS; rests at transform:none. */
+.magnetic { transition: transform 0.4s var(--axum-ease); }
+
+/* (4) One-shot page-load intro overlay — white layer wipes up and
+   self-removes. aria-hidden + pointer-events:none + nothing
+   focusable (cond 4.1–4.8). Never rendered under reduced motion. */
+@keyframes axum-intro-wipe {
+  0%, 55% { transform: translateY(0); }
+  100%    { transform: translateY(-100%); }
+}
+@keyframes axum-intro-mark {
+  0%   { opacity: 0; transform: translateY(16px); }
+  38%  { opacity: 1; transform: translateY(0); }
+  72%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+.axum-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #fff;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: axum-intro-wipe 1.15s var(--axum-ease) forwards;
+}
+.axum-intro__logo {
+  display: block;
+  height: clamp(2rem, 8vw, 5.5rem);
+  width: auto;
+  animation: axum-intro-mark 1.15s var(--axum-ease) forwards;
+}
+
+/* ---------------------------------------------------------------------------
+   Smart site header — entrance + auto-hide (accessibility-lead sign-off).
+   All motion is opt-in via data-anim, which the component sets ONLY when
+   prefers-reduced-motion is NOT set (progressive enhancement: no JS / reduced
+   motion => no data-anim => static, fully-visible bar). The @media block below
+   is a hard belt-and-suspenders override.
+   --------------------------------------------------------------------------- */
+[data-testid="site-header"][data-anim="on"] {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.3s ease,
+              border-color 0.3s ease;
+  will-change: transform;
+}
+/* Entrance start state (before data-ready is added). */
+[data-testid="site-header"][data-anim="on"]:not([data-ready]) {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+[data-testid="site-header"][data-anim="on"][data-ready] {
+  transform: translateY(0);
+  opacity: 1;
+}
+/* Auto-hide on scroll-down (only meaningful once the entrance has settled). */
+[data-testid="site-header"][data-anim="on"][data-ready].is-hidden {
+  transform: translateY(-100%);
+}
+/* Instant reveal on keyboard focus — no slide, so the focused control is never
+   clipped off-screen (WCAG 2.4.7 / 2.4.11). */
+[data-testid="site-header"][data-snap] {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-testid="site-header"],
+  [data-testid="site-header"][data-anim="on"],
+  [data-testid="site-header"][data-ready],
+  [data-testid="site-header"]:not([data-ready]),
+  [data-testid="site-header"].is-hidden {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease !important;
+  }
+}
+
+/* (5) Refined link easing — keyboard parity: the underline sweep that
+   fires on :hover ALSO fires on :focus-visible, and the link carries a
+   visible focus outline (cond 5.2/5.3). Links keep a resting underline
+   elsewhere so they are not signalled by colour alone (cond 5.1). */
+.axum-link:focus-visible::after { right: 0; }
+.axum-link:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 4px;
+}
 
 /* Hide scrollbar polished */
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Keep anchored / focused targets clear of the 68px sticky header (SC 2.4.11). */
+  scroll-padding-top: 84px;
+}
+
+/* ============================================================
+   Reduced motion — the master off-switch (WCAG 2.3.3 / 2.2.2).
+   When the user asks for less motion, every scroll/hover effect is
+   neutralised and all content is shown in its final, static state.
+   JS also avoids adding `.js-ready`, but this belt-and-suspenders
+   block also covers a runtime toggle of the OS setting.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .reveal-3d,
+  .js-ready .reveal,
+  .js-ready .reveal-3d { opacity: 1 !important; transform: none !important; }
+  .js-ready .parallax { transform: none !important; }
+  .tilt { transform: none !important; }
+  .hero-slide.active img { animation: none !important; }
+  .marquee-track { animation: none !important; }
+  .scroll-cue { animation: none !important; }
+  .lookbook-img { opacity: 1 !important; }
+  /* Premium motion pass — off (cond X1). */
+  .js-ready .mask-lines .mask-word-inner {
+    transform: none !important;
+    transition: none !important;
+  }
+  .js-ready .wipe,
+  .js-ready .wipe.in { clip-path: none !important; transition: none !important; }
+  .magnetic { transform: none !important; transition: none !important; }
+  .axum-intro { display: none !important; }
+  /* Premium motion pass 2 — off (conditions A3, B3). Sheen stays parked
+     off-screen + invisible; press feedback neutralised. */
+  .axum-btn::before {
+    animation: none !important;
+    transition: none !important;
+    opacity: 0 !important;
+    background-position: 120% 0 !important;
+  }
+  .axum-btn:hover::before,
+  .axum-btn:focus-visible::before {
+    opacity: 0 !important;
+    background-position: 120% 0 !important;
+  }
+  .axum-btn:active { transform: none !important; }
+}
 
 /* shadcn vars kept minimal (light) */
 @layer base {
@@ -241,5 +580,403 @@ html { scroll-behavior: smooth; }
     --input: 0 0% 0%;
     --ring: 0 0% 0%;
     --radius: 0px;
+  }
+}
+
+/* ============================================================
+   ScrollRevealText — GSAP scroll-triggered character reveal.
+   Two variants (premium + typewriter) driven from the component;
+   this stylesheet only defines the static look, the cursor, and the
+   reduced-motion off-switch. Glyphs stay SOLID (the premium glow is a
+   shadow AROUND the text, never a lightening fill) so large-text 3:1
+   contrast holds at every frame (WCAG 1.4.3).
+   ============================================================ */
+.srt-root { position: relative; }
+
+/* The visible layer is aria-hidden; the real accessible name is the
+   adjacent .sr-only copy, so AT reads the heading once, normally. */
+.srt-visual {
+  display: block;
+  /* 3D depth for the premium rotateX reveal. */
+  perspective: 700px;
+}
+.srt-line {
+  display: block;
+  /* Children (chars) carry their own 3D transforms. */
+  transform-style: preserve-3d;
+}
+
+/* Per-character cell. inline-block so y / scale / rotateX apply, and so
+   GSAP can stagger each glyph independently. Inter-word spaces are real
+   text nodes (not cells) → copy/select + find-in-page stay intact. */
+.srt-char {
+  display: inline-block;
+  white-space: pre;
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  /* Premium glow halo — scales with the GSAP-tweened --srt-glow (1→0).
+     Solid glyph + surrounding shadow, so it never reduces contrast. */
+  --srt-glow: 0;
+  text-shadow:
+    0 0 calc(var(--srt-glow) * 16px) rgba(0, 0, 0, calc(var(--srt-glow) * 0.45)),
+    0 0 calc(var(--srt-glow) * 6px)  rgba(0, 0, 0, calc(var(--srt-glow) * 0.35));
+}
+
+/* Terminal cursor — a thin block that sits after the last glyph.
+   aria-hidden + never focusable. Steady by default; only blinks while
+   the visual carries .srt-typing (i.e. during the sub-5s reveal),
+   satisfying WCAG 2.2.2 without a pause control. */
+.srt-cursor {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin-left: 0.08em;
+  vertical-align: -0.06em;
+  background: currentColor;
+  opacity: 1;
+}
+.srt-visual.srt-typing .srt-cursor {
+  /* ~1.1Hz (0.9s) — well clear of the 3-flash/s threshold (2.3.1). */
+  animation: srt-blink 0.9s steps(1, end) infinite;
+}
+@keyframes srt-blink {
+  0%, 50%   { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Reduced motion — show the final, static text and remove the cursor
+   entirely. The component already renders the plain variant under this
+   setting; this is the belt-and-suspenders CSS guarantee (2.3.3 / 2.2.2). */
+@media (prefers-reduced-motion: reduce) {
+  .srt-char {
+    opacity: 1 !important;
+    transform: none !important;
+    text-shadow: none !important;
+    will-change: auto;
+  }
+  .srt-cursor {
+    display: none !important;
+    animation: none !important;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Back-to-top floating control (components/BackToTop.jsx)
+   The mobile shop bar (MobileBagButton) is md:hidden, fixed bottom-0, ~50px tall,
+   z-40. Lift the button above it on small screens and honor the iOS home
+   indicator. At md the bar is hidden, so the button drops to a normal offset.
+---------------------------------------------------------------------------- */
+.back-to-top {
+  bottom: calc(50px + 1rem + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 768px) {
+  .back-to-top {
+    bottom: 1.5rem;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   ScrollTypeWriter (components/ScrollTypeWriter.jsx) — scroll-driven typing.
+   - chars start opacity:0 and fade to 1 when JS adds .shown
+   - no transforms / no layout shift (inline-block keeps char box stable)
+   - reduced-motion master switch hard-overrides every char to opacity:1
+---------------------------------------------------------------------------- */
+.stw-root .stw-visual { display: inline; }
+.stw-line { display: inline; }
+.stw-char {
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 90ms linear;
+  will-change: opacity;
+}
+.stw-char.shown { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .stw-char {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   .axum-graffiti — decorative bubble-letter graffiti STICKERS placed in the
+   empty whitespace corners of selected sections. Each section opts into one
+   sticker via a modifier class. The sticker is a CSS background-image (NOT an
+   <img>, NOT in the a11y tree, pointer-events:none, no focusables) — so it
+   contributes nothing to assistive tech and can be hidden cleanly under
+   high-contrast / print.
+
+   Accessibility-lead sign-off (Option B): because the sticker lives in
+   deliberate whitespace and is NEVER under real text, its ink can run at 100%
+   opacity without violating 1.4.3 / 1.4.11. The brand-neutral word list
+   (AXUM / RAW / DROP) keeps surprise content out of OCR.
+---------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------
+   .axum-waves — DECORATIVE sinuous wave-strand background applied to selected
+   white sections. CSS background-image (no DOM/AT impact), strokes baked at
+   stroke-opacity 0.085 on #1a1a1a → worst-case pixel ~ rgb(228,228,228) →
+   ~17:1 vs #111 body text (WCAG 1.4.3 cleared).
+
+   accessibility-lead sign-off (this session): hidden under forced-colors,
+   prefers-contrast: more, prefers-reduced-transparency, print, and mobile
+   (≤640px) so it never compounds visual noise or breaks Windows HCM.
+---------------------------------------------------------------------------- */
+.axum-waves { position: relative; isolation: isolate; }
+.axum-waves::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.axum-waves > * { position: relative; z-index: 1; }
+
+/* DESKTOP (>640px) — sinuous wave-line strands. */
+@media (min-width: 641px) {
+  .axum-waves::before {
+    background-image: url("./assets/waves.svg");
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: center top;
+  }
+}
+
+/* MOBILE (≤640px) — zine paper-noise + grid tile. The SVG itself bakes the
+   warm paper colour, so it visually replaces the section's white background
+   without the CSS needing to override `bg-white` utility specificity. */
+@media (max-width: 640px) and (prefers-color-scheme: light),
+       (max-width: 640px) {
+  .axum-waves::before {
+    background-image: url("./assets/paper-noise.svg");
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    background-position: center top;
+  }
+}
+
+/* Hard-off cases — never fight forced-colors / Windows HCM, dropped
+   transparency, high-contrast preference, or print. */
+@media (forced-colors: active),
+       (prefers-contrast: more),
+       (prefers-reduced-transparency: reduce),
+       print {
+  .axum-waves::before { background-image: none; }
+}
+
+.axum-graffiti { position: relative; isolation: isolate; }
+/* Real content rises above the decorative sticker layer rendered as a sibling. */
+.axum-graffiti > *:not(.graffiti-sticker) { position: relative; z-index: 1; }
+
+/* Sticker wrapper (sibling inside .axum-graffiti). The SVG inside is hand-
+   drawn abstract spray-mark art; this just pins the wrapper to one corner. */
+.graffiti-sticker {
+  position: absolute;
+  width: 180px;
+  height: 130px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.graffiti-sticker--tr { top: 10px;    right: 14px; }
+.graffiti-sticker--bl { bottom: 10px; left: 14px; }
+.graffiti-sticker--br { bottom: 10px; right: 14px; }
+
+/* Mobile / small tablets — hide stickers entirely. On stacked single-column
+   layouts every section corner ends up over real body text (form labels,
+   disclaimers, list items), and shrinking the sticker doesn't fix overlap.
+   Stickers are purely decorative — no semantic loss when hidden. */
+@media (max-width: 1024px) {
+  .graffiti-sticker { display: none; }
+}
+
+/* Forced-colors / high-contrast / reduced-transparency / print → hide stickers
+   entirely. Parity with the waves layer opt-outs so both decorative layers
+   disable together when the user signals "less visual noise". */
+@media (forced-colors: active),
+       (prefers-contrast: more),
+       (prefers-reduced-transparency: reduce),
+       print {
+  .graffiti-sticker { display: none; }
+}
+
+/* ----------------------------------------------------------------------------
+   Quick-add button — touch-device hide.
+   On mouse devices the "+ В КОРЗИНУ" reveal-on-hover is fine; on touch
+   devices the first tap latches the hover state, leaving the button visible
+   without a clean way to dismiss. Hide it entirely on anything that isn't a
+   true hover-capable, fine-pointer device. Card link + heart + cart drawer
+   remain reachable; touch users add to cart from the product detail page.
+---------------------------------------------------------------------------- */
+@media not all and (hover: hover) and (pointer: fine) {
+  [data-testid^="quick-add-"] { display: none; }
+}
+
+/* ----------------------------------------------------------------------------
+   ScrollTextBand (components/ScrollTextBand.jsx) — kinetic typography band.
+   Two oversized slogan rows slide horizontally with scroll (JS writes the
+   transform on .stb-track). This stylesheet owns the look + the reduced-motion
+   hard-off. Large display text in --axum-ink-muted clears 3:1 on the surface.
+---------------------------------------------------------------------------- */
+.stb {
+  width: 100%;
+  background: var(--axum-surface);
+  overflow: hidden;
+  padding: clamp(2.5rem, 7vw, 6rem) 0;
+  /* keeps the kinetic rows out of the document's horizontal scroll math */
+  contain: layout paint;
+}
+.stb-row { width: 100%; overflow: hidden; }
+.stb-row + .stb-row { margin-top: 0.1em; }
+.stb-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  /* Resting transform is none; JS updates it on scroll. The second row is
+     pre-shifted via its start position so the two rows look offset. */
+  transition: none;
+}
+.stb-row[data-dir="right"] .stb-track { margin-left: -180px; }
+.stb-word {
+  font-family: 'Oswald', 'Archivo Black', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(2.4rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--axum-ink-muted);
+  padding: 0 0.35em;
+  display: inline-flex;
+  align-items: center;
+}
+.stb-dot {
+  color: var(--axum-pink);
+  padding: 0 0.45em;
+  font-size: 0.5em;
+  transform: translateY(-0.1em);
+}
+
+/* Reduced motion: pin both rows static (no scroll-driven transform). The rows
+   stay readable and centered-ish; JS also never arms the scroll handler. */
+@media (prefers-reduced-motion: reduce) {
+  .stb-track { transform: none !important; }
+}
+
+/* ============================================================================
+   AXUM DARK THEME — global remap (accessibility-lead sign-off)
+   ----------------------------------------------------------------------------
+   The site's design system was authored light (white surfaces, black ink &
+   hairlines). Rather than touch every component, we remap the literal utility
+   and design-token classes here. These selectors are UNLAYERED, so they win
+   over Tailwind's @layer utilities regardless of source order.
+
+   Contrast (all vs --axum-surface #0a0a0a):
+     text  #cfcfcf ≈ 9.7:1   ·  muted #9b9b9b ≈ 5.1:1  ·  faint #7c7c7c ≈ 3.2:1
+   No information is conveyed by colour alone; focus rings are pure white.
+   ============================================================================ */
+
+/* Surfaces — every white panel becomes the near-black base. */
+.bg-white { background-color: var(--axum-surface) !important; }
+.product-card { background: var(--axum-surface) !important; }
+.nav-overlay { background: var(--axum-surface); border-left-color: var(--axum-line); }
+
+/* Ink — black text/icons become light grey. */
+.text-black { color: var(--axum-ink) !important; }
+.text-white { color: var(--axum-ink) !important; }   /* already light — normalise to token */
+
+/* Hairlines — every black border/divider becomes a dark-grey line. */
+.border-black { border-color: var(--axum-line) !important; }
+.axum-border,
+.axum-border-b,
+.axum-border-t,
+.axum-border-r,
+.axum-border-l { border-color: var(--axum-line); }
+
+/* ::selection already inverted globally above. */
+
+/* --- Primary button (.axum-btn): light fill on dark, inverts to outline --- */
+.axum-btn {
+  background: var(--axum-accent);
+  color: #000;
+  border-color: var(--axum-accent);
+}
+.axum-btn:hover { background: transparent; color: var(--axum-accent); }
+.axum-btn:focus-visible { outline-color: var(--axum-focus); }
+
+.axum-btn-ghost { background: transparent; color: var(--axum-ink); border-color: var(--axum-line-strong); }
+.axum-btn-ghost:hover { background: var(--axum-accent); color: #000; }
+
+/* Solid (footer/newsletter) — light fill so it stays visible on the dark footer. */
+.axum-btn-solid,
+.axum-btn-solid:hover,
+.axum-btn-solid:focus {
+  background: var(--axum-accent) !important;
+  color: #000 !important;
+  border-color: var(--axum-accent) !important;
+}
+
+/* --- Light "pill" chips (bg-white text-black border-black) become outline
+   chips on dark; the campaign / tile CTA hover already paints dark→light. --- */
+.campaign-cta { color: var(--axum-ink); }
+.campaign-cta:hover { background: var(--axum-accent); color: #000; }
+
+/* --- Form inputs --- */
+.axum-input {
+  border-bottom-color: var(--axum-line-strong);
+  color: var(--axum-ink);
+}
+.axum-input::placeholder { color: var(--axum-ink-muted); opacity: 1; }
+
+/* --- Underline link sweep --- */
+.axum-link::after { background: var(--axum-ink); }
+.axum-link:focus-visible { outline-color: var(--axum-focus); }
+
+/* --- Intro overlay: wipe from black, not white --- */
+.axum-intro { background: var(--axum-surface); }
+
+/* --- Focus rings authored as ring-black / outline-black → white on dark.
+   The Tailwind ring colour is driven by --tw-ring-color; remap it where the
+   component asked for black. Sky-blue rings (already high-contrast) are kept. */
+.focus-visible\:ring-black:focus-visible { --tw-ring-color: var(--axum-focus) !important; }
+.focus\:ring-black:focus { --tw-ring-color: var(--axum-focus) !important; }
+.focus-visible\:outline-black:focus-visible { outline-color: var(--axum-focus) !important; }
+.focus-visible\:ring-offset-white { --tw-ring-offset-color: var(--axum-surface) !important; }
+
+/* --- Hover invert utilities (hover:bg-black hover:text-white) used by nav
+   links, lookbook controls, etc. On dark, "black" hover would vanish — paint
+   the hovered state with the light accent instead. --- */
+.hover\:bg-black:hover { background-color: var(--axum-accent) !important; }
+.hover\:text-white:hover { color: #000 !important; }
+
+/* NOTE: `bg-black` surfaces are intentionally left dark (they read as black on
+   near-black — valid on a dark theme), so floating dark controls (BackToTop,
+   mobile bag bar, image scrims, tile backdrops) keep working untouched.
+   Selected-state pills that need to "pop" are handled per-component. */
+
+/* Translucent-black utilities: a 50%-alpha BLACK is invisible on dark, so the
+   literal `/NN` variants are remapped to light equivalents. (The non-slash
+   `.text-black` is already remapped above; these alpha variants are separate
+   generated classes that need their own rules.) */
+.text-black\/50 { color: var(--axum-ink-muted) !important; }
+.text-black\/60 { color: var(--axum-ink-muted) !important; }
+.text-black\/70,
+.text-black\/80 { color: var(--axum-ink) !important; }
+.border-black\/10,
+.border-black\/20,
+.border-black\/30 { border-color: rgba(255, 255, 255, 0.14) !important; }
+
+/* Active underline indicators authored as a 1px `bg-black` bar (catalog & home
+   category tabs) — make them light so the selected tab is signalled by the bar
+   as well as by the brighter text (not colour alone). */
+.h-px.bg-black { background-color: var(--axum-ink) !important; }
+
+/* shadcn dark tokens (forms/dialogs that read the HSL vars) — charcoal grey. */
+@layer base {
+  :root {
+    --background: 0 0% 14%;
+    --foreground: 0 0% 83%;
+    --border: 0 0% 23%;
+    --input: 0 0% 30%;
+    --ring: 0 0% 100%;
   }
 }

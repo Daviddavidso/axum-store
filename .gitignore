@@ -80,3 +80,9 @@ memory/test_credentials.md
 
 # Mobile development
 android-sdk/
+# --- secrets & local tooling (added before first GitHub push) ---
+.env
+**/.env
+.claude/
+**/.claude/
+frontend/node_modules/.cache/default-development/3.pack

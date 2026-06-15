@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "sonner";
 import { ArrowRight } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
+import ScrollTypeWriter from "@/components/ScrollTypeWriter";
+import { ThrowieSticker } from "@/components/GraffitiSticker";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -31,13 +33,21 @@ const Newsletter = () => {
   };
 
   return (
-    <section className="w-full bg-white axum-border-t" data-testid="newsletter-section">
+    <section className="w-full bg-white axum-border-t axum-graffiti" data-testid="newsletter-section">
+      <ThrowieSticker corner="br" />
       <div className="grid grid-cols-1 lg:grid-cols-12">
         <div className="lg:col-span-7 p-8 md:p-14 axum-border-b lg:axum-border-b-0 lg:axum-border-r">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-6">{t("newsletter.eyebrow")}</div>
-          <h2 className="font-display uppercase text-5xl md:text-7xl lg:text-8xl leading-[0.88] tracking-tighter" data-testid="newsletter-title">
-            {t("newsletter.title_a")}<br />{t("newsletter.title_b")}<br />{t("newsletter.title_c")}
-          </h2>
+          {/* Headline reveals character-by-character as the section scrolls
+              through the viewport (one-way, monotonic). The semantic name lives
+              as an sr-only twin inside the same <h2>; the visual layer is
+              aria-hidden. See ScrollTypeWriter for the accessibility contract. */}
+          <ScrollTypeWriter
+            as="h2"
+            lines={[t("newsletter.title_a"), t("newsletter.title_b"), t("newsletter.title_c")]}
+            className="font-display uppercase text-5xl md:text-7xl lg:text-8xl leading-[0.88] tracking-tighter"
+            data-testid="newsletter-title"
+          />
           <p className="mt-8 max-w-md text-sm leading-relaxed">{t("newsletter.copy")}</p>
         </div>
         <div className="lg:col-span-5 p-8 md:p-14 flex flex-col justify-center">

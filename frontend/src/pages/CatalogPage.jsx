@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import SiteHeader from "@/components/SiteHeader";
 import CartDrawer from "@/components/CartDrawer";
 import MobileBagButton from "@/components/MobileBagButton";
+import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import { CrownSticker, TagArrowSticker } from "@/components/GraffitiSticker";
 import { useLang } from "@/contexts/LanguageContext";
+
+const PAGE_SIZE = 12;
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -16,20 +20,35 @@ const CatalogPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isNew = searchParams.get("new") === "1";
+  // Deep-link from the collection tiles / nav menu: ?category=<localized name>.
+  const categoryParam = searchParams.get("category") || "";
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState(["ALL"]);
-  const [active, setActive] = useState("ALL");
+  const [active, setActive] = useState(categoryParam || "ALL");
+  // "Show more" pagination — the catalog was one very long scroll on mobile.
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const gridRef = useRef(null);
+
+  // Reset the page size whenever the result set changes (filter / lang / new).
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [active, lang, isNew]);
 
   useEffect(() => {
-    setActive("ALL");
+    // Honour a ?category= deep-link on load / lang change; otherwise reset to ALL.
+    setActive(categoryParam || "ALL");
     (async () => {
       try {
         const { data } = await axios.get(`${API}/products/categories`, { params: { lang } });
-        setCategories(data?.categories || ["ALL"]);
+        const cats = data?.categories || ["ALL"];
+        setCategories(cats);
+        // If the deep-linked category isn't a known category for this language,
+        // fall back to ALL so the user never lands on an empty, confusing grid.
+        if (categoryParam && !cats.includes(categoryParam)) setActive("ALL");
       } catch (e) { /* noop */ }
     })();
-  }, [lang]);
+  }, [lang, categoryParam]);
 
   useEffect(() => {
     (async () => {
@@ -44,14 +63,37 @@ const CatalogPage = () => {
     })();
   }, [active, lang, isNew]);
 
+  const shown = Math.min(visibleCount, products.length);
+  const allShown = shown >= products.length;
+  const countMsg = allShown
+    ? t("catalog.all_shown").replace("{total}", products.length)
+    : t("catalog.showing_count").replace("{shown}", shown).replace("{total}", products.length);
+
+  const handleLoadMore = () => {
+    const next = visibleCount + PAGE_SIZE;
+    setVisibleCount(next);
+    if (next >= products.length) {
+      // The button unmounts once the list is exhausted — move focus to the grid
+      // so it isn't dropped (WCAG 2.4.3).
+      requestAnimationFrame(() => gridRef.current?.focus());
+    }
+  };
+
   return (
     <div className="App bg-white min-h-screen" data-testid="catalog-page">
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
+      <BackToTop />
 
-      <main className="pt-[68px]">
-        <section className="px-5 md:px-10 py-14 md:py-20" data-testid="catalog-title-block">
+      <main
+        id="top"
+        tabIndex={-1}
+        className="pt-[68px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 scroll-mt-[68px] focus:outline-none"
+      >
+        <section className="px-5 md:px-10 py-14 md:py-20 axum-graffiti" data-testid="catalog-title-block">
+          <CrownSticker corner="tr" tilt={-3} />
+          <TagArrowSticker corner="br" tilt={-8} />
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">
             {isNew ? t("nav.new") : t("catalog.full_eyebrow")}
           </div>
@@ -59,9 +101,15 @@ const CatalogPage = () => {
             {t("catalog.full_title_a")}<br />{t("catalog.full_title_b")}
           </h1>
           <p className="mt-6 max-w-xl text-sm leading-relaxed opacity-80">{t("catalog.full_blurb")}</p>
-          <div className="mt-8 text-[11px] tracking-[0.3em] uppercase opacity-70" data-testid="catalog-count">
-            {products.length} {t("catalog.pieces")}
-          </div>
+          {products.length > 0 && (
+            <div
+              role="status"
+              className="mt-8 text-[11px] tracking-[0.3em] uppercase opacity-70"
+              data-testid="catalog-count"
+            >
+              {countMsg}
+            </div>
+          )}
         </section>
 
         {/* Airy underlined tabs */}
@@ -89,8 +137,12 @@ const CatalogPage = () => {
           })}
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-6 gap-y-10 md:gap-y-16 px-5 md:px-10 pb-20">
-          {products.map((p, idx) => (
+        <div
+          ref={gridRef}
+          tabIndex={-1}
+          className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-6 gap-y-10 md:gap-y-16 px-5 md:px-10 pb-12 focus:outline-none"
+        >
+          {products.slice(0, visibleCount).map((p, idx) => (
             <ProductCard key={p.id || idx} product={p} idx={idx} isNew={isNew || idx < 2} />
           ))}
           {products.length === 0 && (
@@ -99,6 +151,19 @@ const CatalogPage = () => {
             </div>
           )}
         </div>
+
+        {!allShown && (
+          <div className="flex justify-center pb-20" data-testid="catalog-load-more-wrap">
+            <button
+              type="button"
+              onClick={handleLoadMore}
+              className="axum-btn focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black"
+              data-testid="catalog-load-more"
+            >
+              {t("catalog.load_more")} ({products.length - shown})
+            </button>
+          </div>
+        )}
 
         <Footer />
       </main>

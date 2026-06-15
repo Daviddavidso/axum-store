@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "@/components/ProductCard";
+import SplitText from "@/components/SplitText";
 import { useLang } from "@/contexts/LanguageContext";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -39,11 +40,16 @@ const ProductGrid = () => {
     <div className="w-full bg-white" data-testid="product-grid-section">
       {/* Title block */}
       <div className="flex items-end justify-between px-5 md:px-10 py-14 md:py-20">
-        <div className="reveal">
-          <div className="text-[10px] tracking-[0.32em] uppercase mb-3 opacity-60">{t("catalog.eyebrow")}</div>
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl uppercase leading-none tracking-tighter" data-testid="catalog-title">
-            {t("catalog.title_a")}<br />{t("catalog.title_b")}
-          </h2>
+        {/* Parallax (decorative drift) wraps the reveal so the two transforms
+            never collide. Both are disabled under prefers-reduced-motion. */}
+        <div className="parallax" data-parallax="0.12">
+          <div className="reveal text-[10px] tracking-[0.32em] uppercase mb-3 opacity-60">{t("catalog.eyebrow")}</div>
+          <SplitText
+            as="h2"
+            className="font-display text-4xl md:text-6xl lg:text-7xl uppercase leading-none tracking-tighter"
+            data-testid="catalog-title"
+            lines={[t("catalog.title_a"), t("catalog.title_b")]}
+          />
         </div>
         <button onClick={() => navigate(`/${lang}/catalog`)} className="hidden md:inline axum-link" data-testid="see-all-link">
           {t("catalog.view_all")}
@@ -75,9 +81,11 @@ const ProductGrid = () => {
         })}
       </div>
 
-      {/* Product grid — airy gaps */}
+      {/* Product grid — airy gaps. The home grid is a curated PREVIEW (first 8);
+          the full set lives on the catalog page via the CTA below, so the
+          landing page isn't an endless scroll on mobile. */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 md:gap-x-6 gap-y-10 md:gap-y-16 px-5 md:px-10 pb-16">
-        {products.map((p, idx) => (
+        {products.slice(0, 8).map((p, idx) => (
           <ProductCard key={p.id || idx} product={p} idx={idx} isNew={idx < 2} />
         ))}
         {products.length === 0 && (
@@ -88,7 +96,7 @@ const ProductGrid = () => {
       </div>
 
       <div className="flex justify-center py-12 md:py-16 axum-border-t" data-testid="open-catalog-cta-wrap">
-        <button onClick={() => navigate(`/${lang}/catalog`)} className="axum-btn" data-testid="open-catalog-cta">
+        <button onClick={() => navigate(`/${lang}/catalog`)} data-magnetic className="axum-btn" data-testid="open-catalog-cta">
           {t("catalog.open_full")} →
         </button>
       </div>

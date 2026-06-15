@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLang } from "@/contexts/LanguageContext";
 
-const LanguageToggle = ({ scrolled }) => {
+const LanguageToggle = ({ scrolled, onNavigate }) => {
   const { lang } = useLang();
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,10 +11,15 @@ const LanguageToggle = ({ scrolled }) => {
     if (target === lang) return;
     const newPath = location.pathname.replace(/^\/(en|ru)/, `/${target}`);
     navigate(newPath + location.search + location.hash);
+    // Optional: let a host (e.g. the mobile menu) react to the switch — close
+    // the overlay AFTER navigation so focus return targets the persistent header
+    // trigger on the new route.
+    if (typeof onNavigate === "function") onNavigate();
   };
 
   const base = "px-2 py-1 text-xs tracking-[0.18em] uppercase font-display axum-ease";
-  const onColor = scrolled ? "#000" : "#fff";
+  // Dark theme: light-grey on solid surfaces, pure white (mix-blend) over the hero.
+  const onColor = scrolled ? "#cfcfcf" : "#fff";
   return (
     <div
       className="flex items-center gap-1 select-none"
