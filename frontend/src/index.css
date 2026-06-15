@@ -153,16 +153,20 @@ html, body, #root {
 .ctile:hover .ctile-img--front { opacity: 0; transform: scale(1.04); transition-duration: 0.7s, 1.2s, 0.45s; transition-delay: 0s; }
 .ctile:hover .ctile-img--back  { opacity: 1; transform: scale(1.02); transition-duration: 0.7s, 1.2s, 0.45s; transition-delay: 0s; }
 
-/* Chip in the top-right of the media — index → piece-count swap on hover. */
+/* Chip in the top-right of the media — index → piece-count swap on hover.
+   Two states are STACKED via grid + transform; the chip sizes to whichever
+   state is currently the LARGER, so neither label ever clips. */
 .ctile-chip {
   position: absolute;
   top: 10px; right: 10px;
-  display: inline-flex;
+  display: inline-grid;
+  grid-template-areas: "stack";
   align-items: center;
-  padding: 6px 10px;
-  background: rgba(10, 10, 10, 0.6);
+  justify-items: center;
+  padding: 6px 12px;
+  background: rgba(10, 10, 10, 0.62);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: 10px;
@@ -171,24 +175,18 @@ html, body, #root {
   color: #fff;
   z-index: 2;
   overflow: hidden;
-  min-width: 64px;
-  height: 26px;
+  min-height: 26px;
+  white-space: nowrap;
 }
 .ctile-chip__idx,
 .ctile-chip__pieces {
+  grid-area: stack;          /* both labels occupy the same grid cell → chip
+                                width = max(idx, pieces) — neither clips. */
   white-space: nowrap;
   transition: transform 0.45s var(--axum-ease), opacity 0.35s var(--axum-ease);
   will-change: transform, opacity;
 }
-.ctile-chip__pieces {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(110%);
-  opacity: 0;
-}
+.ctile-chip__pieces { transform: translateY(110%); opacity: 0; }
 .ctile:hover .ctile-chip__idx { transform: translateY(-110%); opacity: 0; }
 .ctile:hover .ctile-chip__pieces { transform: translateY(0); opacity: 1; }
 
