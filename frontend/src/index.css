@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Oswald:wght@500;600;700&family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
 
 @tailwind base;
@@ -55,15 +55,14 @@ html, body, #root {
 }
 
 /* AXUM design tokens */
-/* Display face: switched to OSWALD 700 — a bold, condensed grotesque (client
-   ref: Balenciaga + the heavy "STOP HATIN'" graphic). Crucially Oswald ships
-   full CYRILLIC, so RU and EN headings render in the SAME face (Anton/Bebas are
-   Latin-only and would silently fall back on Russian text). Condensed glyphs
-   carry their own spacing, so we drop the Archivo-era −0.02em tightening; per-
-   heading tracking classes still apply on top. */
+/* Display face: switched to MONTSERRAT 800 — geometric sans recommended by
+   design.google/library/scripting-cyrillic for premium Cyrillic display.
+   Wider letterforms than Oswald, more modern/editorial. Full Cyrillic + Latin
+   coverage, 9 weights — RU and EN render identically. Per-heading tracking
+   utility classes (tracking-[0.16em] etc.) still layer on top. */
 .font-display {
-  font-family: 'Oswald', 'Archivo Black', 'Helvetica Neue', sans-serif;
-  font-weight: 700;
+  font-family: 'Montserrat', 'Oswald', 'Helvetica Neue', sans-serif;
+  font-weight: 800;
   letter-spacing: 0;
 }
 
