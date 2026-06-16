@@ -110,7 +110,7 @@ const CatalogPage = () => {
         </section>
 
         {/* Airy underlined tabs */}
-        <div className="flex flex-wrap items-center gap-x-6 md:gap-x-10 gap-y-2 px-5 md:px-10 pb-10 md:pb-14" data-testid="catalog-tabs">
+        <div className="flex flex-wrap items-center gap-x-5 md:gap-x-10 gap-y-4 px-5 md:px-10 pb-10 md:pb-14" data-testid="catalog-tabs">
           {categories.map((cat) => {
             const isActive = active === cat;
             return (
