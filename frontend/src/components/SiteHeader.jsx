@@ -229,10 +229,11 @@ const SiteHeader = ({ variant = "solid" }) => {
           data-testid="logo"
           style={{ color: onColor }}
         >
-          {/* Mobile (<sm): wordmark only, comfortably sized. Crest hidden so
-              the AXUM text doesn't collide with the cart + EN/RU on a 375px
-              viewport. Full lockup returns at sm+. */}
-          <span className="sm:hidden inline-flex">
+          {/* Mobile (<sm): crest + wordmark, both at the same height (28px on
+              solid / 32px on hero). EN/RU is hidden from the bar on mobile
+              (still reachable from the nav menu) so the lockup fits. */}
+          <span className="sm:hidden inline-flex items-center gap-2">
+            <Crest size={isTransparent ? 32 : 28} className="shrink-0" />
             <Logo height={isTransparent ? 32 : 28} tone={isTransparent ? "overlay" : "white"} />
           </span>
           <span className="hidden sm:inline-flex items-center gap-2.5 md:gap-3">
@@ -257,9 +258,9 @@ const SiteHeader = ({ variant = "solid" }) => {
               ({count})
             </span>
           </button>
-          {/* Language switch is now visible directly in the header on ALL
-              viewports (was desktop-only). The in-menu toggle stays too. */}
-          <div className="flex items-center ml-0.5 md:ml-1">
+          {/* EN/RU lives in the header only on sm+ — on phones the lockup
+              needs that space; the nav menu still carries the toggle. */}
+          <div className="hidden sm:flex items-center ml-0.5 md:ml-1">
             <LanguageToggle scrolled={!isTransparent} />
           </div>
           <button
