@@ -232,9 +232,12 @@ const SiteHeader = ({ variant = "solid" }) => {
           {/* Mobile (<sm): crest BIGGER than wordmark; logo hugs the menu icon
               on the left. AXUM kept reasonably sized; cart count + EN/RU also
               fit on the right at this scale. */}
+          {/* Mobile (<sm): SQUARE crest at 40 (gives a proper brand-mark feel,
+              not a tall narrow sliver), wordmark 22 sits next to it with a bit
+              of breathing room. Compact lang toggle on the right makes room. */}
           <span className="sm:hidden inline-flex items-center gap-1.5">
-            <Crest size={isTransparent ? 36 : 32} className="shrink-0" />
-            <Logo height={isTransparent ? 22 : 18} tone={isTransparent ? "overlay" : "white"} />
+            <Crest size={isTransparent ? 44 : 40} className="shrink-0" />
+            <Logo height={isTransparent ? 26 : 22} tone={isTransparent ? "overlay" : "white"} />
           </span>
           <span className="hidden sm:inline-flex items-center gap-2.5 md:gap-3">
             <Crest size={isTransparent ? 38 : 30} className="shrink-0" />

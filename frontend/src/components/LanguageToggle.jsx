@@ -17,7 +17,9 @@ const LanguageToggle = ({ scrolled, onNavigate }) => {
     if (typeof onNavigate === "function") onNavigate();
   };
 
-  const base = "px-2 py-1 text-xs tracking-[0.18em] uppercase font-display axum-ease";
+  // Compact on phones (px-1, tight tracking) so the toggle fits next to a
+  // larger crest + AXUM lockup; spacious on tablet+ for desktop polish.
+  const base = "px-1 sm:px-2 py-1 text-xs tracking-[0.1em] sm:tracking-[0.18em] uppercase font-display axum-ease";
   // Dark theme: light-grey on solid surfaces, pure white (mix-blend) over the hero.
   const onColor = scrolled ? "#cfcfcf" : "#fff";
   return (
@@ -39,7 +41,8 @@ const LanguageToggle = ({ scrolled, onNavigate }) => {
       >
         EN
       </button>
-      <span className="opacity-50 text-xs">/</span>
+      {/* Separator: hidden on mobile to save width, shown on sm+ */}
+      <span className="hidden sm:inline opacity-50 text-xs">/</span>
       <button
         onClick={() => switchTo("ru")}
         className={`${base}`}
