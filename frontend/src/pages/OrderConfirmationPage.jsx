@@ -88,7 +88,7 @@ const OrderConfirmationPage = () => {
   return (
     <div className="App bg-white min-h-screen" data-testid="confirmation-page">
       <SiteHeader variant="solid" />
-      <main className="pt-[108px]">
+      <main className="pt-[72px]">
         <section className="px-5 md:px-10 py-16 md:py-24 max-w-2xl">
           {/* Outcome announced once: assertive for failure, polite otherwise. */}
           {announce && (

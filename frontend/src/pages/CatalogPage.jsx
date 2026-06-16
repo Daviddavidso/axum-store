@@ -88,7 +88,7 @@ const CatalogPage = () => {
       <main
         id="top"
         tabIndex={-1}
-        className="pt-[108px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 scroll-mt-[108px] focus:outline-none"
+        className="pt-[72px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 scroll-mt-[72px] focus:outline-none"
       >
         <section className="px-5 md:px-10 py-9 md:py-12" data-testid="catalog-title-block">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">
