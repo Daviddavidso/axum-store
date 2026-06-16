@@ -609,12 +609,13 @@ html, body, #root {
 .ctile:hover .ctile-img--front { opacity: 0; transform: scale(1.04); transition-duration: 0.7s, 1.2s, 0.45s; transition-delay: 0s; }
 .ctile:hover .ctile-img--back  { opacity: 1; transform: scale(1.02); transition-duration: 0.7s, 1.2s, 0.45s; transition-delay: 0s; }
 
-/* Chip in the top-right of the media — index → piece-count swap on hover.
-   Two states are STACKED via grid + transform; the chip sizes to whichever
-   state is currently the LARGER, so neither label ever clips. */
+/* Chip BOTTOM-right of the media — out of the way of model faces (the brand's
+   studio shots all center the model's head in the upper-third of the frame).
+   Two states are STACKED via grid + transform; chip sizes to whichever is
+   wider so neither label ever clips. */
 .ctile-chip {
   position: absolute;
-  top: 10px; right: 10px;
+  bottom: 10px; right: 10px;
   display: inline-grid;
   grid-template-areas: "stack";
   align-items: center;
@@ -811,10 +812,11 @@ html, body, #root {
 .product-card-v2:hover .pc-img--front { opacity: 0; }
 .product-card-v2:hover .pc-img--back { opacity: 1; transform: scale(1.03); }
 
-/* NEW badge: tiny pink dot + capital label, no solid block. */
+/* NEW badge BOTTOM-left so the studio model's face stays clear. Pink dot +
+   capital label, no solid block. */
 .pc-badge {
   position: absolute;
-  top: 10px; left: 10px;
+  bottom: 10px; left: 10px;
   display: inline-flex;
   align-items: center;
   gap: 6px;

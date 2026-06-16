@@ -112,9 +112,10 @@ const ProductPage = () => {
             {/* Dark plate + true #fff text — guarantees the counter holds
                 ≥7:1 over ANY photo (busy/light/skin tones included), and
                 bypasses the dark-theme global text-white→ink remap which would
-                otherwise turn this counter mid-grey on the dark plate. */}
+                otherwise turn this counter mid-grey on the dark plate.
+                Bottom-left so it doesn't cover the model's face. */}
             <div
-              className="absolute top-3 left-3 inline-flex items-center px-2.5 py-1 text-[10px] tracking-[0.32em] uppercase font-display"
+              className="absolute bottom-3 left-3 inline-flex items-center px-2.5 py-1 text-[10px] tracking-[0.32em] uppercase font-display"
               style={{
                 color: "#fff",
                 background: "rgba(10, 10, 10, 0.78)",
