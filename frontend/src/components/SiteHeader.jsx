@@ -224,7 +224,7 @@ const SiteHeader = ({ variant = "solid" }) => {
         <a
           href={`/${lang}`}
           onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); scrollTo(null, { top: true }); }}
-          className="flex items-center md:justify-self-center -ml-1 sm:ml-0"
+          className="flex items-center md:justify-self-center ml-2 sm:ml-0"
           aria-label="AXUM home"
           data-testid="logo"
           style={{ color: onColor }}
