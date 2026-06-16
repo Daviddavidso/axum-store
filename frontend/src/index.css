@@ -79,6 +79,43 @@ html, body, #root {
 .graffiti-sticker { display: none !important; }
 
 /* ============================================================================
+   PERFORMANCE: content-visibility + GPU compositing.
+   ----------------------------------------------------------------------------
+   Heavy off-screen sections (lookbook, editorial, manifesto, scroll-text band,
+   footer) skip render until they enter the viewport. Saves layout/paint work
+   during fast inertial scroll. `contain-intrinsic-size` reserves space so the
+   scrollbar doesn't jump as sections virtualise in.
+
+   Animated elements (.ctile, .pc-quickadd, .mnav, etc.) get translateZ(0) so
+   they composite on a dedicated GPU layer and the fixed/sticky header doesn't
+   repaint with them.
+
+   accessibility-lead sign-off: content-visibility may break in-page find
+   (Ctrl+F) in older browsers — modern browsers support find-in-page over
+   `auto` sections. Anchor focus also triggers visibility so #lookbook etc.
+   still work.
+   ============================================================================ */
+[data-testid="lookbook-section"],
+[data-testid="editorial-strip"],
+[data-testid="newsletter-section"],
+[data-testid="scroll-text-band"],
+#footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
+}
+
+/* Force GPU compositing layer on animated tiles and the fixed bottom bar so
+   inertial scroll never blocks paint on the rest of the page. */
+.ctile-media,
+.ctile-img,
+.pc-media,
+.pc-img,
+.mnav,
+[data-testid="site-header"] {
+  transform: translateZ(0);
+}
+
+/* ============================================================================
    Checkout fields — floating-label input boxes for the dark theme.
    The previous underline-only inputs blended into #242424; these draw a clear
    1px frame so the visitor SEES where to type, with a smooth label float on

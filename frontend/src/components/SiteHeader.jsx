@@ -176,9 +176,15 @@ const SiteHeader = ({ variant = "solid" }) => {
   const onColor = isTransparent ? "#fff" : "#cfcfcf";
 
   const headerStyle = {
-    background: isTransparent ? "transparent" : "rgba(36,36,36,0.9)",
-    backdropFilter: isTransparent ? "none" : "blur(8px)",
+    // Solid surface on inner pages — no transparency so cards never peek
+    // through the bar during fast scroll. Hero variant stays clean transparent.
+    background: isTransparent ? "transparent" : "var(--axum-surface)",
+    backdropFilter: "none",
     borderBottom: isTransparent ? "1px solid transparent" : "1px solid #3a3a3a",
+    // Force a dedicated compositing layer so the fixed header doesn't repaint
+    // when the page underneath scrolls — keeps the bar buttery during inertia.
+    willChange: "transform",
+    transform: "translateZ(0)",
   };
 
   const iconBtnCls = "axum-ease p-1.5 hover:opacity-70 relative";
