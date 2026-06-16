@@ -868,6 +868,7 @@ html, body, #root {
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.16em;
+  line-height: 1.4;          /* clears Cyrillic descenders (Ц/Щ/Д/Р) at uppercase */
   text-transform: uppercase;
   color: var(--axum-ink);
   text-align: left;
@@ -875,11 +876,18 @@ html, body, #root {
   border: 0;
   padding: 0;
   cursor: pointer;
+  /* 2-line clamp: full product name now fits on TWO lines instead of being
+     cut to "БОРДОВЫЙ БАРХАТНЫЙ К…". em-based max-height so it scales with
+     the user's font-size setting (WCAG 1.4.4 Resize text). */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  max-height: 2.8em;
   flex: 1 1 auto;
   transition: color 0.2s var(--axum-ease);
+  /* meta row uses align-items: baseline; keep our top edge aligned with price */
+  align-self: flex-start;
 }
 .product-card-v2 .pc-name:hover { color: var(--axum-accent); text-decoration: underline; text-underline-offset: 4px; }
 .product-card-v2 .pc-name:focus-visible {
