@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Oswald:wght@500;600;700&family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Oswald:wght@500;600;700&family=Archivo+Black&family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
 
 @tailwind base;
@@ -55,14 +55,13 @@ html, body, #root {
 }
 
 /* AXUM design tokens */
-/* Display face: switched to MONTSERRAT 800 — geometric sans recommended by
-   design.google/library/scripting-cyrillic for premium Cyrillic display.
-   Wider letterforms than Oswald, more modern/editorial. Full Cyrillic + Latin
-   coverage, 9 weights — RU and EN render identically. Per-heading tracking
-   utility classes (tracking-[0.16em] etc.) still layer on top. */
+/* Display face: UNBOUNDED 700 — geometric editorial display, designed with
+   strong Cyrillic in mind (Google Fonts, full RU/EN parity). Used in modern
+   premium fashion/tech rebrands. Per-heading tracking utility classes
+   (tracking-[0.16em] etc.) still layer on top. */
 .font-display {
-  font-family: 'Montserrat', 'Oswald', 'Helvetica Neue', sans-serif;
-  font-weight: 800;
+  font-family: 'Unbounded', 'Montserrat', 'Helvetica Neue', sans-serif;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
