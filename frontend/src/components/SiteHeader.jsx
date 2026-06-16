@@ -197,7 +197,7 @@ const SiteHeader = ({ variant = "solid" }) => {
       <header
         ref={headerRef}
         onFocus={revealForFocus}
-        className={`fixed top-0 left-0 right-0 z-50 flex justify-between md:grid md:grid-cols-3 items-center gap-4 sm:gap-5 px-4 md:px-8 py-3.5 md:py-4 axum-ease ${hidden ? "is-hidden" : ""}`}
+        className={`fixed top-0 left-0 right-0 z-50 flex md:grid md:grid-cols-3 items-center gap-2 sm:gap-5 px-3 md:px-8 py-3.5 md:py-4 axum-ease ${hidden ? "is-hidden" : ""}`}
         style={headerStyle}
         data-testid="site-header"
       >
@@ -224,17 +224,17 @@ const SiteHeader = ({ variant = "solid" }) => {
         <a
           href={`/${lang}`}
           onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); scrollTo(null, { top: true }); }}
-          className="flex items-center justify-self-center"
+          className="flex items-center md:justify-self-center -ml-1 sm:ml-0"
           aria-label="AXUM home"
           data-testid="logo"
           style={{ color: onColor }}
         >
-          {/* Mobile (<sm): crest + wordmark, both at the same height (28px on
-              solid / 32px on hero). EN/RU is hidden from the bar on mobile
-              (still reachable from the nav menu) so the lockup fits. */}
-          <span className="sm:hidden inline-flex items-center gap-2">
-            <Crest size={isTransparent ? 32 : 28} className="shrink-0" />
-            <Logo height={isTransparent ? 32 : 28} tone={isTransparent ? "overlay" : "white"} />
+          {/* Mobile (<sm): crest BIGGER than wordmark; logo hugs the menu icon
+              on the left. AXUM kept reasonably sized; cart count + EN/RU also
+              fit on the right at this scale. */}
+          <span className="sm:hidden inline-flex items-center gap-1.5">
+            <Crest size={isTransparent ? 36 : 32} className="shrink-0" />
+            <Logo height={isTransparent ? 22 : 18} tone={isTransparent ? "overlay" : "white"} />
           </span>
           <span className="hidden sm:inline-flex items-center gap-2.5 md:gap-3">
             <Crest size={isTransparent ? 38 : 30} className="shrink-0" />
@@ -242,8 +242,9 @@ const SiteHeader = ({ variant = "solid" }) => {
           </span>
         </a>
 
-        {/* RIGHT — icons */}
-        <div className="flex items-center gap-3 md:gap-4 justify-self-end" style={iconStyle}>
+        {/* RIGHT — icons. ml-auto on mobile pushes the right cluster to the
+            edge while the logo stays left-of-center next to the menu icon. */}
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4 ml-auto md:ml-0 md:justify-self-end" style={iconStyle}>
           <button className={`${iconBtnCls} hidden sm:inline-flex`} aria-label="Search" data-testid="header-search" onClick={() => alert(t("header.search_soon"))}>
             <Search size={20} strokeWidth={1.5} />
           </button>
@@ -254,13 +255,15 @@ const SiteHeader = ({ variant = "solid" }) => {
             data-testid="header-bag"
           >
             <ShoppingBag size={20} strokeWidth={1.5} />
-            <span className="text-[11px] tracking-[0.18em] font-display tabular-nums" data-testid="bag-count">
+            {/* Cart count hidden on the smallest viewports — would not fit
+                alongside crest + AXUM + EN/RU. Cart icon alone still works. */}
+            <span className="hidden sm:inline text-[11px] tracking-[0.18em] font-display tabular-nums" data-testid="bag-count">
               ({count})
             </span>
           </button>
-          {/* EN/RU lives in the header only on sm+ — on phones the lockup
-              needs that space; the nav menu still carries the toggle. */}
-          <div className="hidden sm:flex items-center ml-0.5 md:ml-1">
+          {/* EN/RU visible on all viewports. On mobile sits next to the cart
+              icon; the nav-menu copy is still there as a secondary fallback. */}
+          <div className="flex items-center ml-0.5 md:ml-1">
             <LanguageToggle scrolled={!isTransparent} />
           </div>
           <button
