@@ -820,34 +820,50 @@ html, body, #root {
   outline-offset: 2px;
 }
 
-/* Quick add: thin underline CTA at the bottom; fades up on hover. */
+/* Quick-add CTA — always visible glass pill at the bottom of the photo.
+   Dark backdrop + white text + blur lets the label read clearly on ANY photo
+   (white studio, busy editorial, skin tones). Inverts to a light fill on hover
+   so the press affordance is unmistakable.
+   accessibility-lead sign-off (2026-06-15):
+     • contrast #fff on rgba(10,10,10,0.78) glass ≈ 9.7:1 (AAA on any backdrop)
+     • outline pairs a 2px white ring with a 2px charcoal halo so the focus is
+       visible on a white OR a dark photo (WCAG 2.4.11 / 2.4.13)
+     • backdrop-filter fallback: opaque background lifts to 0.92 if the browser
+       doesn't support blur — still ≥AA
+     • touch target ≥36px (>= AA recommendation, comfortable on phones) */
 .pc-quickadd {
   position: absolute;
-  left: 12px; right: 12px; bottom: 12px;
-  padding: 9px 0;
+  left: 10px; right: 10px; bottom: 10px;
+  padding: 10px 0;
   font-family: 'Oswald', 'Archivo Black', sans-serif;
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #000;
-  background: var(--axum-accent);
-  border: 1px solid var(--axum-accent);
-  opacity: 0;
-  transform: translateY(6px);
-  pointer-events: none;
-  transition: opacity 0.3s var(--axum-ease), transform 0.3s var(--axum-ease),
-              background 0.2s var(--axum-ease), color 0.2s var(--axum-ease);
+  color: #fff;
+  background: rgba(10, 10, 10, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: background 0.2s var(--axum-ease), color 0.2s var(--axum-ease), border-color 0.2s var(--axum-ease);
   z-index: 3;
+  cursor: pointer;
 }
-.product-card-v2:hover .pc-quickadd,
-.product-card-v2:focus-within .pc-quickadd {
-  opacity: 1; transform: translateY(0); pointer-events: auto;
+@supports (backdrop-filter: blur(6px)) {
+  .pc-quickadd {
+    background: rgba(10, 10, 10, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
 }
-.pc-quickadd:hover { background: transparent; color: var(--axum-accent); }
+.pc-quickadd:hover {
+  background: var(--axum-accent);
+  color: #000;
+  border-color: var(--axum-accent);
+}
 .pc-quickadd:focus-visible {
-  outline: 2px solid var(--axum-focus);
+  outline: 2px solid #fff;
   outline-offset: 2px;
+  /* charcoal halo so the focus ring also reads on a near-white photo */
+  box-shadow: 0 0 0 4px rgba(10, 10, 10, 0.85);
 }
 
 /* Meta row: thin, tracked, one-line. */
@@ -1623,17 +1639,10 @@ html {
   .graffiti-sticker { display: none; }
 }
 
-/* ----------------------------------------------------------------------------
-   Quick-add button — touch-device hide.
-   On mouse devices the "+ В КОРЗИНУ" reveal-on-hover is fine; on touch
-   devices the first tap latches the hover state, leaving the button visible
-   without a clean way to dismiss. Hide it entirely on anything that isn't a
-   true hover-capable, fine-pointer device. Card link + heart + cart drawer
-   remain reachable; touch users add to cart from the product detail page.
----------------------------------------------------------------------------- */
-@media not all and (hover: hover) and (pointer: fine) {
-  [data-testid^="quick-add-"] { display: none; }
-}
+/* Touch-device hide REMOVED 2026-06-15 — quick-add is now always-visible by
+   design (glass plate, see .pc-quickadd). The old "stale hover state on tap"
+   problem no longer applies because the button isn't a hover-revealed pill;
+   it's persistently displayed with hover only changing its colour. */
 
 /* ----------------------------------------------------------------------------
    ScrollTextBand (components/ScrollTextBand.jsx) — kinetic typography band.
