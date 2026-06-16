@@ -55,13 +55,13 @@ html, body, #root {
 }
 
 /* AXUM design tokens */
-/* Display face: UNBOUNDED 700 — geometric editorial display, designed with
-   strong Cyrillic in mind (Google Fonts, full RU/EN parity). Used in modern
-   premium fashion/tech rebrands. Per-heading tracking utility classes
-   (tracking-[0.16em] etc.) still layer on top. */
+/* Display face: UNBOUNDED 500 — geometric editorial display, designed with
+   strong Cyrillic in mind (Google Fonts, full RU/EN parity). Lighter Medium
+   weight reads cleaner and less brutal than 700; per-heading tracking utility
+   classes (tracking-[0.16em] etc.) still layer on top. */
 .font-display {
   font-family: 'Unbounded', 'Montserrat', 'Helvetica Neue', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
