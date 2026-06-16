@@ -107,15 +107,6 @@ const ProductCard = ({ product, idx, isNew = false, isBestSeller = false }) => {
           <Heart size={18} strokeWidth={1.5} fill={wished ? "currentColor" : "none"} />
         </button>
 
-        {/* Quick add — thin underline-style CTA at the bottom, fades in on hover.
-            Hidden on touch via CSS (no stale hover state). */}
-        <button
-          onClick={quickAdd}
-          className="pc-quickadd"
-          data-testid={`quick-add-${product.id}`}
-        >
-          + {t("product_card.add")}
-        </button>
       </div>
 
       {/* Below image — name + price, single tight row */}
@@ -131,6 +122,19 @@ const ProductCard = ({ product, idx, isNew = false, isBestSeller = false }) => {
           {product.price}
         </div>
       </div>
+
+      {/* Quick add — full-width LIGHT button below the meta row, on the card
+          surface. Unique aria-label so screen-reader users hear the product
+          name for every repeated CTA in the grid. */}
+      <button
+        type="button"
+        onClick={quickAdd}
+        className="pc-quickadd"
+        aria-label={`${t("product_card.add")} — ${product.name}`}
+        data-testid={`quick-add-${product.id}`}
+      >
+        + {t("product_card.add")}
+      </button>
     </article>
   );
 };
