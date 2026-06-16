@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Pause, Play } from "lucide-react";
 import { useLang } from "@/contexts/LanguageContext";
+import { asset } from "@/lib/asset";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -97,28 +98,58 @@ const Lookbook = () => {
             )}
           </div>
           <div className="flex-1 flex flex-col">
-            {items.map((it, idx) => (
-              <button
-                key={it.id || idx}
-                onClick={() => setActive(idx)}
-                aria-pressed={idx === active}
-                className={`text-left px-8 md:px-10 py-6 md:py-8 axum-border-b axum-ease flex items-center justify-between focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sky-500 ${
-                  idx === active ? "bg-[var(--axum-accent)] text-[#000]" : "bg-white text-black hover:bg-black hover:text-white"
-                }`}
-                data-testid={`lookbook-tab-${idx}`}
-              >
-                <div>
-                  <div className="text-[10px] tracking-[0.4em] uppercase opacity-70 mb-2">
-                    {String(idx + 1).padStart(2, "0")} — {it.tab}
+            {items.map((it, idx) => {
+              const descId = `lookbook-desc-${idx}`;
+              return (
+                <button
+                  key={it.id || idx}
+                  onClick={() => setActive(idx)}
+                  aria-pressed={idx === active}
+                  aria-describedby={descId}
+                  className={`text-left axum-border-b axum-ease focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-sky-500 ${
+                    idx === active ? "bg-[var(--axum-accent)] text-[#000]" : "bg-white text-black hover:bg-black hover:text-white"
+                  }`}
+                  data-testid={`lookbook-tab-${idx}`}
+                >
+                  {/* Mobile-only inline photo of the tab — decorative; title text
+                      below is the button's accessible name. Hidden ≥lg because
+                      the big hero on the right already shows the active photo. */}
+                  <div className="lg:hidden">
+                    <img
+                      src={asset(it.image)}
+                      alt=""
+                      loading="lazy"
+                      className="block w-full aspect-[4/5] object-cover"
+                    />
                   </div>
-                  <div className="font-display text-xl md:text-2xl uppercase leading-tight">
-                    {it.title}
+
+                  <div className="px-6 md:px-10 py-5 md:py-8 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <div className="text-[10px] tracking-[0.4em] uppercase opacity-70 mb-2">
+                        {String(idx + 1).padStart(2, "0")} — {it.tab}
+                      </div>
+                      <div className="font-display text-xl md:text-2xl uppercase leading-tight">
+                        {it.title}
+                      </div>
+                    </div>
+                    <span className="font-display text-lg ml-4" aria-hidden="true">{idx === active ? "●" : "○"}</span>
                   </div>
-                </div>
-                <span className="font-display text-lg ml-4" aria-hidden="true">{idx === active ? "●" : "○"}</span>
-              </button>
-            ))}
-            <div className="p-8 md:p-10 mt-auto">
+
+                  {/* Mobile-only description, exposed to AT via aria-describedby
+                      (accessibility-lead pattern). Hidden ≥lg — desktop shows
+                      the active description in the bottom-left "notes" block. */}
+                  <p
+                    id={descId}
+                    className="lg:hidden px-6 pb-6 md:px-10 md:pb-8 text-sm leading-relaxed opacity-80"
+                  >
+                    {it.description}
+                  </p>
+                </button>
+              );
+            })}
+            {/* Desktop-only "notes" block — each mobile tab carries its own
+                description inline so this would duplicate on small screens. */}
+            <div className="hidden lg:block p-8 md:p-10 mt-auto">
               <div className="text-[11px] tracking-[0.3em] uppercase opacity-70 mb-3">{t("lookbook.notes")}</div>
               <p className="text-sm leading-relaxed max-w-md" data-testid="lookbook-description">
                 {current.description}
@@ -127,10 +158,12 @@ const Lookbook = () => {
           </div>
         </div>
 
-        <div className="lg:col-span-8 relative overflow-hidden bg-[#f3f2f0]" style={{ minHeight: "70vh" }}>
+        {/* Big hero on the right — desktop-only. On mobile each tab carries
+            its own inline photo, so this would duplicate. */}
+        <div className="hidden lg:block lg:col-span-8 relative overflow-hidden bg-[#f3f2f0]" style={{ minHeight: "70vh" }}>
           <img
             key={fadeKey.current}
-            src={current.image}
+            src={asset(current.image)}
             alt={current.alt || current.title}
             className={`lookbook-img ${visible ? "visible" : ""} absolute inset-0 w-full h-full object-contain`}
             data-testid="lookbook-image"
