@@ -197,7 +197,7 @@ const SiteHeader = ({ variant = "solid" }) => {
       <header
         ref={headerRef}
         onFocus={revealForFocus}
-        className={`fixed top-0 left-0 right-0 z-50 flex justify-between md:grid md:grid-cols-3 items-center gap-4 sm:gap-5 px-4 md:px-8 py-3.5 axum-ease ${hidden ? "is-hidden" : ""}`}
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-between md:grid md:grid-cols-3 items-center gap-4 sm:gap-5 px-4 md:px-8 py-4 md:py-5 axum-ease ${hidden ? "is-hidden" : ""}`}
         style={headerStyle}
         data-testid="site-header"
       >
@@ -216,21 +216,21 @@ const SiteHeader = ({ variant = "solid" }) => {
           </button>
         </div>
 
-        {/* CENTER — crest emblem + wordmark.
-            The crest is decorative (aria-hidden inside Crest); the link's
-            aria-label carries the brand name so AT announces it once. The
-            wordmark uses a light tone: "overlay" (white, mix-blend) over the
-            hero, "white" on the solid dark bar. */}
+        {/* CENTER — crest + wordmark, LARGE. The crest is decorative
+            (aria-hidden inside Crest); the link's aria-label carries the brand
+            name so AT announces it once. The wordmark uses a light tone:
+            "overlay" (white, mix-blend) over the hero, "white" on the solid
+            dark bar. */}
         <a
           href={`/${lang}`}
           onClick={(e) => { e.preventDefault(); navigate(`/${lang}`); scrollTo(null, { top: true }); }}
-          className="flex items-center gap-2.5 md:gap-3 justify-self-center"
+          className="flex items-center gap-3 md:gap-4 justify-self-center"
           aria-label="AXUM home"
           data-testid="logo"
           style={{ color: onColor }}
         >
-          <Crest size={isTransparent ? 26 : 20} className="shrink-0" />
-          <Logo height={isTransparent ? 30 : 22} tone={isTransparent ? "overlay" : "white"} />
+          <Crest size={isTransparent ? 40 : 32} className="shrink-0" />
+          <Logo height={isTransparent ? 42 : 34} tone={isTransparent ? "overlay" : "white"} />
         </a>
 
         {/* RIGHT — icons */}

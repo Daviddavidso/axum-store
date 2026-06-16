@@ -41,7 +41,7 @@ const Home = () => {
       <main
         id="top"
         tabIndex={-1}
-        className="pt-[68px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 focus:outline-none"
+        className="pt-[88px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0 focus:outline-none"
       >
         {/* The hero is image-only with no visible text headline, so the page's
             single <h1> is visually hidden. It names the page (durable, not a
@@ -55,7 +55,7 @@ const Home = () => {
         <TrendingRail />
         {/* tabIndex=-1 so the #shop scroll cue moves keyboard focus here, not
             just the viewport (WCAG 2.4.3). scroll-mt clears the sticky header. */}
-        <section id="shop" tabIndex={-1} className="axum-border-t scroll-mt-[68px] focus:outline-none">
+        <section id="shop" tabIndex={-1} className="axum-border-t scroll-mt-[88px] focus:outline-none">
           <ProductGrid />
         </section>
         <CategoryBlocks />
