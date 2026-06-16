@@ -197,7 +197,7 @@ const SiteHeader = ({ variant = "solid" }) => {
       <header
         ref={headerRef}
         onFocus={revealForFocus}
-        className={`fixed top-0 left-0 right-0 z-50 flex justify-between md:grid md:grid-cols-3 items-center gap-4 sm:gap-5 px-4 md:px-8 py-4 md:py-5 axum-ease ${hidden ? "is-hidden" : ""}`}
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-between md:grid md:grid-cols-3 items-center gap-4 sm:gap-5 px-4 md:px-8 py-5 md:py-6 axum-ease ${hidden ? "is-hidden" : ""}`}
         style={headerStyle}
         data-testid="site-header"
       >
@@ -229,8 +229,8 @@ const SiteHeader = ({ variant = "solid" }) => {
           data-testid="logo"
           style={{ color: onColor }}
         >
-          <Crest size={isTransparent ? 40 : 32} className="shrink-0" />
-          <Logo height={isTransparent ? 42 : 34} tone={isTransparent ? "overlay" : "white"} />
+          <Crest size={isTransparent ? 54 : 44} className="shrink-0" />
+          <Logo height={isTransparent ? 58 : 46} tone={isTransparent ? "overlay" : "white"} />
         </a>
 
         {/* RIGHT — icons */}

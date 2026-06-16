@@ -94,7 +94,7 @@ const ProductPage = () => {
       <CartDrawer />
       <MobileBagButton />
 
-      <main className="pt-[88px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0">
+      <main className="pt-[108px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0">
         <section className="grid grid-cols-1 lg:grid-cols-12 axum-border-b" data-testid="product-gallery">
           {/* Main active image — presentational projection of the selected
               thumbnail. Not focusable (no action on it); its alt updates to the

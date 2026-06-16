@@ -12,7 +12,7 @@ const AboutPage = () => {
       <SiteHeader variant="solid" />
       <CartDrawer />
       <MobileBagButton />
-      <main className="pt-[88px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0">
+      <main className="pt-[108px] pb-[calc(50px+env(safe-area-inset-bottom,0px))] md:pb-0">
         <section className="px-5 md:px-10 py-16 md:py-24 axum-border-b">
           <div className="text-[10px] tracking-[0.4em] uppercase opacity-60 mb-4">{t("about.eyebrow")}</div>
           <h1 className="font-display uppercase text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.88]">
