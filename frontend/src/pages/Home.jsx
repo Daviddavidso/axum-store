@@ -8,7 +8,6 @@ import HeroSlider from "@/components/HeroSlider";
 import TrendingRail from "@/components/TrendingRail";
 import ProductGrid from "@/components/ProductGrid";
 import CollectionTiles from "@/components/CollectionTiles";
-import VideoCampaign from "@/components/VideoCampaign";
 import ScrollTextBand from "@/components/ScrollTextBand";
 import CategoryBlocks from "@/components/CategoryBlocks";
 import Lookbook from "@/components/Lookbook";
@@ -53,8 +52,6 @@ const Home = () => {
         {/* Browse by collection (reference: Balenciaga "explore") — high up so
             the collection-led navigation the client asked for leads the page. */}
         <CollectionTiles />
-        {/* Brand film — kinetic AI-transition campaign clip. */}
-        <VideoCampaign />
         <TrendingRail />
         {/* tabIndex=-1 so the #shop scroll cue moves keyboard focus here, not
             just the viewport (WCAG 2.4.3). scroll-mt clears the sticky header. */}

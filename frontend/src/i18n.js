@@ -164,6 +164,8 @@ export const STRINGS = {
     hero: {
       scroll: "Scroll ↓",
       alt: "AXUM campaign hero.",
+      play_film: "Play hero film",
+      pause_film: "Pause hero film",
     },
     catalog: {
       eyebrow: "N°02 / Catalogue",
@@ -494,6 +496,8 @@ export const STRINGS = {
     hero: {
       scroll: "Скролл ↓",
       alt: "Главная фотография кампании AXUM.",
+      play_film: "Запустить hero-видео",
+      pause_film: "Пауза hero-видео",
     },
     catalog: {
       eyebrow: "№02 / Каталог",
