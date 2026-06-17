@@ -111,6 +111,53 @@ const HeroSlider = () => {
           : <Pause size={16} strokeWidth={2} aria-hidden="true" />}
       </button>
 
+      {/* ── Editorial overlays — give the hero a campaign film vibe.
+          All decorative + aria-hidden; the sr-only <h1> on the page owns the
+          accessible name. Each plate has its own dark backdrop for ≥4.5:1
+          contrast over any video frame. No motion (no FOM). */}
+
+      {/* Top-left: drop badge + pink asterisk accent (graffiti-ish nudge). */}
+      <div
+        aria-hidden="true"
+        className="absolute top-5 left-5 md:top-7 md:left-10 z-10 inline-flex items-center gap-2 px-3 py-1.5 text-[10px] tracking-[0.4em] uppercase font-display"
+        style={{ color: "#fff", background: "rgba(10,10,10,0.55)", backdropFilter: "blur(6px)" }}
+      >
+        <span style={{ color: "var(--axum-pink)" }}>✦</span>
+        AXUM · ДРОП 04
+      </div>
+
+      {/* Top-right (under the pause control): season tag. */}
+      <div
+        aria-hidden="true"
+        className="absolute top-16 right-5 md:top-20 md:right-7 z-10 text-[10px] tracking-[0.32em] uppercase font-display"
+        style={{ color: "rgba(255,255,255,0.85)" }}
+      >
+        FW · 2026
+      </div>
+
+      {/* Bottom-right: big slogan — heavy uppercase, the brand's "STOP HATIN'"
+          editorial reference; pink half-line cues a graffiti-ish accent.
+          Lifted on mobile so the bottom nav bar doesn't crop the slogan. */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-24 right-5 md:bottom-10 md:right-10 z-10 text-right"
+      >
+        <div
+          className="font-display uppercase leading-[0.92] tracking-tight text-[clamp(2rem,7vw,5.5rem)]"
+          style={{ color: "#fff", textShadow: "0 2px 18px rgba(0,0,0,0.5)" }}
+        >
+          {t("hero.slogan_a")}
+          <br />
+          <span style={{ color: "var(--axum-pink)" }}>{t("hero.slogan_b")}</span>
+        </div>
+        <div
+          className="mt-2 text-[10px] tracking-[0.4em] uppercase"
+          style={{ color: "rgba(255,255,255,0.75)" }}
+        >
+          AXUM STUDIO · TAILORING × AI
+        </div>
+      </div>
+
       {/* Scroll cue — own near-black plate backs both the text and the focus ring */}
       <a
         href="#shop"

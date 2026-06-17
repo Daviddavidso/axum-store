@@ -166,6 +166,8 @@ export const STRINGS = {
       alt: "AXUM campaign hero.",
       play_film: "Play hero film",
       pause_film: "Pause hero film",
+      slogan_a: "BEAUTY IS",
+      slogan_b: "A WEAPON",
     },
     catalog: {
       eyebrow: "N°02 / Catalogue",
@@ -498,6 +500,8 @@ export const STRINGS = {
       alt: "Главная фотография кампании AXUM.",
       play_film: "Запустить hero-видео",
       pause_film: "Пауза hero-видео",
+      slogan_a: "КРАСОТА —",
+      slogan_b: "ОРУЖИЕ",
     },
     catalog: {
       eyebrow: "№02 / Каталог",
