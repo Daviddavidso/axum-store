@@ -135,19 +135,22 @@ const HeroSlider = () => {
         FW · 2026
       </div>
 
-      {/* Bottom-right: big slogan — heavy uppercase, the brand's "STOP HATIN'"
-          editorial reference; pink half-line cues a graffiti-ish accent.
-          Lifted on mobile so the bottom nav bar doesn't crop the slogan. */}
+      {/* Bottom-right: tight editorial slogan. One line on desktop, two-line
+          stack on mobile (clamp keeps it readable everywhere). Heavy uppercase
+          + subtle pink accent on the second word — no shouting. */}
       <div
         aria-hidden="true"
-        className="absolute bottom-24 right-5 md:bottom-10 md:right-10 z-10 text-right"
+        className="absolute bottom-24 right-5 md:bottom-10 md:right-10 z-10 text-right max-w-[88vw] md:max-w-[40vw]"
       >
         <div
-          className="font-display uppercase leading-[0.92] tracking-tight text-[clamp(2rem,7vw,5.5rem)]"
-          style={{ color: "#fff", textShadow: "0 2px 18px rgba(0,0,0,0.5)" }}
+          className="font-display uppercase leading-[0.95] tracking-tight"
+          style={{
+            color: "#fff",
+            fontSize: "clamp(1.5rem, 4vw, 2.75rem)",
+            textShadow: "0 2px 18px rgba(0,0,0,0.55)",
+          }}
         >
-          {t("hero.slogan_a")}
-          <br />
+          {t("hero.slogan_a")}{" "}
           <span style={{ color: "var(--axum-pink)" }}>{t("hero.slogan_b")}</span>
         </div>
         <div
