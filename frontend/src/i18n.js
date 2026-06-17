@@ -154,6 +154,13 @@ export const STRINGS = {
       pieces: "Pieces",
       view: "View",
     },
+    campaign_film: {
+      eyebrow: "Brand film",
+      title: "Walk through the wall",
+      copy: "A studio moment captured as the frame dissolves into the next world. AXUM tailoring meets the AI horizon.",
+      play: "Play film",
+      pause: "Pause film",
+    },
     hero: {
       scroll: "Scroll ↓",
       alt: "AXUM campaign hero.",
@@ -476,6 +483,13 @@ export const STRINGS = {
       cta_aria: "Открыть коллекцию «{name}»",
       pieces: "Вещей",
       view: "Открыть",
+    },
+    campaign_film: {
+      eyebrow: "Бренд-фильм",
+      title: "Сквозь стену",
+      copy: "Студийный момент, в котором кадр растворяется в следующем мире. Конструктив AXUM встречает AI-горизонт.",
+      play: "Запустить",
+      pause: "Поставить на паузу",
     },
     hero: {
       scroll: "Скролл ↓",
