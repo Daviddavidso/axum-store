@@ -1,0 +1,737 @@
+[
+ {
+  "id": "corset-butterfly",
+  "name": "BUTTERFLY corset",
+  "description": "The BUTTERFLY corset sculpts the waist for a striking silhouette while keeping full freedom of movement. Adjustable back lacing adapts to your figure for a precise fit. Available in several shades, from naturals to custom hand-dyed.\n\n100% cotton.",
+  "category": "CORSETS",
+  "price": "2 000 000 IDR",
+  "price_value": 2000000,
+  "currency": "IDR",
+  "image1": "/products/real/corset-butterfly/pink-1.jpg",
+  "image2": "/products/real/corset-butterfly/pink-2.jpg",
+  "alt1": "BUTTERFLY corset",
+  "alt2": "BUTTERFLY corset — Pink",
+  "images": [
+   {
+    "src": "/products/real/corset-butterfly/pink-1.jpg",
+    "alt": "BUTTERFLY corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-butterfly/pink-2.jpg",
+    "alt": "BUTTERFLY corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-butterfly/pink-3.jpg",
+    "alt": "BUTTERFLY corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-butterfly/blood-1.jpg",
+    "alt": "BUTTERFLY corset — Blood"
+   },
+   {
+    "src": "/products/real/corset-butterfly/grey-smoke-1.jpg",
+    "alt": "BUTTERFLY corset — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-butterfly/denim-1.jpg",
+    "alt": "BUTTERFLY corset — Denim"
+   },
+   {
+    "src": "/products/real/corset-butterfly/beige-1.jpg",
+    "alt": "BUTTERFLY corset — Beige"
+   },
+   {
+    "src": "/products/real/corset-butterfly/black-1.jpg",
+    "alt": "BUTTERFLY corset — Black"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Pink",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Denim",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Beige",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Black",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Size S — XXS–M · Size M — S–XL",
+  "composition": "100% cotton",
+  "care": [
+   "Hand wash only.",
+   "Use a mild detergent or soapy solution.",
+   "Rinse thoroughly in clean water until all detergent is removed.",
+   "Gently squeeze out water by hand — do not wring or twist.",
+   "Dry flat on a level surface.",
+   "Avoid direct sunlight and heat sources.",
+   "Do not machine wash or tumble dry.",
+   "Store in a dry place, away from humidity and heat."
+  ],
+  "sort_order": 60,
+  "is_new": true
+ },
+ {
+  "id": "corset-u",
+  "name": "U corset",
+  "description": "The U corset defines the waistline for a feminine silhouette with comfortable movement. Adjustable back lacing tailors the fit to your figure. Available in natural and custom-dyed shades.\n\n100% cotton.",
+  "category": "CORSETS",
+  "price": "2 000 000 IDR",
+  "price_value": 2000000,
+  "currency": "IDR",
+  "image1": "/products/real/corset-u/pink-1.jpg",
+  "image2": "/products/real/corset-u/pink-2.jpg",
+  "alt1": "U corset",
+  "alt2": "U corset — Pink",
+  "images": [
+   {
+    "src": "/products/real/corset-u/pink-1.jpg",
+    "alt": "U corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-u/pink-2.jpg",
+    "alt": "U corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-u/pink-3.jpg",
+    "alt": "U corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-u/blood-1.jpg",
+    "alt": "U corset — Blood"
+   },
+   {
+    "src": "/products/real/corset-u/grey-smoke-1.jpg",
+    "alt": "U corset — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-u/denim-1.jpg",
+    "alt": "U corset — Denim"
+   },
+   {
+    "src": "/products/real/corset-u/beige-1.jpg",
+    "alt": "U corset — Beige"
+   },
+   {
+    "src": "/products/real/corset-u/black-1.jpg",
+    "alt": "U corset — Black"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Pink",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Denim",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Beige",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Black",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Size S — XXS–M · Size M — S–XL",
+  "composition": "100% cotton",
+  "care": [
+   "Hand wash only.",
+   "Use a mild detergent or soapy solution.",
+   "Rinse thoroughly in clean water until all detergent is removed.",
+   "Gently squeeze out water by hand — do not wring or twist.",
+   "Dry flat on a level surface.",
+   "Avoid direct sunlight and heat sources.",
+   "Do not machine wash or tumble dry.",
+   "Store in a dry place, away from humidity and heat."
+  ],
+  "sort_order": 55,
+  "is_new": true
+ },
+ {
+  "id": "corset-mini",
+  "name": "MINI corset",
+  "description": "The MINI corset is a cropped style with adjustable back lacing. It defines the waist cleanly and pairs with both basics and statement looks. Available in several shades.\n\n100% cotton.",
+  "category": "CORSETS",
+  "price": "1 800 000 IDR",
+  "price_value": 1800000,
+  "currency": "IDR",
+  "image1": "/products/real/corset-mini/pink-1.jpg",
+  "image2": "/products/real/corset-mini/pink-2.jpg",
+  "alt1": "MINI corset",
+  "alt2": "MINI corset — Pink",
+  "images": [
+   {
+    "src": "/products/real/corset-mini/pink-1.jpg",
+    "alt": "MINI corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-mini/pink-2.jpg",
+    "alt": "MINI corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-mini/pink-3.jpg",
+    "alt": "MINI corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-mini/blood-1.jpg",
+    "alt": "MINI corset — Blood"
+   },
+   {
+    "src": "/products/real/corset-mini/grey-smoke-1.jpg",
+    "alt": "MINI corset — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-mini/denim-1.jpg",
+    "alt": "MINI corset — Denim"
+   },
+   {
+    "src": "/products/real/corset-mini/beige-1.jpg",
+    "alt": "MINI corset — Beige"
+   },
+   {
+    "src": "/products/real/corset-mini/black-1.jpg",
+    "alt": "MINI corset — Black"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Pink",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Denim",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Beige",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Black",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Size S — XXS–M · Size M — S–XL",
+  "composition": "100% cotton",
+  "care": [
+   "Hand wash only.",
+   "Use a mild detergent or soapy solution.",
+   "Rinse thoroughly in clean water until all detergent is removed.",
+   "Gently squeeze out water by hand — do not wring or twist.",
+   "Dry flat on a level surface.",
+   "Avoid direct sunlight and heat sources.",
+   "Do not machine wash or tumble dry.",
+   "Store in a dry place, away from humidity and heat."
+  ],
+  "sort_order": 50,
+  "is_new": true
+ },
+ {
+  "id": "corset-long-slim",
+  "name": "LONG SLIM corset",
+  "description": "The LONG SLIM corset is an elongated style that lengthens the silhouette and accents the waist and hips. Adjustable lacing gives a tailored fit. Available in several shades.\n\n100% cotton.",
+  "category": "CORSETS",
+  "price": "2 000 000 IDR",
+  "price_value": 2000000,
+  "currency": "IDR",
+  "image1": "/products/real/corset-long-slim/pink-1.jpg",
+  "image2": "/products/real/corset-long-slim/pink-2.jpg",
+  "alt1": "LONG SLIM corset",
+  "alt2": "LONG SLIM corset — Pink",
+  "images": [
+   {
+    "src": "/products/real/corset-long-slim/pink-1.jpg",
+    "alt": "LONG SLIM corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-long-slim/pink-2.jpg",
+    "alt": "LONG SLIM corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-long-slim/pink-3.jpg",
+    "alt": "LONG SLIM corset — Pink"
+   },
+   {
+    "src": "/products/real/corset-long-slim/blood-1.jpg",
+    "alt": "LONG SLIM corset — Blood"
+   },
+   {
+    "src": "/products/real/corset-long-slim/grey-smoke-1.jpg",
+    "alt": "LONG SLIM corset — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-long-slim/denim-1.jpg",
+    "alt": "LONG SLIM corset — Denim"
+   },
+   {
+    "src": "/products/real/corset-long-slim/beige-1.jpg",
+    "alt": "LONG SLIM corset — Beige"
+   },
+   {
+    "src": "/products/real/corset-long-slim/black-1.jpg",
+    "alt": "LONG SLIM corset — Black"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Pink",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Denim",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Beige",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Black",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Size S — XXS–M · Size M — S–XL",
+  "composition": "100% cotton",
+  "care": [
+   "Hand wash only.",
+   "Use a mild detergent or soapy solution.",
+   "Rinse thoroughly in clean water until all detergent is removed.",
+   "Gently squeeze out water by hand — do not wring or twist.",
+   "Dry flat on a level surface.",
+   "Avoid direct sunlight and heat sources.",
+   "Do not machine wash or tumble dry.",
+   "Store in a dry place, away from humidity and heat."
+  ],
+  "sort_order": 45,
+  "is_new": false
+ },
+ {
+  "id": "skirt-worker",
+  "name": "Worker skirt",
+  "description": "The Worker skirt in punk aesthetic — raw, frayed seams and a bold silhouette drawn from street culture. Natural shades (Denim, Black, Beige) keep the fabric's authentic texture; dyed shades (Pink, Grey Smoke, Blood) are custom hand-dyed for a unique effect.\n\n100% cotton.",
+  "category": "SKIRTS",
+  "price": "1 750 000 IDR",
+  "price_value": 1750000,
+  "currency": "IDR",
+  "image1": "/products/real/skirt-worker/pink-1.jpg",
+  "image2": "/products/real/skirt-worker/pink-2.jpg",
+  "alt1": "Worker skirt",
+  "alt2": "Worker skirt — Pink",
+  "images": [
+   {
+    "src": "/products/real/skirt-worker/pink-1.jpg",
+    "alt": "Worker skirt — Pink"
+   },
+   {
+    "src": "/products/real/skirt-worker/pink-2.jpg",
+    "alt": "Worker skirt — Pink"
+   },
+   {
+    "src": "/products/real/skirt-worker/pink-3.jpg",
+    "alt": "Worker skirt — Pink"
+   },
+   {
+    "src": "/products/real/skirt-worker/blood-1.jpg",
+    "alt": "Worker skirt — Blood"
+   },
+   {
+    "src": "/products/real/skirt-worker/denim-1.jpg",
+    "alt": "Worker skirt — Denim"
+   },
+   {
+    "src": "/products/real/skirt-worker/beige-1.jpg",
+    "alt": "Worker skirt — Beige"
+   },
+   {
+    "src": "/products/real/skirt-worker/black-1.jpg",
+    "alt": "Worker skirt — Black"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Pink",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Denim",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Beige",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Black",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Sizes S and M",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Use mild detergent.",
+   "Wash inside out to protect the fabric.",
+   "Do not bleach.",
+   "Do not tumble dry — lay flat or hang to air dry.",
+   "Iron on low heat if needed.",
+   "Do not dry clean unless specified."
+  ],
+  "sort_order": 30,
+  "is_new": false
+ },
+ {
+  "id": "jeans-worker",
+  "name": "Worker jeans",
+  "description": "The Worker jeans in punk aesthetic — raw, frayed seams and a bold silhouette. The Pink shade is custom hand-dyed: rich, deep and lasting even after many washes. Each batch is dyed by hand, so the shade may vary slightly.\n\n100% cotton.",
+  "category": "JEANS",
+  "price": "3 000 000 IDR",
+  "price_value": 3000000,
+  "currency": "IDR",
+  "image1": "/products/real/jeans-worker/pink-1.jpg",
+  "image2": "/products/real/jeans-worker/pink-2.jpg",
+  "alt1": "Worker jeans",
+  "alt2": "Worker jeans — Pink",
+  "images": [
+   {
+    "src": "/products/real/jeans-worker/pink-1.jpg",
+    "alt": "Worker jeans — Pink"
+   },
+   {
+    "src": "/products/real/jeans-worker/pink-2.jpg",
+    "alt": "Worker jeans — Pink"
+   },
+   {
+    "src": "/products/real/jeans-worker/pink-3.jpg",
+    "alt": "Worker jeans — Pink"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Pink",
+    "hex": "#e84c9a"
+   }
+  ],
+  "size_note": "Sizes S and M",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Use mild detergent.",
+   "Wash inside out to protect the fabric.",
+   "Do not bleach.",
+   "Do not tumble dry — lay flat or hang to air dry.",
+   "Iron on low heat if needed.",
+   "Do not dry clean unless specified."
+  ],
+  "sort_order": 20,
+  "is_new": true
+ },
+ {
+  "id": "dress-long",
+  "name": "Long dress",
+  "description": "An AXUM long dress — a clean, elongated silhouette that works day to night. Light fabric with a focus on the fit.\n\n(Colours, sizing and price are being finalised — this listing will be updated.)",
+  "category": "DRESSES",
+  "price": "4 050 000 IDR",
+  "price_value": 4050000,
+  "currency": "IDR",
+  "image1": "/products/real/dress-long/shot-1.jpg",
+  "image2": "/products/real/dress-long/shot-2.jpg",
+  "alt1": "Long dress",
+  "alt2": "Long dress",
+  "images": [
+   {
+    "src": "/products/real/dress-long/shot-1.jpg",
+    "alt": "Long dress"
+   },
+   {
+    "src": "/products/real/dress-long/shot-2.jpg",
+    "alt": "Long dress"
+   },
+   {
+    "src": "/products/real/dress-long/shot-3.jpg",
+    "alt": "Long dress"
+   },
+   {
+    "src": "/products/real/dress-long/shot-4.jpg",
+    "alt": "Long dress"
+   },
+   {
+    "src": "/products/real/dress-long/shot-5.jpg",
+    "alt": "Long dress"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Sizes S and M (TBC)",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Use mild detergent.",
+   "Wash inside out to protect the fabric.",
+   "Do not bleach.",
+   "Do not tumble dry — lay flat or hang to air dry.",
+   "Iron on low heat if needed."
+  ],
+  "sort_order": 15,
+  "is_new": true
+ },
+ {
+  "id": "dress-mini",
+  "name": "Mini dress",
+  "description": "An AXUM mini dress — a bold, cropped silhouette with attitude. Accents the figure and pairs with statement accessories.\n\n(Colours, sizing and price are being finalised — this listing will be updated.)",
+  "category": "DRESSES",
+  "price": "3 400 000 IDR",
+  "price_value": 3400000,
+  "currency": "IDR",
+  "image1": "/products/real/dress-mini/shot-1.jpg",
+  "image2": "/products/real/dress-mini/shot-2.jpg",
+  "alt1": "Mini dress",
+  "alt2": "Mini dress",
+  "images": [
+   {
+    "src": "/products/real/dress-mini/shot-1.jpg",
+    "alt": "Mini dress"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-2.jpg",
+    "alt": "Mini dress"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-3.jpg",
+    "alt": "Mini dress"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-4.jpg",
+    "alt": "Mini dress"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-5.jpg",
+    "alt": "Mini dress"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Sizes S and M (TBC)",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Use mild detergent.",
+   "Wash inside out to protect the fabric.",
+   "Do not bleach.",
+   "Do not tumble dry — lay flat or hang to air dry.",
+   "Iron on low heat if needed."
+  ],
+  "sort_order": 14,
+  "is_new": true
+ },
+ {
+  "id": "set-streetwear",
+  "name": "Streetwear set",
+  "description": "An AXUM streetwear set — a coordinated top-and-bottom look in one palette. Relaxed cut with street-born character.\n\n(Colours, sizing and price are being finalised — this listing will be updated.)",
+  "category": "SETS",
+  "price": "4 950 000 IDR",
+  "price_value": 4950000,
+  "currency": "IDR",
+  "image1": "/products/real/set-streetwear/shot-1.jpg",
+  "image2": "/products/real/set-streetwear/shot-2.jpg",
+  "alt1": "Streetwear set",
+  "alt2": "Streetwear set",
+  "images": [
+   {
+    "src": "/products/real/set-streetwear/shot-1.jpg",
+    "alt": "Streetwear set"
+   },
+   {
+    "src": "/products/real/set-streetwear/shot-2.jpg",
+    "alt": "Streetwear set"
+   },
+   {
+    "src": "/products/real/set-streetwear/shot-3.jpg",
+    "alt": "Streetwear set"
+   },
+   {
+    "src": "/products/real/set-streetwear/shot-4.jpg",
+    "alt": "Streetwear set"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Sizes S and M (TBC)",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Use mild detergent.",
+   "Wash inside out to protect the fabric.",
+   "Do not bleach.",
+   "Do not tumble dry — lay flat or hang to air dry.",
+   "Iron on low heat if needed."
+  ],
+  "sort_order": 13,
+  "is_new": true
+ },
+ {
+  "id": "pajama",
+  "name": "Pajama set",
+  "description": "AXUM pajamas — a soft loungewear set in the brand's signature aesthetic. Relaxed fit, natural materials.\n\n(Colours, sizing and price are being finalised — this listing will be updated.)",
+  "category": "PAJAMAS",
+  "price": "2 950 000 IDR",
+  "price_value": 2950000,
+  "currency": "IDR",
+  "image1": "/products/real/pajama/shot-1.jpg",
+  "image2": "/products/real/pajama/shot-2.jpg",
+  "alt1": "Pajama set",
+  "alt2": "Pajama set",
+  "images": [
+   {
+    "src": "/products/real/pajama/shot-1.jpg",
+    "alt": "Pajama set"
+   },
+   {
+    "src": "/products/real/pajama/shot-2.jpg",
+    "alt": "Pajama set"
+   },
+   {
+    "src": "/products/real/pajama/shot-3.jpg",
+    "alt": "Pajama set"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Sizes S and M (TBC)",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Use mild detergent.",
+   "Wash inside out to protect the fabric.",
+   "Do not bleach.",
+   "Do not tumble dry — lay flat or hang to air dry.",
+   "Iron on low heat if needed."
+  ],
+  "sort_order": 12,
+  "is_new": true
+ },
+ {
+  "id": "bandana",
+  "name": "Bandana",
+  "description": "An AXUM bandana — the finishing touch. Wear it at the neck, in your hair, or on your bag.\n\n(Price is being finalised.)",
+  "category": "ACCESSORIES",
+  "price": "900 000 IDR",
+  "price_value": 900000,
+  "currency": "IDR",
+  "image1": "/products/real/bandana/shot-1.jpg",
+  "image2": "/products/real/bandana/shot-2.jpg",
+  "alt1": "Bandana",
+  "alt2": "Bandana",
+  "images": [
+   {
+    "src": "/products/real/bandana/shot-1.jpg",
+    "alt": "Bandana"
+   },
+   {
+    "src": "/products/real/bandana/shot-2.jpg",
+    "alt": "Bandana"
+   },
+   {
+    "src": "/products/real/bandana/shot-3.jpg",
+    "alt": "Bandana"
+   },
+   {
+    "src": "/products/real/bandana/shot-4.jpg",
+    "alt": "Bandana"
+   },
+   {
+    "src": "/products/real/bandana/shot-5.jpg",
+    "alt": "Bandana"
+   }
+  ],
+  "sizes": [
+   "OS"
+  ],
+  "size_note": "One size",
+  "composition": "100% cotton",
+  "care": [
+   "Machine wash cold (30 °C) on a gentle cycle.",
+   "Do not bleach.",
+   "Iron on low heat if needed."
+  ],
+  "sort_order": 10,
+  "is_new": true
+ }
+]

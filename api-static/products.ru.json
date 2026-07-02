@@ -1,0 +1,737 @@
+[
+ {
+  "id": "corset-butterfly",
+  "name": "Корсет BUTTERFLY",
+  "description": "Корсет BUTTERFLY подчёркивает талию, создавая выразительный силуэт и сохраняя полную свободу движений. Благодаря регулируемой шнуровке на спине модель легко адаптируется к фигуре и обеспечивает комфортную посадку. Доступен в нескольких оттенках — от натуральных до авторского крашения.\n\nСостав: 100% хлопок.",
+  "category": "КОРСЕТЫ",
+  "price": "8 900 ₽",
+  "price_value": 8900,
+  "currency": "RUB",
+  "image1": "/products/real/corset-butterfly/pink-1.jpg",
+  "image2": "/products/real/corset-butterfly/pink-2.jpg",
+  "alt1": "Корсет BUTTERFLY",
+  "alt2": "Корсет BUTTERFLY — Розовый",
+  "images": [
+   {
+    "src": "/products/real/corset-butterfly/pink-1.jpg",
+    "alt": "Корсет BUTTERFLY — Розовый"
+   },
+   {
+    "src": "/products/real/corset-butterfly/pink-2.jpg",
+    "alt": "Корсет BUTTERFLY — Розовый"
+   },
+   {
+    "src": "/products/real/corset-butterfly/pink-3.jpg",
+    "alt": "Корсет BUTTERFLY — Розовый"
+   },
+   {
+    "src": "/products/real/corset-butterfly/blood-1.jpg",
+    "alt": "Корсет BUTTERFLY — Blood"
+   },
+   {
+    "src": "/products/real/corset-butterfly/grey-smoke-1.jpg",
+    "alt": "Корсет BUTTERFLY — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-butterfly/denim-1.jpg",
+    "alt": "Корсет BUTTERFLY — Деним"
+   },
+   {
+    "src": "/products/real/corset-butterfly/beige-1.jpg",
+    "alt": "Корсет BUTTERFLY — Беж"
+   },
+   {
+    "src": "/products/real/corset-butterfly/black-1.jpg",
+    "alt": "Корсет BUTTERFLY — Чёрный"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Розовый",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Деним",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Беж",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Чёрный",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Размер S — XXS–M · Размер M — S–XL",
+  "composition": "100% хлопок",
+  "care": [
+   "Стирайте изделие только вручную.",
+   "Используйте мягкое моющее средство или мыльный раствор.",
+   "Тщательно прополаскивайте изделие в чистой воде до полного удаления средства.",
+   "Аккуратно отжимайте руками, не скручивая и не сдавливая.",
+   "Сушите в горизонтальном положении на ровной поверхности.",
+   "Избегайте прямых солнечных лучей и источников тепла.",
+   "Не используйте стиральную машину и сушильный барабан.",
+   "Храните в сухом месте, избегая повышенной влажности и высоких температур."
+  ],
+  "sort_order": 60,
+  "is_new": true
+ },
+ {
+  "id": "corset-u",
+  "name": "Корсет U",
+  "description": "Корсет U подчёркивает линию талии, формируя женственный силуэт и сохраняя комфорт в движении. Регулируемая шнуровка на спине подстраивается под фигуру для идеальной посадки. Доступен в натуральных и крашеных оттенках.\n\nСостав: 100% хлопок.",
+  "category": "КОРСЕТЫ",
+  "price": "8 900 ₽",
+  "price_value": 8900,
+  "currency": "RUB",
+  "image1": "/products/real/corset-u/pink-1.jpg",
+  "image2": "/products/real/corset-u/pink-2.jpg",
+  "alt1": "Корсет U",
+  "alt2": "Корсет U — Розовый",
+  "images": [
+   {
+    "src": "/products/real/corset-u/pink-1.jpg",
+    "alt": "Корсет U — Розовый"
+   },
+   {
+    "src": "/products/real/corset-u/pink-2.jpg",
+    "alt": "Корсет U — Розовый"
+   },
+   {
+    "src": "/products/real/corset-u/pink-3.jpg",
+    "alt": "Корсет U — Розовый"
+   },
+   {
+    "src": "/products/real/corset-u/blood-1.jpg",
+    "alt": "Корсет U — Blood"
+   },
+   {
+    "src": "/products/real/corset-u/grey-smoke-1.jpg",
+    "alt": "Корсет U — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-u/denim-1.jpg",
+    "alt": "Корсет U — Деним"
+   },
+   {
+    "src": "/products/real/corset-u/beige-1.jpg",
+    "alt": "Корсет U — Беж"
+   },
+   {
+    "src": "/products/real/corset-u/black-1.jpg",
+    "alt": "Корсет U — Чёрный"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Розовый",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Деним",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Беж",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Чёрный",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Размер S — XXS–M · Размер M — S–XL",
+  "composition": "100% хлопок",
+  "care": [
+   "Стирайте изделие только вручную.",
+   "Используйте мягкое моющее средство или мыльный раствор.",
+   "Тщательно прополаскивайте изделие в чистой воде до полного удаления средства.",
+   "Аккуратно отжимайте руками, не скручивая и не сдавливая.",
+   "Сушите в горизонтальном положении на ровной поверхности.",
+   "Избегайте прямых солнечных лучей и источников тепла.",
+   "Не используйте стиральную машину и сушильный барабан.",
+   "Храните в сухом месте, избегая повышенной влажности и высоких температур."
+  ],
+  "sort_order": 55,
+  "is_new": true
+ },
+ {
+  "id": "corset-mini",
+  "name": "Корсет MINI",
+  "description": "Корсет MINI — укороченная модель с регулируемой шнуровкой на спине. Чётко очерчивает талию и легко комбинируется как с базовыми, так и с акцентными образами. Доступен в нескольких оттенках.\n\nСостав: 100% хлопок.",
+  "category": "КОРСЕТЫ",
+  "price": "7 900 ₽",
+  "price_value": 7900,
+  "currency": "RUB",
+  "image1": "/products/real/corset-mini/pink-1.jpg",
+  "image2": "/products/real/corset-mini/pink-2.jpg",
+  "alt1": "Корсет MINI",
+  "alt2": "Корсет MINI — Розовый",
+  "images": [
+   {
+    "src": "/products/real/corset-mini/pink-1.jpg",
+    "alt": "Корсет MINI — Розовый"
+   },
+   {
+    "src": "/products/real/corset-mini/pink-2.jpg",
+    "alt": "Корсет MINI — Розовый"
+   },
+   {
+    "src": "/products/real/corset-mini/pink-3.jpg",
+    "alt": "Корсет MINI — Розовый"
+   },
+   {
+    "src": "/products/real/corset-mini/blood-1.jpg",
+    "alt": "Корсет MINI — Blood"
+   },
+   {
+    "src": "/products/real/corset-mini/grey-smoke-1.jpg",
+    "alt": "Корсет MINI — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-mini/denim-1.jpg",
+    "alt": "Корсет MINI — Деним"
+   },
+   {
+    "src": "/products/real/corset-mini/beige-1.jpg",
+    "alt": "Корсет MINI — Беж"
+   },
+   {
+    "src": "/products/real/corset-mini/black-1.jpg",
+    "alt": "Корсет MINI — Чёрный"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Розовый",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Деним",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Беж",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Чёрный",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Размер S — XXS–M · Размер M — S–XL",
+  "composition": "100% хлопок",
+  "care": [
+   "Стирайте изделие только вручную.",
+   "Используйте мягкое моющее средство или мыльный раствор.",
+   "Тщательно прополаскивайте изделие в чистой воде до полного удаления средства.",
+   "Аккуратно отжимайте руками, не скручивая и не сдавливая.",
+   "Сушите в горизонтальном положении на ровной поверхности.",
+   "Избегайте прямых солнечных лучей и источников тепла.",
+   "Не используйте стиральную машину и сушильный барабан.",
+   "Храните в сухом месте, избегая повышенной влажности и высоких температур."
+  ],
+  "sort_order": 50,
+  "is_new": true
+ },
+ {
+  "id": "corset-long-slim",
+  "name": "Корсет LONG SLIM",
+  "description": "Корсет LONG SLIM — удлинённая модель, вытягивающая силуэт и подчёркивающая линию талии и бёдер. Регулируемая шнуровка обеспечивает посадку точно по фигуре. Доступен в нескольких оттенках.\n\nСостав: 100% хлопок.",
+  "category": "КОРСЕТЫ",
+  "price": "8 900 ₽",
+  "price_value": 8900,
+  "currency": "RUB",
+  "image1": "/products/real/corset-long-slim/pink-1.jpg",
+  "image2": "/products/real/corset-long-slim/pink-2.jpg",
+  "alt1": "Корсет LONG SLIM",
+  "alt2": "Корсет LONG SLIM — Розовый",
+  "images": [
+   {
+    "src": "/products/real/corset-long-slim/pink-1.jpg",
+    "alt": "Корсет LONG SLIM — Розовый"
+   },
+   {
+    "src": "/products/real/corset-long-slim/pink-2.jpg",
+    "alt": "Корсет LONG SLIM — Розовый"
+   },
+   {
+    "src": "/products/real/corset-long-slim/pink-3.jpg",
+    "alt": "Корсет LONG SLIM — Розовый"
+   },
+   {
+    "src": "/products/real/corset-long-slim/blood-1.jpg",
+    "alt": "Корсет LONG SLIM — Blood"
+   },
+   {
+    "src": "/products/real/corset-long-slim/grey-smoke-1.jpg",
+    "alt": "Корсет LONG SLIM — Grey Smoke"
+   },
+   {
+    "src": "/products/real/corset-long-slim/denim-1.jpg",
+    "alt": "Корсет LONG SLIM — Деним"
+   },
+   {
+    "src": "/products/real/corset-long-slim/beige-1.jpg",
+    "alt": "Корсет LONG SLIM — Беж"
+   },
+   {
+    "src": "/products/real/corset-long-slim/black-1.jpg",
+    "alt": "Корсет LONG SLIM — Чёрный"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Розовый",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Grey Smoke",
+    "hex": "#9a9591"
+   },
+   {
+    "name": "Деним",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Беж",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Чёрный",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Размер S — XXS–M · Размер M — S–XL",
+  "composition": "100% хлопок",
+  "care": [
+   "Стирайте изделие только вручную.",
+   "Используйте мягкое моющее средство или мыльный раствор.",
+   "Тщательно прополаскивайте изделие в чистой воде до полного удаления средства.",
+   "Аккуратно отжимайте руками, не скручивая и не сдавливая.",
+   "Сушите в горизонтальном положении на ровной поверхности.",
+   "Избегайте прямых солнечных лучей и источников тепла.",
+   "Не используйте стиральную машину и сушильный барабан.",
+   "Храните в сухом месте, избегая повышенной влажности и высоких температур."
+  ],
+  "sort_order": 45,
+  "is_new": false
+ },
+ {
+  "id": "skirt-worker",
+  "name": "Юбка Worker",
+  "description": "Юбка Worker в эстетике панк — с необработанными срезами и рваными элементами. Смелый силуэт, вдохновлённый уличной культурой и свободой самовыражения. Натуральные оттенки (Denim, Black, Beige) сохраняют аутентичную фактуру ткани; крашеные (Pink, Grey Smoke, Blood) создаются по авторской технологии окрашивания с уникальным эффектом.\n\nСостав: 100% хлопок.",
+  "category": "ЮБКИ",
+  "price": "7 700 ₽",
+  "price_value": 7700,
+  "currency": "RUB",
+  "image1": "/products/real/skirt-worker/pink-1.jpg",
+  "image2": "/products/real/skirt-worker/pink-2.jpg",
+  "alt1": "Юбка Worker",
+  "alt2": "Юбка Worker — Розовый",
+  "images": [
+   {
+    "src": "/products/real/skirt-worker/pink-1.jpg",
+    "alt": "Юбка Worker — Розовый"
+   },
+   {
+    "src": "/products/real/skirt-worker/pink-2.jpg",
+    "alt": "Юбка Worker — Розовый"
+   },
+   {
+    "src": "/products/real/skirt-worker/pink-3.jpg",
+    "alt": "Юбка Worker — Розовый"
+   },
+   {
+    "src": "/products/real/skirt-worker/blood-1.jpg",
+    "alt": "Юбка Worker — Blood"
+   },
+   {
+    "src": "/products/real/skirt-worker/denim-1.jpg",
+    "alt": "Юбка Worker — Деним"
+   },
+   {
+    "src": "/products/real/skirt-worker/beige-1.jpg",
+    "alt": "Юбка Worker — Беж"
+   },
+   {
+    "src": "/products/real/skirt-worker/black-1.jpg",
+    "alt": "Юбка Worker — Чёрный"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Розовый",
+    "hex": "#e84c9a"
+   },
+   {
+    "name": "Blood",
+    "hex": "#7a2a36"
+   },
+   {
+    "name": "Деним",
+    "hex": "#4f6f9c"
+   },
+   {
+    "name": "Беж",
+    "hex": "#dccbae"
+   },
+   {
+    "name": "Чёрный",
+    "hex": "#1a1a1a"
+   }
+  ],
+  "size_note": "Размеры S и M",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Используйте мягкие моющие средства.",
+   "Стирайте изделие, вывернув наизнанку.",
+   "Не отбеливать.",
+   "Не сушите в стиральной машине — сушите расправленным горизонтально или на вешалке.",
+   "Гладьте при низкой температуре.",
+   "Химчистка не рекомендуется."
+  ],
+  "sort_order": 30,
+  "is_new": false
+ },
+ {
+  "id": "jeans-worker",
+  "name": "Джинсы Worker",
+  "description": "Джинсы Worker в эстетике панк — необработанные срезы, рваные элементы, смелый силуэт. Оттенок Pink создан по авторской технологии окрашивания: насыщенный, глубокий и стойкий даже после многочисленных стирок. Каждая партия окрашивается вручную, поэтому оттенок может незначительно отличаться.\n\nСостав: 100% хлопок.",
+  "category": "ДЖИНСЫ",
+  "price": "13 000 ₽",
+  "price_value": 13000,
+  "currency": "RUB",
+  "image1": "/products/real/jeans-worker/pink-1.jpg",
+  "image2": "/products/real/jeans-worker/pink-2.jpg",
+  "alt1": "Джинсы Worker",
+  "alt2": "Джинсы Worker — Розовый",
+  "images": [
+   {
+    "src": "/products/real/jeans-worker/pink-1.jpg",
+    "alt": "Джинсы Worker — Розовый"
+   },
+   {
+    "src": "/products/real/jeans-worker/pink-2.jpg",
+    "alt": "Джинсы Worker — Розовый"
+   },
+   {
+    "src": "/products/real/jeans-worker/pink-3.jpg",
+    "alt": "Джинсы Worker — Розовый"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "colors": [
+   {
+    "name": "Розовый",
+    "hex": "#e84c9a"
+   }
+  ],
+  "size_note": "Размеры S и M",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Используйте мягкие моющие средства.",
+   "Стирайте изделие, вывернув наизнанку.",
+   "Не отбеливать.",
+   "Не сушите в стиральной машине — сушите расправленным горизонтально или на вешалке.",
+   "Гладьте при низкой температуре.",
+   "Химчистка не рекомендуется."
+  ],
+  "sort_order": 20,
+  "is_new": true
+ },
+ {
+  "id": "dress-long",
+  "name": "Платье Long",
+  "description": "Длинное платье AXUM — чистый, вытянутый силуэт, который работает и в повседневности, и в вечернем образе. Лёгкая ткань, акцент на посадке по фигуре.\n\n(Цвета, размеры и цена уточняются — карточку дополним.)",
+  "category": "ПЛАТЬЯ",
+  "price": "17 900 ₽",
+  "price_value": 17900,
+  "currency": "RUB",
+  "image1": "/products/real/dress-long/shot-1.jpg",
+  "image2": "/products/real/dress-long/shot-2.jpg",
+  "alt1": "Платье Long",
+  "alt2": "Платье Long",
+  "images": [
+   {
+    "src": "/products/real/dress-long/shot-1.jpg",
+    "alt": "Платье Long"
+   },
+   {
+    "src": "/products/real/dress-long/shot-2.jpg",
+    "alt": "Платье Long"
+   },
+   {
+    "src": "/products/real/dress-long/shot-3.jpg",
+    "alt": "Платье Long"
+   },
+   {
+    "src": "/products/real/dress-long/shot-4.jpg",
+    "alt": "Платье Long"
+   },
+   {
+    "src": "/products/real/dress-long/shot-5.jpg",
+    "alt": "Платье Long"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Размеры S и M (уточняется)",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Используйте мягкие моющие средства.",
+   "Стирайте изделие, вывернув наизнанку.",
+   "Не отбеливать.",
+   "Не сушите в стиральной машине — сушите расправленным горизонтально или на вешалке.",
+   "Гладьте при низкой температуре."
+  ],
+  "sort_order": 15,
+  "is_new": true
+ },
+ {
+  "id": "dress-mini",
+  "name": "Платье Mini",
+  "description": "Мини-платье AXUM — смелый укороченный силуэт с характером. Подчёркивает фигуру и легко комбинируется с акцентными аксессуарами.\n\n(Цвета, размеры и цена уточняются — карточку дополним.)",
+  "category": "ПЛАТЬЯ",
+  "price": "14 900 ₽",
+  "price_value": 14900,
+  "currency": "RUB",
+  "image1": "/products/real/dress-mini/shot-1.jpg",
+  "image2": "/products/real/dress-mini/shot-2.jpg",
+  "alt1": "Платье Mini",
+  "alt2": "Платье Mini",
+  "images": [
+   {
+    "src": "/products/real/dress-mini/shot-1.jpg",
+    "alt": "Платье Mini"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-2.jpg",
+    "alt": "Платье Mini"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-3.jpg",
+    "alt": "Платье Mini"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-4.jpg",
+    "alt": "Платье Mini"
+   },
+   {
+    "src": "/products/real/dress-mini/shot-5.jpg",
+    "alt": "Платье Mini"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Размеры S и M (уточняется)",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Используйте мягкие моющие средства.",
+   "Стирайте изделие, вывернув наизнанку.",
+   "Не отбеливать.",
+   "Не сушите в стиральной машине — сушите расправленным горизонтально или на вешалке.",
+   "Гладьте при низкой температуре."
+  ],
+  "sort_order": 14,
+  "is_new": true
+ },
+ {
+  "id": "set-streetwear",
+  "name": "Комплект Streetwear",
+  "description": "Комплект AXUM в стритвир-эстетике — собранный образ из верха и низа в единой палитре. Свобода кроя и характер улицы.\n\n(Цвета, размеры и цена уточняются — карточку дополним.)",
+  "category": "КОМПЛЕКТЫ",
+  "price": "21 900 ₽",
+  "price_value": 21900,
+  "currency": "RUB",
+  "image1": "/products/real/set-streetwear/shot-1.jpg",
+  "image2": "/products/real/set-streetwear/shot-2.jpg",
+  "alt1": "Комплект Streetwear",
+  "alt2": "Комплект Streetwear",
+  "images": [
+   {
+    "src": "/products/real/set-streetwear/shot-1.jpg",
+    "alt": "Комплект Streetwear"
+   },
+   {
+    "src": "/products/real/set-streetwear/shot-2.jpg",
+    "alt": "Комплект Streetwear"
+   },
+   {
+    "src": "/products/real/set-streetwear/shot-3.jpg",
+    "alt": "Комплект Streetwear"
+   },
+   {
+    "src": "/products/real/set-streetwear/shot-4.jpg",
+    "alt": "Комплект Streetwear"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Размеры S и M (уточняется)",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Используйте мягкие моющие средства.",
+   "Стирайте изделие, вывернув наизнанку.",
+   "Не отбеливать.",
+   "Не сушите в стиральной машине — сушите расправленным горизонтально или на вешалке.",
+   "Гладьте при низкой температуре."
+  ],
+  "sort_order": 13,
+  "is_new": true
+ },
+ {
+  "id": "pajama",
+  "name": "Пижама",
+  "description": "Пижама AXUM — мягкий комплект для дома в фирменной эстетике бренда. Свободная посадка, натуральные материалы.\n\n(Цвета, размеры и цена уточняются — карточку дополним.)",
+  "category": "ПИЖАМЫ",
+  "price": "12 900 ₽",
+  "price_value": 12900,
+  "currency": "RUB",
+  "image1": "/products/real/pajama/shot-1.jpg",
+  "image2": "/products/real/pajama/shot-2.jpg",
+  "alt1": "Пижама",
+  "alt2": "Пижама",
+  "images": [
+   {
+    "src": "/products/real/pajama/shot-1.jpg",
+    "alt": "Пижама"
+   },
+   {
+    "src": "/products/real/pajama/shot-2.jpg",
+    "alt": "Пижама"
+   },
+   {
+    "src": "/products/real/pajama/shot-3.jpg",
+    "alt": "Пижама"
+   }
+  ],
+  "sizes": [
+   "S",
+   "M"
+  ],
+  "size_note": "Размеры S и M (уточняется)",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Используйте мягкие моющие средства.",
+   "Стирайте изделие, вывернув наизнанку.",
+   "Не отбеливать.",
+   "Не сушите в стиральной машине — сушите расправленным горизонтально или на вешалке.",
+   "Гладьте при низкой температуре."
+  ],
+  "sort_order": 12,
+  "is_new": true
+ },
+ {
+  "id": "bandana",
+  "name": "Бандана",
+  "description": "Бандана AXUM — финальный штрих к образу. Носите на шее, в волосах или на сумке.\n\n(Цена уточняется.)",
+  "category": "АКСЕССУАРЫ",
+  "price": "3 900 ₽",
+  "price_value": 3900,
+  "currency": "RUB",
+  "image1": "/products/real/bandana/shot-1.jpg",
+  "image2": "/products/real/bandana/shot-2.jpg",
+  "alt1": "Бандана",
+  "alt2": "Бандана",
+  "images": [
+   {
+    "src": "/products/real/bandana/shot-1.jpg",
+    "alt": "Бандана"
+   },
+   {
+    "src": "/products/real/bandana/shot-2.jpg",
+    "alt": "Бандана"
+   },
+   {
+    "src": "/products/real/bandana/shot-3.jpg",
+    "alt": "Бандана"
+   },
+   {
+    "src": "/products/real/bandana/shot-4.jpg",
+    "alt": "Бандана"
+   },
+   {
+    "src": "/products/real/bandana/shot-5.jpg",
+    "alt": "Бандана"
+   }
+  ],
+  "sizes": [
+   "OS"
+  ],
+  "size_note": "Универсальный размер",
+  "composition": "100% хлопок",
+  "care": [
+   "Машинная стирка до 30 °C в деликатном режиме.",
+   "Не отбеливать.",
+   "Гладьте при низкой температуре."
+  ],
+  "sort_order": 10,
+  "is_new": true
+ }
+]

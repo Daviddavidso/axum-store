@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/axum-store/static/css/main.a214fb7a.css",
+    "main.js": "/axum-store/static/js/main.f1f22445.js",
+    "static/media/waves.svg": "/axum-store/static/media/waves.200fb6e7cbfca0df0d76.svg",
+    "static/media/paper-noise.svg": "/axum-store/static/media/paper-noise.3045c3afb616d6849cda.svg",
+    "index.html": "/axum-store/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.a214fb7a.css",
+    "static/js/main.f1f22445.js"
+  ]
+}
