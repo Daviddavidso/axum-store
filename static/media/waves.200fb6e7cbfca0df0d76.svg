@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" width="1200" height="500" aria-hidden="true" focusable="false">
+  <!--
+    AXUM background waves — DECORATIVE BACKGROUND ONLY.
+    16 sinuous horizontal strands stacked vertically with alternating
+    amplitudes/phases. Stroke #1a1a1a at stroke-opacity 0.08 → worst-case pixel
+    on white is ≈ rgb(228,228,228); body text on #111 still clears 17:1.
+    No animation, no <title>/<desc>. Hidden under forced-colors / print /
+    reduced-transparency / ≤640px.
+  -->
+  <g fill="none" stroke="#1a1a1a" stroke-opacity="0.14" stroke-width="1.5" stroke-linecap="round">
+    <path d="M 0 30  C 200 5,   400 55,  600 30  S 1000 5,   1200 30" />
+    <path d="M 0 60  C 200 82,  400 38,  600 60  S 1000 82,  1200 60" />
+    <path d="M 0 90  C 200 62,  400 118, 600 90  S 1000 62,  1200 90" />
+    <path d="M 0 120 C 200 145, 400 95,  600 120 S 1000 145, 1200 120" />
+    <path d="M 0 150 C 200 128, 400 172, 600 150 S 1000 128, 1200 150" />
+    <path d="M 0 180 C 200 208, 400 152, 600 180 S 1000 208, 1200 180" />
+    <path d="M 0 210 C 200 186, 400 234, 600 210 S 1000 186, 1200 210" />
+    <path d="M 0 240 C 200 266, 400 214, 600 240 S 1000 266, 1200 240" />
+    <path d="M 0 270 C 200 250, 400 290, 600 270 S 1000 250, 1200 270" />
+    <path d="M 0 300 C 200 330, 400 270, 600 300 S 1000 330, 1200 300" />
+    <path d="M 0 330 C 200 305, 400 355, 600 330 S 1000 305, 1200 330" />
+    <path d="M 0 360 C 200 382, 400 338, 600 360 S 1000 382, 1200 360" />
+    <path d="M 0 390 C 200 362, 400 418, 600 390 S 1000 362, 1200 390" />
+    <path d="M 0 420 C 200 445, 400 395, 600 420 S 1000 445, 1200 420" />
+    <path d="M 0 450 C 200 428, 400 472, 600 450 S 1000 428, 1200 450" />
+    <path d="M 0 480 C 200 506, 400 454, 600 480 S 1000 506, 1200 480" />
+  </g>
+</svg>
