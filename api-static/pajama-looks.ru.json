@@ -1,0 +1,56 @@
+{
+  "enabled": true,
+  "eyebrow": "Пижамы",
+  "title_a": "Not Just",
+  "title_b": "Pajamas",
+  "intro": "Пижама AXUM живёт не только дома. Бамбук-шёлк оливкового цвета, собранный с корсетом и низом из основной коллекции, — образ, который спокойно переходит из спальни в город.",
+  "looks": [
+    {
+      "id": "look-01",
+      "tag": "Look 01 — Olive",
+      "photo": "/products/real/pajama-look/look-01.jpg",
+      "photo_alt": "Модель в оливковой пижамной рубашке нараспашку поверх чёрного корсета-бандо, с оливковыми широкими брюками",
+      "items": [
+        {
+          "product_id": "pajama-shirt-olive",
+          "label": "Пижама · Рубашка",
+          "price": "11 000 ₽"
+        },
+        {
+          "product_id": "pajama-pants-olive",
+          "label": "Пижама · Штаны",
+          "price": "11 000 ₽"
+        },
+        {
+          "product_id": "corset-butterfly-black",
+          "label": "Корсет BUTTERFLY · Чёрный",
+          "price": "8 900 ₽"
+        }
+      ]
+    },
+    {
+      "id": "look-02",
+      "tag": "Look 02 — Noir",
+      "photo": "/products/real/pajama-look/look-02.jpg",
+      "photo_alt": "Модель в тёмной пижамной рубашке нараспашку и чёрном низе, кожаный ремень EYE обёрнут по бёдрам",
+      "items": [
+        {
+          "product_id": "pajama-shirt-grey",
+          "label": "Пижама · Рубашка",
+          "price": "11 000 ₽"
+        },
+        {
+          "product_id": "pajama-shorts-grey",
+          "label": "Пижама · Шорты",
+          "price": "6 600 ₽"
+        },
+        {
+          "product_id": "belt-leather",
+          "label": "Ремень кожаный EYE",
+          "price": "10 000 ₽"
+        }
+      ]
+    }
+  ],
+  "_note": "Раздел «shop the look» для пижам. Фото образов: public/products/real/pajama-look/look-0N.jpg. photo_alt ОБЯЗАТЕЛЕН и описывает, КАК надеты вещи (не перечисляет названия — они уже в списке). label должен совпадать с названием карточки товара, product_id — её id."
+}

@@ -1,0 +1,56 @@
+{
+  "enabled": true,
+  "eyebrow": "Pajamas",
+  "title_a": "Not Just",
+  "title_b": "Pajamas",
+  "intro": "AXUM pyjamas don't stay home. Olive bamboo-silk, styled with a corset and a bottom from the main line — a look that moves easily from the bedroom to the street.",
+  "looks": [
+    {
+      "id": "look-01",
+      "tag": "Look 01 — Olive",
+      "photo": "/products/real/pajama-look/look-01.jpg",
+      "photo_alt": "Model in an olive pyjama shirt worn open over a black bandeau corset, with wide olive trousers",
+      "items": [
+        {
+          "product_id": "pajama-shirt-olive",
+          "label": "Pajama · Shirt",
+          "price": "2 500 000 IDR"
+        },
+        {
+          "product_id": "pajama-pants-olive",
+          "label": "Pajama · Pants",
+          "price": "2 500 000 IDR"
+        },
+        {
+          "product_id": "corset-butterfly-black",
+          "label": "BUTTERFLY corset · Black",
+          "price": "2 000 000 IDR"
+        }
+      ]
+    },
+    {
+      "id": "look-02",
+      "tag": "Look 02 — Noir",
+      "photo": "/products/real/pajama-look/look-02.jpg",
+      "photo_alt": "Model in a dark pyjama shirt worn open with a black bottom, the leather EYE belt wrapped around the hips",
+      "items": [
+        {
+          "product_id": "pajama-shirt-grey",
+          "label": "Pajama · Shirt",
+          "price": "2 500 000 IDR"
+        },
+        {
+          "product_id": "pajama-shorts-grey",
+          "label": "Pajama · Shorts",
+          "price": "1 500 000 IDR"
+        },
+        {
+          "product_id": "belt-leather",
+          "label": "Leather belt EYE",
+          "price": "2 200 000 IDR"
+        }
+      ]
+    }
+  ],
+  "_note": "Shop-the-look section for pajamas. Look photos: public/products/real/pajama-look/look-0N.jpg. photo_alt is REQUIRED and describes HOW the pieces are worn (it does not re-list names — those are in the list). label must match the product card name, product_id its id."
+}
