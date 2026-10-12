@@ -1,0 +1,31 @@
+{
+  "enabled": true,
+  "photo": "/campaign/look-of-week.jpg",
+  "photo_alt": "Model in the black BUTTERFLY corset laced at the front, tucked into wide dark trousers, with a chain at the hip",
+  "eyebrow": "Look of the week",
+  "title_a": "Build",
+  "title_b": "the look",
+  "intro": "Once a week we style an AXUM look: we show how the pieces work together and drop the set into your bag in one tap.",
+  "note": "Mesh shorts come free with the full set.",
+  "cta": "Add the set to bag",
+  "items": [
+    {
+      "product_id": "corset-butterfly-black",
+      "label": "BUTTERFLY corset · Black",
+      "in_set": true
+    },
+    {
+      "product_id": "",
+      "label": "LILY skirt · Grey, special garment dyeing",
+      "in_set": true,
+      "note": "coming to the catalogue"
+    },
+    {
+      "product_id": "",
+      "label": "Genuine leather bag · Grey",
+      "in_set": false,
+      "note": "sold separately"
+    }
+  ],
+  "_note": "PLACEHOLDER PHOTO. Replace public/campaign/look-of-week.jpg with the real look shot AND rewrite photo_alt for it: the alt describes HOW the pieces are worn, it does not repeat their names."
+}

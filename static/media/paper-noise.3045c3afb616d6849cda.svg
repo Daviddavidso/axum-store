@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <!--
+    AXUM mobile zine-paper background — DECORATIVE TILE ONLY.
+    Warm off-white #fbf8f3 base + SVG turbulence noise speckles baked at
+    alpha 0.07 + subtle hairline grid at stroke-opacity 0.05.
+
+    Contrast under #000/#111 body text: paper base ≈ rgb(251,248,243) → ~19:1
+    for #000, ~17:1 for #111. Noise darkens worst-case pixel to ~rgb(238,235,230)
+    → still ~16:1. All well above WCAG 1.4.3 4.5:1.
+
+    stitchTiles="stitch" makes the noise seamless on tile boundaries so a
+    repeat-tiled background shows no seams.
+  -->
+  <defs>
+    <filter id="paper-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" seed="11"/>
+      <feColorMatrix values="0 0 0 0 0
+                             0 0 0 0 0
+                             0 0 0 0 0
+                             0 0 0 0.07 0"/>
+    </filter>
+  </defs>
+
+  <!-- Warm paper base -->
+  <rect width="300" height="300" fill="#fbf8f3"/>
+
+  <!-- Noise speckles (black at 7% alpha) over the base -->
+  <rect width="300" height="300" filter="url(#paper-grain)"/>
+
+  <!-- Subtle hairline grid — barely-visible structure cue -->
+  <g stroke="#1a1a1a" stroke-opacity="0.05" stroke-width="0.5" fill="none">
+    <path d="M 0 75  H 300" />
+    <path d="M 0 150 H 300" />
+    <path d="M 0 225 H 300" />
+    <path d="M 75  0 V 300" />
+    <path d="M 150 0 V 300" />
+    <path d="M 225 0 V 300" />
+  </g>
+</svg>
